@@ -9,15 +9,12 @@ import domain_logic.producer.Uploader;
 import domain_logic.producer.UploaderImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.configuration.IMockitoConfiguration;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class MediaFileRepositoryTest {
 
@@ -306,7 +303,7 @@ class MediaFileRepositoryTest {
         assertTrue(mnf.updateAccessCounterMediaFile("1"));
     }
 
-    
+
 
     @Test
     void readUploaderWithCountedMediaElements() {

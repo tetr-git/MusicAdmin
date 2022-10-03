@@ -157,7 +157,7 @@ public final class ParseMedia {
         }
         return i;
     }
-    //todo delete
+    //todo delete -> util
     private static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;

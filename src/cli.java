@@ -2,6 +2,7 @@ import domain_logic.MediaFileRepository;
 import routing.handler.EventHandler;
 import routing.listener.CliOutputListener;
 import routing.listener.CreateMediaListener;
+import routing.listener.CreateUploaderListener;
 import ui.cli.ConsoleManagement;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ public class cli {
         ConsoleManagement consoleManagement = new ConsoleManagement(inputHandler);
         EventHandler outputHandler = new EventHandler();
         inputHandler.add(new CreateMediaListener(mediaFileRepository, outputHandler));
+        inputHandler.add(new CreateUploaderListener(mediaFileRepository,outputHandler));
         CliOutputListener cliOutputListener = new CliOutputListener(consoleManagement);
         outputHandler.add(cliOutputListener);
         consoleManagement.run();

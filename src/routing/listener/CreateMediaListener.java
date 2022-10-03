@@ -153,7 +153,8 @@ public class CreateMediaListener implements EventListener {
         if (addedMedia) {
             returnString = "added Media";
         } else {
-            returnString = (String) arg.get(0);
+            //todo if arg number okay but not addable wrong error message
+            returnString = "could not added Media: "+ (String) arg.get(0);
         }
         outputEvent = new CliOutputEvent(event,returnString);
         outputHandler.handle(outputEvent);

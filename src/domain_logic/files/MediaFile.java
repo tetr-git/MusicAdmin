@@ -1,9 +1,11 @@
 package domain_logic.files;
 
-import domain_logic.producer.Producer;
+import domain_logic.file_interfaces.Content;
 import domain_logic.enums.Tag;
 import domain_logic.file_interfaces.MediaContent;
 import domain_logic.file_interfaces.Uploadable;
+import domain_logic.producer.Uploader;
+import domain_logic.producer.UploaderImpl;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,29 +14,38 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
-public abstract class MediaFile implements Uploadable, MediaContent, Serializable {
-    static final long serialVersionUID = 1L;
-    private Collection<Tag> tags;
-    private long accessCount;
-    private BigDecimal bitrate;
-    private Duration length;
-    private BigDecimal size;
-    private Producer producer;
-    private Date uploadDate;
+public abstract class MediaFile implements Uploadable, MediaContent, Content, Serializable {
 
-    public MediaFile(Producer producer, Collection<Tag> tags, BigDecimal bitrate, Duration length) {
+    static final long serialVersionUID = 1L;
+    private final UploaderImpl uploader;
+    private final Collection<Tag> tags;
+    private long accessCount;
+    private final BigDecimal bitrate;
+    private final Duration length;
+    private final BigDecimal size;
+    private final Date uploadDate;
+    private String address;
+
+    public MediaFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address) {
+        this.uploader = uploader;
         this.tags = tags;
         this.accessCount = 0;
         this.bitrate = bitrate;
         this.length = length;
         this.size = bitrate.multiply(new BigDecimal(length.getSeconds()));
-        this.producer = producer;
 
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE,0);
         today.set(Calendar.SECOND,0);
         this.uploadDate = today.getTime();
+
+        this.address = address;
+    }
+
+    @Override
+    public String getAddress() {
+        return address;
     }
 
     @Override
@@ -63,8 +74,8 @@ public abstract class MediaFile implements Uploadable, MediaContent, Serializabl
     }
 
     @Override
-    public Producer getUploader() {
-        return producer;
+    public Uploader getUploader() {
+        return uploader;
     }
 
     @Override
@@ -74,6 +85,10 @@ public abstract class MediaFile implements Uploadable, MediaContent, Serializabl
 
     public void updateAccessCount() {
         accessCount++;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public abstract String typeString();

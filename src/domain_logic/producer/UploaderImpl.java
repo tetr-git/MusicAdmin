@@ -2,12 +2,12 @@ package domain_logic.producer;
 
 import java.io.Serializable;
 
-public class Producer implements Uploader, Serializable {
+public class UploaderImpl implements Uploader, Serializable {
 
     static final long serialVersionUID = 1L;
-    private String name;
+    private final String name;
 
-    public Producer(String name) {
+    public UploaderImpl(String name) {
             this.name = name;
         }
 

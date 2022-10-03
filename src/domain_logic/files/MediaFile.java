@@ -26,7 +26,7 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
     private final Date uploadDate;
     private String address;
 
-    public MediaFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address) {
+    public MediaFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length) {
         this.uploader = uploader;
         this.tags = tags;
         this.accessCount = 0;
@@ -40,7 +40,7 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
         today.set(Calendar.SECOND,0);
         this.uploadDate = today.getTime();
 
-        this.address = address;
+        this.address = "";
     }
 
     @Override

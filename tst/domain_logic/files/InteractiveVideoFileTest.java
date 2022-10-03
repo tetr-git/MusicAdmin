@@ -19,7 +19,6 @@ class InteractiveVideoFileTest {
     Collection<Tag> tags =  new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News));
     BigDecimal bitrate = new BigDecimal("48.000");
     Duration length = Duration.ofSeconds(215);
-    String address = "3";
     String type = "News";
     int resolution = 1080;
 
@@ -27,7 +26,6 @@ class InteractiveVideoFileTest {
             tags,
             bitrate,
             length,
-            address,
             type,
             resolution);
 

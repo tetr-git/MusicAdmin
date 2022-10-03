@@ -15,8 +15,8 @@ public class LicensedAudioFile extends MediaFile implements LicensedAudio, Seria
     private final int samplingRate;
     private final String holder;
 
-    public LicensedAudioFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address, int samplingRate, String holder) {
-        super(uploader, tags, bitrate, length, address);
+    public LicensedAudioFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, int samplingRate, String holder) {
+        super(uploader, tags, bitrate, length);
         this.samplingRate = samplingRate;
         this.holder = holder;
     }

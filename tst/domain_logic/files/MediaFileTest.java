@@ -19,19 +19,18 @@ class MediaFileTest {
     Collection<Tag> tags =  new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News));
     BigDecimal bitrate = new BigDecimal("48.000");
     Duration length = Duration.ofSeconds(215);
-    String address = "";
     int samplingRate = 320;
 
     MediaFile mediaFile;
 
     @BeforeEach
     void setUp() {
-        mediaFile = new AudioFile(up1, tags, bitrate, length, address, samplingRate);
+        mediaFile = new AudioFile(up1, tags, bitrate, length, samplingRate);
     }
 
     @Test
     void getAddress() {
-        assertEquals(address, mediaFile.getAddress());
+        assertEquals("", mediaFile.getAddress());
     }
 
     @Test

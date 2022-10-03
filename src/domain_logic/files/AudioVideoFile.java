@@ -15,8 +15,8 @@ public class AudioVideoFile extends MediaFile implements AudioVideo, Serializabl
     private final int samplingRate;
     private final int resolution;
 
-    public AudioVideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address, int samplingRate, int resolution) {
-        super(uploader, tags, bitrate, length, address);
+    public AudioVideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, int samplingRate, int resolution) {
+        super(uploader, tags, bitrate, length);
         this.samplingRate = samplingRate;
         this.resolution = resolution;
     }

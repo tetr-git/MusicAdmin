@@ -17,8 +17,8 @@ public class LicensedAudioVideoFile extends MediaFile implements LicensedAudioVi
     private final String holder;
     private final int resolution;
 
-    public LicensedAudioVideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address, int samplingRate, String holder, int resolution) {
-        super(uploader, tags, bitrate, length, address);
+    public LicensedAudioVideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, int samplingRate, String holder, int resolution) {
+        super(uploader, tags, bitrate, length);
         this.samplingRate = samplingRate;
         this.holder = holder;
         this.resolution = resolution;

@@ -18,14 +18,12 @@ class VideoFileTest {
     Collection<Tag> tags =  new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News));
     BigDecimal bitrate = new BigDecimal("48.000");
     Duration length = Duration.ofSeconds(215);
-    String address = "C://media/audio";
     int resolution = 320;
 
     VideoFile mediaElement = new VideoFile(up1,
             tags,
             bitrate,
             length,
-            address,
             resolution);
 
     @Test

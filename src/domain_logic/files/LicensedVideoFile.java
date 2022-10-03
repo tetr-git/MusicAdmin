@@ -16,8 +16,8 @@ public class LicensedVideoFile extends MediaFile implements LicensedVideo, Seria
     private final String holder;
     private final int resolution;
 
-    public LicensedVideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address, String holder, int resolution) {
-        super(uploader, tags, bitrate, length, address);
+    public LicensedVideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String holder, int resolution) {
+        super(uploader, tags, bitrate, length);
         this.holder = holder;
         this.resolution = resolution;
     }

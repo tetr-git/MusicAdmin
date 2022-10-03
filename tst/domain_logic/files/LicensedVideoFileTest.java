@@ -18,7 +18,6 @@ class LicensedVideoFileTest {
     Collection<Tag> tags =  new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News));
     BigDecimal bitrate = new BigDecimal("48.000");
     Duration length = Duration.ofSeconds(215);
-    String address = "C://media/LicensedVideo";
     String holder = "Universal";
     int resolution = 1080;
 
@@ -26,7 +25,6 @@ class LicensedVideoFileTest {
             tags,
             bitrate,
             length,
-            address,
             holder,
             resolution);
 

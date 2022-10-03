@@ -16,8 +16,8 @@ public class InteractiveVideoFile extends MediaFile implements InteractiveVideo,
     private final String type;
     private final int resolution;
 
-    public InteractiveVideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address, String type, int resolution) {
-        super(uploader, tags, bitrate, length, address);
+    public InteractiveVideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String type, int resolution) {
+        super(uploader, tags, bitrate, length);
         this.type = type;
         this.resolution = resolution;
     }

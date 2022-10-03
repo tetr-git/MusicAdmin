@@ -14,8 +14,8 @@ public class VideoFile extends MediaFile implements Video, Serializable {
 
     private final int resolution;
 
-    public VideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address, int resolution) {
-        super(uploader, tags, bitrate, length, address);
+    public VideoFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, int resolution) {
+        super(uploader, tags, bitrate, length);
         this.resolution = resolution;
     }
 

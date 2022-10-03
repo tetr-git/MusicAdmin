@@ -18,7 +18,6 @@ class AudioVideoFileTest {
     Collection<Tag> tags =  new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News));
     BigDecimal bitrate = new BigDecimal("48.000");
     Duration length = Duration.ofSeconds(215);
-    String address = "2";
     int samplingRate = 320;
     int resolution = 1080;
 
@@ -26,7 +25,6 @@ class AudioVideoFileTest {
             tags,
             bitrate,
             length,
-            address,
             samplingRate,
             resolution);
 

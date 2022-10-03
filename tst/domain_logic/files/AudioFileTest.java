@@ -19,10 +19,9 @@ class AudioFileTest {
     Collection<Tag> tags =  new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News));
     BigDecimal bitrate = new BigDecimal("48.000");
     Duration length = Duration.ofSeconds(215);
-    String address = "1";
     int samplingRate = 320;
 
-    AudioFile audioFile = new AudioFile(up1, tags, bitrate, length, address, samplingRate);
+    AudioFile audioFile = new AudioFile(up1, tags, bitrate, length, samplingRate);
 
     @Test
     void getSamplingRate() {

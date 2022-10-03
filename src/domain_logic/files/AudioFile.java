@@ -15,8 +15,8 @@ public class AudioFile extends MediaFile implements Audio, Serializable {
     static final long serialVersionUID = 1L;
     private final int samplingRate;
 
-    public AudioFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length, String address, int samplingRate) {
-        super(uploader, tags, bitrate, length, address);
+    public AudioFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length,int samplingRate) {
+        super(uploader, tags, bitrate, length);
         this.samplingRate = samplingRate;
     }
 

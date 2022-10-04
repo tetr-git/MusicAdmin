@@ -9,6 +9,10 @@ public class ConsoleManagement {
     private CliModeEnum mode= CliModeEnum.c;
 
     ParseCreate parseCreate;
+    ParseDelete parseDelete;
+    ParsePersistence parsePersistence;
+    ParseRead parseRead;
+    ParseUpdate parseUpdate;
 
     public ConsoleManagement(EventHandler inputHandler) {
         this.inputHandler = inputHandler;
@@ -19,10 +23,10 @@ public class ConsoleManagement {
         String input;
         Scanner scanner = new Scanner(System.in);
         do {
-            System.out.println("# ");
+            System.out.print("# ");
             input = scanner.nextLine();
             if (input.charAt(0) == ':') {
-                this.switchMode(input);
+                System.out.println(this.switchMode(input));
             } else {
                 this.parseToEvent(input);
             }
@@ -31,7 +35,6 @@ public class ConsoleManagement {
     }
 
     private String switchMode(String input) {
-        //todo print is missing
         switch (input) {
             case ":c":
                 this.mode = CliModeEnum.c;
@@ -48,10 +51,9 @@ public class ConsoleManagement {
             case ":p":
                 this.mode = CliModeEnum.p;
                 return "Persistent mode";
-                /*
-                case ":config": this.mode = 'g';
+            case ":config":
+                this.mode = CliModeEnum.c;
                 return "Config mode";
-             */
             default:
                 return "Error: invalid mode specified";
         }
@@ -61,26 +63,14 @@ public class ConsoleManagement {
         switch (mode) {
             case c:
                 parseCreate.execute(input);
-            /*case d:
-                this.mode = CliModeEnum.d;
-                printer = "Deletion mode";
+            case d:
+                parseDelete.execute(input);
             case u:
-                this.mode = CliModeEnum.u;
-                printer = "Update mode";
+                parseUpdate.execute(input);
             case r:
-                this.mode = CliModeEnum.r;
-                printer = "Read mode";
+                parseRead.execute(input);
             case p:
-                this.mode = CliModeEnum.p;
-                printer = "Persistent mode";
-            case c:
-                this.mode = 'g';
-                printer = "Config mode";
-
-            default:
-                printer = "Error: invalid mode specified";
-
-             */
+                parsePersistence.execute(input);
         }
     }
 

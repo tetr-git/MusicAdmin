@@ -17,6 +17,10 @@ public class ConsoleManagement {
     public ConsoleManagement(EventHandler inputHandler) {
         this.inputHandler = inputHandler;
         parseCreate = new ParseCreate(inputHandler);
+        parseDelete = new ParseDelete(inputHandler);
+        parsePersistence = new ParsePersistence(inputHandler);
+        parseRead = new ParseRead(inputHandler);
+        parseUpdate = new ParseUpdate(inputHandler);
     }
 
     public void run() {

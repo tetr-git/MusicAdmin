@@ -9,7 +9,6 @@ import java.util.List;
 public class EventHandler {
     private List<EventListener> listenerList = new LinkedList<>();
     public void add(EventListener listener) {this.listenerList.add(listener);}
-    public void remove(EventListener listener) {this.listenerList.remove(listener);}
     public void handle(EventObject event) {
         for (EventListener listener: listenerList) listener.onEvent(event);
     }

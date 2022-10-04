@@ -27,12 +27,14 @@ public class CreateUploaderListener implements EventListener {
 
     @Override
     public void onEvent(EventObject event) {
-        String response = "not added";
-        if (mR.insertUploaderFromString(((CreateUploaderEvent)event).getUploaderString())) {
-            response = "added Uploader";
+        if (event.toString().equals("CreateUploaderEvent")){
+            String response = "not added";
+            if (mR.insertUploaderFromString(((CreateUploaderEvent)event).getUploaderString())) {
+                response = "added Uploader";
+            }
+            CliOutputEvent outputEvent;
+            outputEvent = new CliOutputEvent(event,response);
+            outputHandler.handle(outputEvent);
         }
-        CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event,response);
-        outputHandler.handle(outputEvent);
     }
 }

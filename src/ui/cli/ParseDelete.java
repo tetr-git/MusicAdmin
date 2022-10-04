@@ -4,7 +4,7 @@ package ui.cli;
 import routing.events.DeleteEvent;
 import routing.handler.EventHandler;
 
-public class ParseDelete implements CliMode {
+public class ParseDelete {
 
     EventHandler eventHandler;
 

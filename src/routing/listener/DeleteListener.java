@@ -20,16 +20,19 @@ public class DeleteListener implements EventListener {
 
     @Override
     public void onEvent(EventObject event) {
-        String response = " Nothing deleted";
-        if (mR.deleteUploader(((DeleteEvent)event).getDeleteString())) {
-            response = "Uploader deleted";
+        if (event.toString().equals("DeleteEvent")){
+            //todo if uploader with files gets deleted wrong message
+            String response = "";
+            if (mR.deleteUploader(((DeleteEvent)event).getDeleteString())) {
+                response += "Uploader deleted ";
+            } else if (mR.deleteMediaFiles(((DeleteEvent)event).getDeleteString())) {
+                response += "Media deleted";
+            } else {
+                response = "nothing deleted";
+            }
+            CliOutputEvent outputEvent;
+            outputEvent = new CliOutputEvent(event,response);
+            outputHandler.handle(outputEvent);
         }
-        if (mR.deleteMediaFiles(((DeleteEvent)event).getDeleteString())) {
-            //todo what if both?
-            response = "Media deleted";
-        }
-        CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event,response);
-        outputHandler.handle(outputEvent);
     }
 }

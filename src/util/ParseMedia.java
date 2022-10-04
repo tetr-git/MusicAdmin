@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public final class ParseMedia {
 
     //todo delete empty constructor
+    //todo use ParseMedia in Event for Kapeselung
     public ParseMedia() {}
     public MediaAttributesCollection parseToCollection(String[] arg) {
         String errorMessage;

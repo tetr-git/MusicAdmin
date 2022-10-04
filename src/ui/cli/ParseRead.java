@@ -5,7 +5,7 @@ import routing.events.ReadMediaEvent;
 import routing.events.ReadUploaderEvent;
 import routing.handler.EventHandler;
 
-public class ParseRead implements CliMode {
+public class ParseRead {
 
     EventHandler eventHandler;
 

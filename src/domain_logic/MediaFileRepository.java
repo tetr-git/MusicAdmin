@@ -139,14 +139,13 @@ public class MediaFileRepository implements Serializable {
     }
 
     public boolean updateAccessCounterMediaFile(String address) {
-        boolean updateSuccessful = false;
         for (MediaFile i : mediaFileList) {
             if (i.getAddress().equalsIgnoreCase(address)) {
                 i.updateAccessCount();
-                updateSuccessful = true;
+                return true;
             }
         }
-        return updateSuccessful;
+        return false;
     }
 
     /**

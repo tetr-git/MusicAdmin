@@ -28,4 +28,9 @@ public class VideoFile extends MediaFile implements Video, Serializable {
     public String typeString() {
         return MediaTypes.ViDEO.toString();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\t" + resolution;
+    }
 }

@@ -29,4 +29,9 @@ public class AudioFile extends MediaFile implements Audio, Serializable {
     public String typeString() {
         return MediaTypes.AUDIO.toString();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\t" + samplingRate ;
+    }
 }

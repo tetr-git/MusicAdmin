@@ -35,4 +35,9 @@ public class AudioVideoFile extends MediaFile implements AudioVideo, Serializabl
     public String typeString() {
         return MediaTypes.AUDIOVIDEO.toString();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\t" + samplingRate + "\t" + resolution;
+    }
 }

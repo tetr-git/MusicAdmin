@@ -36,4 +36,9 @@ public class LicensedVideoFile extends MediaFile implements LicensedVideo, Seria
     public String typeString() {
         return MediaTypes.LICENSEDVIDEO.toString();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\t" + holder + "\t" + resolution;
+    }
 }

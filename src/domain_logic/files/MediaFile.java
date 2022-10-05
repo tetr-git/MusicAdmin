@@ -9,7 +9,11 @@ import domain_logic.producer.UploaderImpl;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -39,7 +43,6 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
         today.set(Calendar.MINUTE,0);
         today.set(Calendar.SECOND,0);
         this.uploadDate = today.getTime();
-
         this.address = "";
     }
 
@@ -92,4 +95,10 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
     }
 
     public abstract String typeString();
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return address +"\t"+ typeString() +"\t" + uploader.getName() +"\t"+ tags +"\t"+ accessCount +"\t"+ bitrate +"\t"+ length +"\t"+ size + "\t" + sdf.format(uploadDate);
+    }
 }

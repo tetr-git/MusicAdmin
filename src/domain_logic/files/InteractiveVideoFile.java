@@ -27,15 +27,18 @@ public class InteractiveVideoFile extends MediaFile implements InteractiveVideo,
         return type;
     }
 
-
     @Override
     public int getResolution() {
         return resolution;
     }
 
-
     @Override
     public String typeString() {
         return MediaTypes.INTERACTIVEVIDEO.toString();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\t" + type + "\t" + resolution;
     }
 }

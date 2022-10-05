@@ -1,20 +1,20 @@
-package routing.listener;
+package ui.cli;
 
 import domain_logic.MediaFileRepository;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
-import ui.cli.ParseCreate;
-import ui.cli.ParseDelete;
-import ui.cli.ParseUpdate;
+import routing.listener.ChangeListener;
+import routing.listener.CreateMediaListener;
+import routing.listener.CreateUploaderListener;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ChangeListenerTest {
+class ParseUpdateTest {
 
     @Test
-    void onEvent() {
+    void execute() {
         MediaFileRepository mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
         EventHandler inputHandler = new EventHandler();
         EventHandler outputHandler = new EventHandler();

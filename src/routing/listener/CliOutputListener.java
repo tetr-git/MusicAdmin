@@ -16,6 +16,4 @@ public class CliOutputListener implements EventListener {
     public void onEvent(EventObject event) {
         cM.writeToConsole(((CliOutputEvent)event).getWrite());
     }
-
-    //todo testing
 }

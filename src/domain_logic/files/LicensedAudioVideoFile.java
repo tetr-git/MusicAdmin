@@ -44,4 +44,9 @@ public class LicensedAudioVideoFile extends MediaFile implements LicensedAudioVi
         return MediaTypes.LICENSEDAUDIOVIDEO.toString();
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\t" + samplingRate + "\t" + holder + "\t" + resolution;
+
+    }
 }

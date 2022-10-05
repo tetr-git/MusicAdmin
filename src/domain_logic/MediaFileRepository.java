@@ -185,21 +185,17 @@ public class MediaFileRepository implements Serializable {
         return tagList;
     }
 
-    /**
-     * Read filtered media elements by class hash map.
-     *
-     * @param type int
-     * @return hashmap
-     * todo string mediaType
-     */
-    public HashMap<String, MediaFile> readFilteredMediaElementsByClass(String type) {
-        HashMap<String, MediaFile> hashMap = new HashMap<>();
+
+    //todo string mediaType
+
+    public ArrayList<MediaFile> readFilteredMediaElementsByClass(String tyoe) {
+        ArrayList<MediaFile> list = new ArrayList<>();
         for (MediaFile m : mediaFileList) {
-            if (m.typeString().equalsIgnoreCase(type)) {
-                hashMap.put(m.typeString(), m);
+            if (m.typeString().equalsIgnoreCase(tyoe)) {
+                list.add(m);
             }
         }
-        return hashMap;
+        return list;
     }
 
     /**

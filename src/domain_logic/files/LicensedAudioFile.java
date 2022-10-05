@@ -31,9 +31,13 @@ public class LicensedAudioFile extends MediaFile implements LicensedAudio, Seria
         return holder;
     }
 
-
     @Override
     public String typeString() {
         return MediaTypes.LICENSEDAUDIO.toString();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\t" + samplingRate + "\t" + holder;
     }
 }

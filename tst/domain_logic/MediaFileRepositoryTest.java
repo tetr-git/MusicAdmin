@@ -303,6 +303,18 @@ class MediaFileRepositoryTest {
         assertTrue(mnf.updateAccessCounterMediaFile("1"));
     }
 
+    @Test
+    void updateAccessCounterCantFindItem() {
+        UploaderImpl uploader1 = new UploaderImpl("hans");
+        MediaFile mediaFile1 = new AudioFile(uploader1,
+                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
+                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+
+        mnf.insertUploader(uploader1);
+        mnf.insertMediaFile(mediaFile1);
+
+        assertFalse(mnf.updateAccessCounterMediaFile("2"));
+    }
 
 
     @Test
@@ -380,10 +392,12 @@ class MediaFileRepositoryTest {
         mnf.insertUploader(up1);
         mnf.insertMediaFile(audioImpl);
 
-        HashMap<String, MediaFile> hashMap = mnf.readFilteredMediaElementsByClass("audio");
+        ArrayList<MediaFile> list = mnf.readFilteredMediaElementsByClass("audio");
 
-        assertEquals("[Audio]", hashMap.keySet().toString());
+        assertEquals("Audio",mnf.readFilteredMediaElementsByClass("audio").get(0).typeString());
     }
+
+
 
 
     @Test

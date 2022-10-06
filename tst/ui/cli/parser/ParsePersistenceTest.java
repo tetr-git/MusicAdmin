@@ -1,4 +1,4 @@
-package ui.cli;
+package ui.cli.parser;
 
 import domain_logic.MediaFileRepository;
 import domain_logic.enums.Tag;
@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.*;
+import ui.cli.ConsoleManagement;
+import ui.cli.parser.ParsePersistence;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -77,7 +79,6 @@ class ParsePersistenceTest {
             fail();
         }
 
-
         parsePersistence.execute("Jos Load");
 
         verify(consoleManagement).writeToConsole("Jos Loaded");
@@ -88,6 +89,6 @@ class ParsePersistenceTest {
     void tearDown() throws FileNotFoundException {
         File file = new File("mediaFileRepoJos");
         if (!file.delete())
-            throw new FileNotFoundException( "File not found!" );
+            throw new FileNotFoundException( "File couldn't be deleted!" );
     }
 }

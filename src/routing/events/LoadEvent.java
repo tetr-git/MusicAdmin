@@ -3,15 +3,15 @@ package routing.events;
 import java.util.EventObject;
 
 public class LoadEvent extends EventObject {
-    private final String LoadString;
+    private final String loadString;
 
-    public LoadEvent(Object source, String readString) {
+    public LoadEvent(Object source, String loadString) {
         super(source);
-        this.LoadString = readString;
+        this.loadString = loadString;
     }
 
     public String getLoadString() {
-        return LoadString;
+        return loadString;
     }
 
     @Override

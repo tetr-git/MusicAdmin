@@ -1,4 +1,4 @@
-package ui.cli;
+package ui.cli.parser;
 
 import routing.events.CreateMediaEvent;
 import routing.events.CreateUploaderEvent;

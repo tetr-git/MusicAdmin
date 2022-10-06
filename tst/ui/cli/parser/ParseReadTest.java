@@ -1,4 +1,4 @@
-package ui.cli;
+package ui.cli.parser;
 
 import domain_logic.MediaFileRepository;
 import domain_logic.enums.Tag;
@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.*;
+import ui.cli.ConsoleManagement;
+import ui.cli.parser.ParseRead;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;

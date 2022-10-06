@@ -1,4 +1,4 @@
-package ui.cli;
+package ui.cli.parser;
 
 import routing.events.LoadEvent;
 import routing.events.SaveEvent;

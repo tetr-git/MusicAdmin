@@ -1,12 +1,13 @@
-package ui.cli;
+package ui.cli.parser;
 
 import domain_logic.MediaFileRepository;
-import domain_logic.files.AudioFile;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
 import routing.listener.DeleteListener;
+import ui.cli.parser.ParseCreate;
+import ui.cli.parser.ParseDelete;
 
 import java.math.BigDecimal;
 

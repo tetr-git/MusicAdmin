@@ -6,7 +6,7 @@ import domain_logic.producer.Uploader;
 import domain_logic.producer.UploaderImpl;
 import observer.Observer;
 
-import java.io.Serializable;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
@@ -17,7 +17,7 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
     static final long serialVersionUID = 1L;
     private List<MediaFile> mediaFileList = new LinkedList<>();
     private List<Uploader> uploaderList = new LinkedList<>();
-    private final BigDecimal maxCapacity;
+    private BigDecimal maxCapacity;
     private final Lock mItemLock = new ReentrantLock();
 
     public MediaFileRepository(BigDecimal maxCapacity) {
@@ -251,4 +251,46 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
         }
         return counter;
     }
+
+    //jos functionality
+
+    private final String fileNameJos = "mediaManagementJos";
+    private File fileJos;
+
+    public void safeJos() {
+        mItemLock.lock();
+        try {
+            fileJos = new File(fileNameJos);
+            if (!fileJos.exists()) {
+                fileJos.createNewFile();
+            }
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileNameJos));
+            objectOutputStream.writeObject(this);
+            objectOutputStream.close();
+        }
+        catch ( Exception e) {
+            e.printStackTrace();
+        } finally {
+            mItemLock.unlock();
+        }
+    }
+
+    public void loadJos()  {
+        mItemLock.lock();
+        try{
+            File file = new File(fileNameJos);
+            if (!file.exists())
+                throw new FileNotFoundException( "File not found!" );
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileNameJos));
+            MediaFileRepository loadedMediaManagement = (MediaFileRepository) objectInputStream.readObject();
+            this.mediaFileList = loadedMediaManagement.readMediaList();
+            this.uploaderList = loadedMediaManagement.readUploaderList();
+            this.maxCapacity = loadedMediaManagement.getMaxCapacity();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            mItemLock.unlock();
+        }
+    }
+
 }

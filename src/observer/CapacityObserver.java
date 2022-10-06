@@ -10,9 +10,8 @@ public class CapacityObserver implements Observer {
     public CapacityObserver(MediaFileRepository mR) {
         this.mR = mR;
     }
-    /*
-    https://www.geeksforgeeks.org/bigdecimal-compareto-function-in-java/
-     */
+
+    //@source https://www.geeksforgeeks.org/bigdecimal-compareto-function-in-java/
 
     @Override
     public void update() {
@@ -22,23 +21,3 @@ public class CapacityObserver implements Observer {
         }
     }
 }
-
-/*
-public class KonkreterBeobachter implements Beobachter {
-    private KonkretesSubjekt konkretesSubjekt;
-    private int alterZustand;
-    public KonkreterBeobachter(KonkretesSubjekt konkretesSubjekt) {
-        this.konkretesSubjekt = konkretesSubjekt;
-        this.konkretesSubjekt.meldeAn(this);
-        this.alterZustand=this.konkretesSubjekt.gibZustand();
-    }
-    @Override
-    public void aktualisiere() {
-        int newState = konkretesSubjekt.gibZustand();
-        if(newState!=this.alterZustand) {
-            System.out.println("neuer Zustand=" + newState);
-            this.alterZustand=newState;
-        }
-    }
-}
- */

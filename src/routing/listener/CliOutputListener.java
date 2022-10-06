@@ -14,6 +14,8 @@ public class CliOutputListener implements EventListener {
 
     @Override
     public void onEvent(EventObject event) {
-        cM.writeToConsole(((CliOutputEvent)event).getWrite());
+        if (event.toString().equals("CliOutputEvent")) {
+            cM.writeToConsole(((CliOutputEvent)event).getWrite());
+        }
     }
 }

@@ -18,9 +18,13 @@ public class SaveListener implements EventListener {
 
     @Override
     public void onEvent(EventObject event) {
-        if (event.toString().equals("ReadMediaEvent")) {
-            //mR.SaveJos();
-            String response = "Not Save Implemented yet";
+        if (event.toString().equals("SafeEvent")) {
+            String response;
+            if (mR.safeJos()) {
+                response = "Jos saved";
+            } else {
+                response = "Couldn't save Jos";
+            }
             CliOutputEvent outputEvent;
             outputEvent = new CliOutputEvent(event,response);
             outputHandler.handle(outputEvent);

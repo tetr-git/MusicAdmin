@@ -254,10 +254,10 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
 
     //jos functionality
 
-    private final String fileNameJos = "mediaManagementJos";
+    private final String fileNameJos = "mediaFileRepoJos";
     private File fileJos;
 
-    public void safeJos() {
+    public boolean safeJos() {
         mItemLock.lock();
         try {
             fileJos = new File(fileNameJos);
@@ -270,12 +270,14 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
         }
         catch ( Exception e) {
             e.printStackTrace();
+            return false;
         } finally {
             mItemLock.unlock();
         }
+        return true;
     }
 
-    public void loadJos()  {
+    public boolean loadJos()  {
         mItemLock.lock();
         try{
             File file = new File(fileNameJos);
@@ -288,9 +290,11 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
             this.maxCapacity = loadedMediaManagement.getMaxCapacity();
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
+            return false;
         } finally {
             mItemLock.unlock();
         }
+        return true;
     }
 
 }

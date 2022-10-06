@@ -19,11 +19,14 @@ public class LoadListener implements EventListener {
 
     @Override
     public void onEvent(EventObject event) {
-        if (event.toString().equals("ReadMediaEvent")) {
-            //mR.loadJos();
-            String response = "Not Implemented yet";
-            CliOutputEvent outputEvent;
-            outputEvent = new CliOutputEvent(event,response);
+        if (event.toString().equals("LoadEvent")) {
+            String response;
+            if (mR.loadJos()){
+                response = "Jos Loaded";
+            } else {
+                response = "Couldn't load";
+            }
+            CliOutputEvent outputEvent = new CliOutputEvent(event,response);
             outputHandler.handle(outputEvent);
         }
     }

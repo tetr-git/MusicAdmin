@@ -32,7 +32,6 @@ class MediaFileRepositoryTest {
     @Test
     void readMediaList() {
         assertEquals(0, mediaFileRepository.readMediaList().size());
-
     }
 
     @Test

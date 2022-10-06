@@ -6,10 +6,9 @@ import domain_logic.producer.UploaderImpl;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,6 +20,11 @@ class AudioFileTest {
     Duration length = Duration.ofSeconds(215);
     int samplingRate = 320;
 
+    //Date
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Calendar today = Calendar.getInstance();
+    Date todayAsDate = today.getTime();
+
     AudioFile audioFile = new AudioFile(up1, tags, bitrate, length, samplingRate);
 
     @Test
@@ -31,5 +35,10 @@ class AudioFileTest {
     @Test
     void typeString() {
         assertEquals(MediaTypes.AUDIO.toString(),audioFile.typeString());
+    }
+
+    @Test
+    void testToString() {
+        assertEquals("\tAudio\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\t320",audioFile.toString());
     }
 }

@@ -6,11 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +18,11 @@ class MediaFileTest {
     BigDecimal bitrate = new BigDecimal("48.000");
     Duration length = Duration.ofSeconds(215);
     int samplingRate = 320;
+
+    //Date
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Calendar today = Calendar.getInstance();
+    Date todayAsDate = today.getTime();
 
     MediaFile mediaFile;
 
@@ -94,5 +97,11 @@ class MediaFileTest {
         mediaFile.setAddress(string);
 
         assertEquals("newAddress",mediaFile.getAddress());
+    }
+
+    @Test
+    void testToString() {
+        assertEquals("\tAudio\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\t320",
+                mediaFile.toString());
     }
 }

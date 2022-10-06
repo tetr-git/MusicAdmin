@@ -5,10 +5,9 @@ import domain_logic.producer.UploaderImpl;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,6 +20,11 @@ class LicensedAudioVideoFileTest {
     int samplingRate = 320;
     String holder = "Universal";
     int resolution = 1080;
+
+    //Date
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Calendar today = Calendar.getInstance();
+    Date todayAsDate = today.getTime();
 
     LicensedAudioVideoFile mediaElement = new LicensedAudioVideoFile(up1,
             tags,
@@ -48,5 +52,11 @@ class LicensedAudioVideoFileTest {
     @Test
     void typeString() {
         assertEquals("LicensedAudioVideo",mediaElement.typeString());
+    }
+
+    @Test
+    void testToString() {
+        assertEquals("\tLicensedAudioVideo\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\t320\tUniversal\t1080",
+                mediaElement.toString());
     }
 }

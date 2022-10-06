@@ -7,6 +7,8 @@ import domain_logic.files.LicensedAudioFile;
 import domain_logic.files.MediaFile;
 import domain_logic.producer.Uploader;
 import domain_logic.producer.UploaderImpl;
+import observer.CapacityObserver;
+import observer.SimObserver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,56 +17,58 @@ import java.time.Duration;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class MediaFileRepositoryTest {
 
-    MediaFileRepository mnf;
+    MediaFileRepository mediaFileRepository;
 
     @BeforeEach
     void setUp() {
-        mnf = new MediaFileRepository(new BigDecimal(100000));
+        mediaFileRepository = new MediaFileRepository(new BigDecimal(100000));
     }
 
     @Test
     void readMediaList() {
-        assertEquals(0, mnf.readMediaList().size());
+        assertEquals(0, mediaFileRepository.readMediaList().size());
 
     }
 
     @Test
     void readUploaderList() {
-        assertEquals(0, mnf.readUploaderList().size());
+        assertEquals(0, mediaFileRepository.readUploaderList().size());
     }
 
     @Test
     void getCurrentCapacity() {
-        assertEquals(new BigDecimal(0), mnf.getCurrentCapacity());
+        assertEquals(new BigDecimal(0), mediaFileRepository.getCurrentCapacity());
     }
 
     @Test
     void getCurrentCapacityFilled() {
-        assertEquals(new BigDecimal(0), mnf.getCurrentCapacity());
+        assertEquals(new BigDecimal(0), mediaFileRepository.getCurrentCapacity());
     }
 
     @Test
     void getMaxCapacity() {
-        assertEquals(new BigDecimal(100000), mnf.getMaxCapacity());
+        assertEquals(new BigDecimal(100000), mediaFileRepository.getMaxCapacity());
     }
 
     @Test
     void insertUploader() {
         UploaderImpl uploader = new UploaderImpl("Hans");
 
-        assertTrue(mnf.insertUploader(uploader));
+        assertTrue(mediaFileRepository.insertUploader(uploader));
     }
 
     @Test
     void insertExistingUploader(){
         UploaderImpl uploader1 = new UploaderImpl("Hans");
 
-        mnf.insertUploader(uploader1);
+        mediaFileRepository.insertUploader(uploader1);
 
-        assertFalse(mnf.insertUploader(uploader1));
+        assertFalse(mediaFileRepository.insertUploader(uploader1));
     }
 
     @Test
@@ -72,26 +76,26 @@ class MediaFileRepositoryTest {
         UploaderImpl uploader1 = new UploaderImpl("Hans");
         UploaderImpl uploader2 = new UploaderImpl("Hans");
 
-        mnf.insertUploader(uploader1);
+        mediaFileRepository.insertUploader(uploader1);
 
-        assertFalse(mnf.insertUploader(uploader2));
+        assertFalse(mediaFileRepository.insertUploader(uploader2));
     }
 
     @Test
     void insertUploaderFromString() {
         String u = "Hans";
 
-        mnf.insertUploaderFromString(u);
-        mnf.readUploaderList();
+        mediaFileRepository.insertUploaderFromString(u);
+        mediaFileRepository.readUploaderList();
 
-        assertEquals(u, mnf.readUploaderList().getFirst().getName());
+        assertEquals(u, mediaFileRepository.readUploaderList().getFirst().getName());
     }
 
     @Test
     void insertUploaderFromStringCheckReturnValue() {
         String u = "Hans";
 
-        assertTrue(mnf.insertUploaderFromString(u));
+        assertTrue(mediaFileRepository.insertUploaderFromString(u));
     }
 
     @Test
@@ -99,19 +103,19 @@ class MediaFileRepositoryTest {
         UploaderImpl up1 = new UploaderImpl("Hans");
         UploaderImpl up2 = new UploaderImpl("Peter");
 
-        mnf.insertUploader(up1);
-        mnf.insertUploader(up2);
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertUploader(up2);
 
-        assertTrue(mnf.deleteUploader("Hans"));
+        assertTrue(mediaFileRepository.deleteUploader("Hans"));
     }
 
     @Test
     void deleteNotExistingUploader() {
         UploaderImpl up1 = new UploaderImpl("Hans");
 
-        mnf.insertUploader(up1);
+        mediaFileRepository.insertUploader(up1);
 
-        assertFalse(mnf.deleteUploader("Bert"));
+        assertFalse(mediaFileRepository.deleteUploader("Bert"));
     }
 
     @Test
@@ -122,11 +126,11 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader);
-        mnf.insertMediaFile(mediaFile);
-        mnf.deleteUploader(hans);
+        mediaFileRepository.insertUploader(uploader);
+        mediaFileRepository.insertMediaFile(mediaFile);
+        mediaFileRepository.deleteUploader(hans);
 
-        assertEquals(0,mnf.readMediaList().size());
+        assertEquals(0, mediaFileRepository.readMediaList().size());
     }
 
     @Test
@@ -136,9 +140,9 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader);
+        mediaFileRepository.insertUploader(uploader);
 
-        assertTrue(mnf.insertMediaFile(mediaFile));
+        assertTrue(mediaFileRepository.insertMediaFile(mediaFile));
     }
 
     @Test
@@ -148,9 +152,9 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.00000"), Duration.ofSeconds(215009),320);
 
-        mnf.insertUploader(uploader);
+        mediaFileRepository.insertUploader(uploader);
 
-        assertFalse(mnf.insertMediaFile(mediaFile));
+        assertFalse(mediaFileRepository.insertMediaFile(mediaFile));
     }
 
     @Test
@@ -160,7 +164,7 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        assertFalse(mnf.insertMediaFile(mediaFile));
+        assertFalse(mediaFileRepository.insertMediaFile(mediaFile));
     }
 
     @Test
@@ -179,11 +183,11 @@ class MediaFileRepositoryTest {
                 320,
                 1920);
 
-        mnf.insertUploader(up1);
-        mnf.insertMediaFile(audioImpl);
-        mnf.insertMediaFile(audioVideoImpl);
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertMediaFile(audioImpl);
+        mediaFileRepository.insertMediaFile(audioVideoImpl);
 
-        assertEquals(2, mnf.readMediaList().size());
+        assertEquals(2, mediaFileRepository.readMediaList().size());
     }
 
     @Test
@@ -193,8 +197,8 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader);
-        mnf.insertMediaFile(mediaFile);
+        mediaFileRepository.insertUploader(uploader);
+        mediaFileRepository.insertMediaFile(mediaFile);
 
         assertEquals("1",mediaFile.getAddress());
     }
@@ -211,11 +215,11 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader1);
-        mnf.insertUploader(uploader2);
-        mnf.insertMediaFile(mediaFile1);
-        mnf.insertMediaFile(mediaFile2);
-        mnf.deleteUploader("hans");
+        mediaFileRepository.insertUploader(uploader1);
+        mediaFileRepository.insertUploader(uploader2);
+        mediaFileRepository.insertMediaFile(mediaFile1);
+        mediaFileRepository.insertMediaFile(mediaFile2);
+        mediaFileRepository.deleteUploader("hans");
 
         assertEquals("1",mediaFile2.getAddress());
     }
@@ -232,13 +236,13 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader1);
-        mnf.insertUploader(uploader2);
-        mnf.insertMediaFile(mediaFile1);
-        mnf.insertMediaFile(mediaFile2);
-        mnf.deleteMediaFiles("1");
+        mediaFileRepository.insertUploader(uploader1);
+        mediaFileRepository.insertUploader(uploader2);
+        mediaFileRepository.insertMediaFile(mediaFile1);
+        mediaFileRepository.insertMediaFile(mediaFile2);
+        mediaFileRepository.deleteMediaFiles("1");
 
-        assertEquals(1,mnf.readMediaList().size());
+        assertEquals(1, mediaFileRepository.readMediaList().size());
     }
 
     @Test
@@ -249,10 +253,10 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader1);
-        mnf.insertMediaFile(mediaFile1);
+        mediaFileRepository.insertUploader(uploader1);
+        mediaFileRepository.insertMediaFile(mediaFile1);
 
-        assertTrue(mnf.deleteMediaFiles("1"));
+        assertTrue(mediaFileRepository.deleteMediaFiles("1"));
     }
 
     @Test
@@ -267,11 +271,11 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader1);
-        mnf.insertUploader(uploader2);
-        mnf.insertMediaFile(mediaFile1);
-        mnf.insertMediaFile(mediaFile2);
-        mnf.deleteMediaFiles("1");
+        mediaFileRepository.insertUploader(uploader1);
+        mediaFileRepository.insertUploader(uploader2);
+        mediaFileRepository.insertMediaFile(mediaFile1);
+        mediaFileRepository.insertMediaFile(mediaFile2);
+        mediaFileRepository.deleteMediaFiles("1");
 
         assertEquals("1",mediaFile2.getAddress());
     }
@@ -283,9 +287,9 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader1);
-        mnf.insertMediaFile(mediaFile1);
-        mnf.updateAccessCounterMediaFile("1");
+        mediaFileRepository.insertUploader(uploader1);
+        mediaFileRepository.insertMediaFile(mediaFile1);
+        mediaFileRepository.updateAccessCounterMediaFile("1");
 
         assertEquals(1,mediaFile1.getAccessCount());
     }
@@ -297,10 +301,10 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader1);
-        mnf.insertMediaFile(mediaFile1);
+        mediaFileRepository.insertUploader(uploader1);
+        mediaFileRepository.insertMediaFile(mediaFile1);
 
-        assertTrue(mnf.updateAccessCounterMediaFile("1"));
+        assertTrue(mediaFileRepository.updateAccessCounterMediaFile("1"));
     }
 
     @Test
@@ -310,10 +314,10 @@ class MediaFileRepositoryTest {
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
                 new BigDecimal("48.000"), Duration.ofSeconds(215),320);
 
-        mnf.insertUploader(uploader1);
-        mnf.insertMediaFile(mediaFile1);
+        mediaFileRepository.insertUploader(uploader1);
+        mediaFileRepository.insertMediaFile(mediaFile1);
 
-        assertFalse(mnf.updateAccessCounterMediaFile("2"));
+        assertFalse(mediaFileRepository.updateAccessCounterMediaFile("2"));
     }
 
 
@@ -339,13 +343,13 @@ class MediaFileRepositoryTest {
                 999,
                 "Sony");
 
-        mnf.insertUploader(up1);
-        mnf.insertUploader(up2);
-        mnf.insertMediaFile(audioFile);
-        mnf.insertMediaFile(audioVideoFile);
-        mnf.insertMediaFile(licensedAudioFile);
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertUploader(up2);
+        mediaFileRepository.insertMediaFile(audioFile);
+        mediaFileRepository.insertMediaFile(audioVideoFile);
+        mediaFileRepository.insertMediaFile(licensedAudioFile);
 
-        HashMap<Uploader, Integer> hashMap = mnf.readUploaderWithCountedMediaElements();
+        HashMap<Uploader, Integer> hashMap = mediaFileRepository.readUploaderWithCountedMediaElements();
 
         assertEquals(3, hashMap.get(up1));
     }
@@ -354,9 +358,9 @@ class MediaFileRepositoryTest {
     void readUploaderWithCountedMediaElementsEmptyList() {
         UploaderImpl up1 = new UploaderImpl("Hans");
 
-        mnf.insertUploader(up1);
+        mediaFileRepository.insertUploader(up1);
         HashMap<Uploader, Integer> hashMap;
-        hashMap = mnf.readUploaderWithCountedMediaElements();
+        hashMap = mediaFileRepository.readUploaderWithCountedMediaElements();
 
         assertEquals(0, hashMap.get(up1));
     }
@@ -370,14 +374,14 @@ class MediaFileRepositoryTest {
                 Duration.ofSeconds(215),
                 320);
 
-        mnf.insertUploader(up1);
-        mnf.insertMediaFile(audioImpl);
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertMediaFile(audioImpl);
         List<Tag> tagList = new ArrayList<>();
 
         tagList.add(Tag.Lifestyle);
         tagList.add(Tag.News);
 
-        assertEquals(tagList, mnf.listEnumTags());
+        assertEquals(tagList, mediaFileRepository.listEnumTags());
     }
 
     @Test
@@ -389,12 +393,12 @@ class MediaFileRepositoryTest {
                 Duration.ofSeconds(215),
                 320);
 
-        mnf.insertUploader(up1);
-        mnf.insertMediaFile(audioImpl);
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertMediaFile(audioImpl);
 
-        ArrayList<MediaFile> list = mnf.readFilteredMediaElementsByClass("audio");
+        ArrayList<MediaFile> list = mediaFileRepository.readFilteredMediaElementsByClass("audio");
 
-        assertEquals("Audio",mnf.readFilteredMediaElementsByClass("audio").get(0).typeString());
+        assertEquals("Audio", mediaFileRepository.readFilteredMediaElementsByClass("audio").get(0).typeString());
     }
 
 
@@ -409,10 +413,81 @@ class MediaFileRepositoryTest {
                 Duration.ofSeconds(215),
                 320);
 
-        mnf.insertUploader(up1);
-        mnf.insertMediaFile(audioImpl);
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertMediaFile(audioImpl);
 
-        assertEquals(1,mnf.NumberOfMediaType("audio"));
+        assertEquals(1, mediaFileRepository.NumberOfMediaType("audio"));
     }
+
+    @Test
+    void getObserverList() {
+        CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);
+
+        mediaFileRepository.register(capacityObserver);
+
+        assertEquals(1,mediaFileRepository.getObserverList().size());
+    }
+
+    @Test
+    void register() {
+        CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);
+        SimObserver simObserver = new SimObserver(mediaFileRepository);
+
+        mediaFileRepository.register(capacityObserver);
+        mediaFileRepository.register(simObserver);
+
+        assertEquals(2,mediaFileRepository.getObserverList().size());
+    }
+
+    @Test
+    void deregister() {
+        CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);
+        SimObserver simObserver = new SimObserver(mediaFileRepository);
+
+        mediaFileRepository.register(capacityObserver);
+        mediaFileRepository.register(simObserver);
+
+        mediaFileRepository.deregister(capacityObserver);
+
+        assertEquals(1,mediaFileRepository.getObserverList().size());
+    }
+
+    @Test
+    void notifyObservers() {
+        CapacityObserver capacityObserver = mock(CapacityObserver.class);
+
+        mediaFileRepository.register(capacityObserver);
+
+        UploaderImpl up1 = new UploaderImpl("Hans");
+        MediaFile audioImpl = new AudioFile(up1,
+                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
+                new BigDecimal("48.000"),
+                Duration.ofSeconds(215),
+                320);
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertMediaFile(audioImpl);
+
+        verify(capacityObserver).update();
+    }
+
+    @Test
+    void getCurrentNumberOfMediaElements() {
+        UploaderImpl up1 = new UploaderImpl("Hans");
+        MediaFile audioImpl = new AudioFile(up1,
+                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
+                new BigDecimal("48.000"),
+                Duration.ofSeconds(215),
+                320);
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertMediaFile(audioImpl);
+
+        assertEquals(1,mediaFileRepository.getCurrentNumberOfMediaElements());
+    }
+
+    @Test
+    void getCurrentNumberOfMediaElementsWIthEmptyRepository() {
+        assertEquals(0,mediaFileRepository.getCurrentNumberOfMediaElements());
+    }
+
 
 }

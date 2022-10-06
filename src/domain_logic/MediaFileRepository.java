@@ -4,6 +4,7 @@ import domain_logic.enums.Tag;
 import domain_logic.files.MediaFile;
 import domain_logic.producer.Uploader;
 import domain_logic.producer.UploaderImpl;
+import observer.Observer;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class MediaFileRepository implements Serializable {
+public class MediaFileRepository implements Serializable, MediaFileRepositoryInterface {
 
     static final long serialVersionUID = 1L;
     private List<MediaFile> mediaFileList = new LinkedList<>();
@@ -67,7 +68,7 @@ public class MediaFileRepository implements Serializable {
                 if (mediaElement.getUploader().getName().equalsIgnoreCase(delU)) {
                     iterator.remove();
                     updateAllMediaElementAddresses();
-                    //todo this.notifyObservers();
+                    this.notifyObservers();
                 }
             }
             return uploaderList.removeIf(uploader -> uploader.getName().equalsIgnoreCase(delU));
@@ -92,7 +93,7 @@ public class MediaFileRepository implements Serializable {
                     if (i.getName().equalsIgnoreCase(mediaFile.getUploader().getName())) {
                         mediaFileList.add(mediaFile);
                         updateAllMediaElementAddresses();
-                        //todo this.notifyObservers();
+                        this.notifyObservers();
                         return true;
                     }
                 }
@@ -103,7 +104,12 @@ public class MediaFileRepository implements Serializable {
             mItemLock.unlock();
         }
     }
-
+    /**
+     * Delete media files.
+     *
+     * @author https://stackoverflow.com/questions/223918/iterating-through-a-collection-avoiding-concurrentmodificationexception-when-re#comment56183223_23908758
+     *
+     */
     public boolean deleteMediaFiles(String address) {
         mItemLock.lock();
         boolean deleteSuccessful = false;
@@ -112,7 +118,7 @@ public class MediaFileRepository implements Serializable {
                 MediaFile mediaFile = iterator.next();
                 if (mediaFile.getAddress().equalsIgnoreCase(address)) {
                     iterator.remove();
-                    //todo this.notifyObservers();
+                    this.notifyObservers();
                     deleteSuccessful = true;
                 }
             }
@@ -209,6 +215,39 @@ public class MediaFileRepository implements Serializable {
             if (m.typeString().equalsIgnoreCase(mediaType)) {
                 counter++;
             }
+        }
+        return counter;
+    }
+
+    //observer functionality
+
+    private List<observer.Observer> observerList = new LinkedList<observer.Observer>();
+
+    public List<observer.Observer> getObserverList() {
+        return observerList;
+    }
+
+    @Override
+    public void register(observer.Observer observer) {
+        this.observerList.add(observer);
+    }
+
+    @Override
+    public void deregister(observer.Observer observer) {
+        this.observerList.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(Observer observer: this.observerList) {
+            observer.update();
+        }
+    }
+
+    public int getCurrentNumberOfMediaElements() {
+        int counter = 0;
+        for (MediaFile m : mediaFileList) {
+            counter++;
         }
         return counter;
     }

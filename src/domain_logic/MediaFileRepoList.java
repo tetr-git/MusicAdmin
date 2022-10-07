@@ -19,26 +19,29 @@ public class MediaFileRepoList {
     }
 
     public LinkedList<MediaFileRepository> getRepoList() {
-        return repoList;
+        return new LinkedList<>(repoList);
     }
 
     private void addToList(int index) {
-        if (checkRepoAtIndexExists(index)) {
+        if (!checkRepoAtIndexExists(index)) {
             MediaFileRepository newRepo = new MediaFileRepository(maxCapacity);
             repoList.add(newRepo);
             newRepo.setListNumber(index);
         }
     }
 
-    public int getCurrentNumberOfRepos() {
-        return repoList.size();
-    }
-
-    public MediaFileRepository getRepoByIndex(int index) {
-        if (checkRepoAtIndexExists(index)) {
-            return repoList.get(index);
+    /*
+    //todo just for testing used
+     */
+    public MediaFileRepository getRepoByNumber(int number) {
+        if (checkRepoAtIndexExists(number)) {
+            for (MediaFileRepository repository : repoList) {
+                if (repository.getListNumber()==number){
+                    return repository;
+                }
+            }
         }
-        return repoList.get(0);
+        throw new RuntimeException("Wrong Repository Number");
     }
     //only for testing
     private boolean checkRepoAtIndexExists(int index) {
@@ -61,27 +64,30 @@ public class MediaFileRepoList {
     }
 
     public void changeStateAllRepositories(String[] inputRepoNumbers) {
+        for (MediaFileRepository repo : repoList) {
+            repo.setActive(false);
+        }
         for (String repoString : inputRepoNumbers) {
             if (isNumericInteger(repoString)) {
                 int repoInt = addInteger(repoString);
-                if (repoInt>-1) {
+                if (repoInt > -1) {
+                    boolean add = false;
                     for (MediaFileRepository addRepo : repoList) {
-                        if (!(addRepo.getListNumber()==repoInt)) {
-                            addToList(repoInt);
+                        if (!(addRepo.getListNumber() == repoInt)) {
+                            add = true;
                         }
                     }
+                    if (add) {
+                        addToList(repoInt);
+                    }
                     for (MediaFileRepository repo : repoList) {
-                        if (repo.getListNumber()==repoInt) {
+                        if (repo.getListNumber() == repoInt) {
                             repo.setActive(true);
-                        } else {
-                            repo.setActive(false);
                         }
                     }
                 }
             }
         }
     }
-
-
     //todo put saveJos here
 }

@@ -1,12 +1,10 @@
 package ui.cli.parser;
 
 import domain_logic.MediaFileRepoList;
-import domain_logic.MediaFileRepository;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
-import ui.cli.parser.ParseCreate;
 
 import java.math.BigDecimal;
 
@@ -27,7 +25,7 @@ class ParseCreateTest {
 
         parseCreate.execute("Produzent1");
 
-        assertEquals("Produzent1",mediaFileRepoList.getRepoByIndex(0).readUploaderList().getFirst().getName());
+        assertEquals("Produzent1",mediaFileRepoList.getRepoByNumber(0).readUploaderList().getFirst().getName());
         //verify(mediaFileRepoList).getRepoByIndex(0).insertUploaderFromString("Produzent1");
     }
     /*

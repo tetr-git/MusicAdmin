@@ -25,6 +25,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class ParsePersistenceTest {
+    /*
+    todo Speicherzugriff in den Anforderungen nicht erlaubt,
+    Datei wird im Projektordner angelegt sollte daher zumindest Betriebssystem unabhängig sein
+     */
 
     MediaFileRepository mediaFileRepository;
     EventHandler inputHandler;
@@ -81,6 +85,9 @@ class ParsePersistenceTest {
 
         parsePersistence.execute("Jos Load");
 
+        /*
+        doppelte Zusicherung um CliOutputPrint und korrekte Arbeitsweise abzudecken
+         */
         verify(consoleManagement).writeToConsole("Jos Loaded");
         assertEquals(1,mediaFileRepository.getCurrentNumberOfMediaElements());
     }

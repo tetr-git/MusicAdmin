@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParseDeleteTest {
-
+    /*
     @Test
     void execute() {
         MediaFileRepository mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
@@ -49,4 +49,6 @@ class ParseDeleteTest {
 
         assertEquals(0,mediaFileRepository.readMediaList().size());
     }
+
+     */
 }

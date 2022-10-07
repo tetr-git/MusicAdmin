@@ -16,8 +16,8 @@ class ConsoleManagementTest {
         MediaFileRepository mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
         EventHandler inputHandler = new EventHandler();
         EventHandler outputHandler = new EventHandler();
-        inputHandler.add(new CreateMediaListener(mediaFileRepository, outputHandler));
-        inputHandler.add(new CreateUploaderListener(mediaFileRepository,outputHandler));
+        //inputHandler.add(new CreateMediaListener(mediaFileRepository, outputHandler));
+        //inputHandler.add(new CreateUploaderListener(mediaFileRepository,outputHandler));
         ParseCreate parseCreate = new ParseCreate(inputHandler);
         parseCreate.execute("Produzent1");
         parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");

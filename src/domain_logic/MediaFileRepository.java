@@ -297,4 +297,25 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
         return true;
     }
 
+    //RepoList Functionality
+
+    private int listNumber;
+
+    public int getListNumber() {
+        return listNumber;
+    }
+
+    public void setListNumber(int listNumber) {
+        this.listNumber = listNumber;
+    }
+
+    private boolean isActive = false;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }

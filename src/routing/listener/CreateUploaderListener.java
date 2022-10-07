@@ -1,40 +1,43 @@
 package routing.listener;
 
+import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
-import domain_logic.enums.Tag;
-import domain_logic.files.*;
-import domain_logic.producer.UploaderImpl;
 import routing.events.CliOutputEvent;
-import routing.events.CreateMediaEvent;
 import routing.events.CreateUploaderEvent;
 import routing.handler.EventHandler;
-import util.MediaAttributesCollection;
 
-import java.math.BigDecimal;
-import java.time.Duration;
-import java.util.Collection;
 import java.util.EventObject;
 
 public class CreateUploaderListener implements EventListener {
-    private MediaFileRepository mR;
-    private String[] arg;
+    private MediaFileRepoList mediaFileRepoList;
     private EventHandler outputHandler;
+    private EventObject event;
 
-    public CreateUploaderListener(MediaFileRepository mR, EventHandler outputHandler) {
-        this.mR = mR;
+
+    public CreateUploaderListener(MediaFileRepoList mediaFileRepoList, EventHandler outputHandler) {
+        this.mediaFileRepoList = mediaFileRepoList;
         this.outputHandler = outputHandler;
     }
 
     @Override
-    public void onEvent(EventObject event) {
-        if (event.toString().equals("CreateUploaderEvent")){
-            String response = "not added";
-            if (mR.insertUploaderFromString(((CreateUploaderEvent)event).getUploaderString())) {
-                response = "added Uploader";
+    public void onEvent(EventObject eventObject) {
+        if (eventObject.toString().equals("CreateUploaderEvent")){
+            event = eventObject;
+            for (MediaFileRepository repository : mediaFileRepoList.getRepoList()) {
+                if(repository.isActive()) {
+                    this.execute(repository);
+                }
             }
-            CliOutputEvent outputEvent;
-            outputEvent = new CliOutputEvent(event,response);
-            outputHandler.handle(outputEvent);
         }
+    }
+
+    public void execute(MediaFileRepository mR) {
+        String response = "not added";
+        if (mR.insertUploaderFromString(((CreateUploaderEvent)event).getUploaderString())) {
+            response = "added Uploader";
+        }
+        CliOutputEvent outputEvent;
+        outputEvent = new CliOutputEvent(event,response);
+        outputHandler.handle(outputEvent);
     }
 }

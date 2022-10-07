@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.*;
 import ui.cli.ConsoleManagement;
-import ui.cli.parser.ParsePersistence;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,7 +25,7 @@ import static org.mockito.Mockito.verify;
 
 class ParsePersistenceTest {
     /*
-    todo Speicherzugriff in den Anforderungen nicht erlaubt,
+    todo Speicherzugriff auf System laut Anforderungen nicht erlaubt,
     Datei wird im Projektordner angelegt sollte daher zumindest Betriebssystem unabhängig sein
      */
 
@@ -85,11 +84,29 @@ class ParsePersistenceTest {
 
         parsePersistence.execute("Jos Load");
 
-        /*
-        doppelte Zusicherung um CliOutputPrint und korrekte Arbeitsweise abzudecken
-         */
-        verify(consoleManagement).writeToConsole("Jos Loaded");
         assertEquals(1,mediaFileRepository.getCurrentNumberOfMediaElements());
+    }
+
+    @Test
+    void testLoadJosCliOutput() {
+        UploaderImpl up1 = new UploaderImpl("Hans");
+        MediaFile audioVideoFile = new AudioVideoFile(up1,
+                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.Animal)),
+                new BigDecimal("48.000"),
+                Duration.ofSeconds(300),
+                320,
+                1920);;
+        ParsePersistence parsePersistence = new ParsePersistence(inputHandler);
+
+        mediaFileRepository.insertUploader(up1);
+        mediaFileRepository.insertMediaFile(audioVideoFile);
+        if (!mediaFileRepository.safeJos()) {
+            fail();
+        }
+
+        parsePersistence.execute("Jos Load");
+
+        verify(consoleManagement).writeToConsole("Jos Loaded");
     }
 
     @AfterEach

@@ -1,8 +1,13 @@
 package ui.cli;
 
+import domain_logic.MediaFileRepository;
 import routing.handler.EventHandler;
+import routing.listener.CliOutputListener;
+import routing.listener.CreateMediaListener;
+import routing.listener.CreateUploaderListener;
 import ui.cli.parser.*;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ConsoleManagement {
@@ -17,11 +22,16 @@ public class ConsoleManagement {
 
     public ConsoleManagement(EventHandler inputHandler) {
         this.inputHandler = inputHandler;
+    }
+
+    public void start() {
+
         parseCreate = new ParseCreate(inputHandler);
         parseDelete = new ParseDelete(inputHandler);
         parsePersistence = new ParsePersistence(inputHandler);
         parseRead = new ParseRead(inputHandler);
         parseUpdate = new ParseUpdate(inputHandler);
+
     }
 
     public void run() {

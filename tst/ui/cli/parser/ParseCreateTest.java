@@ -1,5 +1,6 @@
 package ui.cli.parser;
 
+import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
@@ -16,19 +17,20 @@ import static org.mockito.Mockito.verify;
 class ParseCreateTest {
 
     @Test
-    void execute() {
-        MediaFileRepository mediaFileRepository = mock(MediaFileRepository.class);
+    void checkParseCreateWithOneActiveMediaFileRepository() {
+        MediaFileRepoList mediaFileRepoList = new MediaFileRepoList (new BigDecimal(10000000));
         EventHandler inputHandler = new EventHandler();
         EventHandler outputHandler = new EventHandler();
-        inputHandler.add(new CreateMediaListener(mediaFileRepository, outputHandler));
-        inputHandler.add(new CreateUploaderListener(mediaFileRepository,outputHandler));
+        inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandler));
+        inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
         ParseCreate parseCreate = new ParseCreate(inputHandler);
 
         parseCreate.execute("Produzent1");
 
-        verify(mediaFileRepository).insertUploaderFromString("Produzent1");
+        assertEquals("Produzent1",mediaFileRepoList.getRepoByIndex(0).readUploaderList().getFirst().getName());
+        //verify(mediaFileRepoList).getRepoByIndex(0).insertUploaderFromString("Produzent1");
     }
-
+    /*
     @Test
     void parseToCreateUploaderEvent() {
         MediaFileRepository mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
@@ -103,4 +105,6 @@ class ParseCreateTest {
 
         assertEquals(14,mediaFileRepository.readMediaList().size());
     }
+
+     */
 }

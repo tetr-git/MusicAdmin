@@ -15,7 +15,7 @@ import static util.TypeConverter.isNumericInteger;
 public class MediaFileRepoList implements Serializable{
     static final long serialVersionUID = 1L;
     private LinkedList<MediaFileRepository> repoList = new LinkedList<>();
-    private final BigDecimal maxCapacity;
+    private BigDecimal maxCapacity;
     private final Lock mItemLock = new ReentrantLock();
 
     public MediaFileRepoList(BigDecimal maxCapacity) {
@@ -30,26 +30,16 @@ public class MediaFileRepoList implements Serializable{
         return new LinkedList<>(repoList);
     }
 
+    public BigDecimal getMaxCapacity() {
+        return maxCapacity;
+    }
+
     private void addToList(int index) {
         if (!checkRepoAtIndexExists(index)) {
             MediaFileRepository newRepo = new MediaFileRepository(maxCapacity);
             repoList.add(newRepo);
             newRepo.setNumberOfRepository(index);
         }
-    }
-
-    /*
-    forTesting
-    */
-    public MediaFileRepository getRepoByNumber1(int number) {
-        if (checkRepoAtIndexExists(number)) {
-            for (MediaFileRepository repository : repoList) {
-                if (repository.getNumberOfRepository()==number){
-                    return repository;
-                }
-            }
-        }
-        throw new RuntimeException("Wrong Repository Number");
     }
 
     public MediaFileRepository getCopyOfRepoByNumber(int number) {
@@ -75,7 +65,6 @@ public class MediaFileRepoList implements Serializable{
         return copyRepo;
     }
 
-    //only for testing
     private boolean checkRepoAtIndexExists(int index) {
         if (!repoList.isEmpty()) {
             for (MediaFileRepository repo : repoList) {
@@ -148,24 +137,23 @@ public class MediaFileRepoList implements Serializable{
     }
 
     public boolean loadJos() {
-        /*
+
         mItemLock.lock();
         try{
             File file = new File(fileNameJos);
             if (!file.exists())
                 throw new FileNotFoundException( "File not found!" );
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileNameJos));
-            MediaFileRepository loadedMediaManagement = (MediaFileRepository) objectInputStream.readObject();
-            this.mediaFileList = loadedMediaManagement.readMediaList();
-            this.uploaderList = loadedMediaManagement.readUploaderList();
-            this.maxCapacity = loadedMediaManagement.getMaxCapacity();
+            MediaFileRepoList loadedList = (MediaFileRepoList) objectInputStream.readObject();
+            this.repoList = loadedList.getRepoList();
+            this.maxCapacity = loadedList.getMaxCapacity();
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
             return false;
         } finally {
             mItemLock.unlock();
         }
-         */
+
         return true;
     }
 }

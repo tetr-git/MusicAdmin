@@ -17,6 +17,8 @@ public class RepositoryListener implements EventListener {
         this.outputHandler = outputHandler;
     }
 
+    //todo output not correct
+
     @Override
     public void onEvent(EventObject event) {
         if (event.toString().equals("SetRepositoryStatusEvent")){

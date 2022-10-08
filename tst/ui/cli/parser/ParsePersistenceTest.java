@@ -55,6 +55,18 @@ class ParsePersistenceTest {
 
         parsePersistence.execute("Jos Save");
 
+        parsePersistence.execute("Jos Load");
+
+
+    }
+
+    @Test
+    void testSaveJosCliOutput() {
+        parseCreate.execute("Produzent1");
+        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
+
+        parsePersistence.execute("Jos Save");
+
         verify(consoleManagement).writeToConsole("Jos saved");
     }
 

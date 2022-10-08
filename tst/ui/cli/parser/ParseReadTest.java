@@ -49,6 +49,7 @@ class ParseReadTest {
     }
 
     /*
+    todo change setUp
     Test with standard repository active (repository number )
     todo check text output with one or more repositories
      */

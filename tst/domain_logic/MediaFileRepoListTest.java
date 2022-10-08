@@ -89,32 +89,31 @@ class MediaFileRepoListTest {
     }
     //todo könnte eventuell besser
     @Test
-    void checkIfJosFileIsCreated() {
+    void checkIfJosFileIsCreated() throws FileNotFoundException {
         String fileNameJos = "mediaFileRepoJos";
         File fileJos = new File(fileNameJos);
 
         mediaFileRepoList.safeJos();
         assertTrue(fileJos.exists());
+
+        if (!fileJos.delete())
+            throw new FileNotFoundException( "File couldn't be deleted!" );
     }
 
-
     @Test
-    void loadJos() {
+    void loadJos() throws FileNotFoundException {
+        String fileNameJos = "mediaFileRepoJos";
+        File fileJos = new File(fileNameJos);
         mediaFileRepoList.safeJos();
 
         String[] changeStatesAfterSave = {"storage","1"};
         //turns of instance 0 -> isActiveRepository false;
         mediaFileRepoList.changeStateAllRepositories(changeStatesAfterSave);
-
         mediaFileRepoList.loadJos();
 
         assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository());
-    }
 
-    @AfterEach
-    void tearDown() throws FileNotFoundException {
-        File file = new File("mediaFileRepoJos");
-        if (!file.delete())
+        if (!fileJos.delete())
             throw new FileNotFoundException( "File couldn't be deleted!" );
     }
 }

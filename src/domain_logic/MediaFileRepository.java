@@ -252,70 +252,25 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
         return counter;
     }
 
-    //jos functionality
-
-    private final String fileNameJos = "mediaFileRepoJos";
-    private File fileJos;
-
-    public boolean safeJos() {
-        mItemLock.lock();
-        try {
-            fileJos = new File(fileNameJos);
-            if (!fileJos.exists()) {
-                fileJos.createNewFile();
-            }
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileNameJos));
-            objectOutputStream.writeObject(this);
-            objectOutputStream.close();
-        }
-        catch ( Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            mItemLock.unlock();
-        }
-        return true;
-    }
-
-    public boolean loadJos()  {
-        mItemLock.lock();
-        try{
-            File file = new File(fileNameJos);
-            if (!file.exists())
-                throw new FileNotFoundException( "File not found!" );
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileNameJos));
-            MediaFileRepository loadedMediaManagement = (MediaFileRepository) objectInputStream.readObject();
-            this.mediaFileList = loadedMediaManagement.readMediaList();
-            this.uploaderList = loadedMediaManagement.readUploaderList();
-            this.maxCapacity = loadedMediaManagement.getMaxCapacity();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            mItemLock.unlock();
-        }
-        return true;
-    }
-
     //RepoList Functionality
 
-    private int listNumber;
+    private int numberOfRepository;
 
-    public int getListNumber() {
-        return listNumber;
+    public int getNumberOfRepository() {
+        return numberOfRepository;
     }
 
-    public void setListNumber(int listNumber) {
-        this.listNumber = listNumber;
+    public void setNumberOfRepository(int numberOfRepository) {
+        this.numberOfRepository = numberOfRepository;
     }
 
-    private boolean isActive = false;
+    private boolean isActiveRepository = false;
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isActiveRepository() {
+        return isActiveRepository;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setActiveRepository(boolean activeRepository) {
+        isActiveRepository = activeRepository;
     }
 }

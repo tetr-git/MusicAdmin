@@ -30,7 +30,7 @@ public class CreateMediaListener implements EventListener {
         if (eventObject.toString().equals("CreateMediaElementEvent")){
             event = eventObject;
             for (MediaFileRepository repository : list.getRepoList()) {
-                if(repository.isActive()) {
+                if(repository.isActiveRepository()) {
                     this.execute(repository);
                 }
             }
@@ -159,14 +159,13 @@ public class CreateMediaListener implements EventListener {
                 }
                 break;
         }
-        String returnString;
+        String s;
         if (addedMedia) {
-            returnString = "added Media";
+            s = "Repository: "+ mR.getNumberOfRepository()+ " added Media" + (String) arg.getType();
         } else {
-            //todo if arg number okay but not addable wrong error message
-            returnString = "could not added Media: "+ (String) arg.get(0);
+            s = "Repository: "+ mR.getNumberOfRepository()+ " Media " + (String) arg.getType()+ " not added";
         }
-        outputEvent = new CliOutputEvent(event,returnString);
+        outputEvent = new CliOutputEvent(event,s);
         outputHandler.handle(outputEvent);
     }
 }

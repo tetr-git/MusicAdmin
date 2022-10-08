@@ -1,5 +1,6 @@
 package routing.listener;
 
+import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
 import domain_logic.files.MediaFile;
 import routing.events.CliOutputEvent;
@@ -7,32 +8,40 @@ import routing.events.ReadMediaEvent;
 import routing.handler.EventHandler;
 
 import java.util.EventObject;
-import java.util.LinkedList;
 
 public class ReadMediaListener implements EventListener {
-    private MediaFileRepository mR;
-    private String[] arg;
+    private final MediaFileRepoList mediaFileRepoList;
     private EventHandler outputHandler;
+    private EventObject event;
 
-    public ReadMediaListener(MediaFileRepository mR, EventHandler outputHandler) {
-        this.mR = mR;
+    public ReadMediaListener(MediaFileRepoList mediaFileRepoList, EventHandler outputHandler) {
+        this.mediaFileRepoList = mediaFileRepoList;
         this.outputHandler = outputHandler;
     }
 
     @Override
-    public void onEvent(EventObject event) {
-        if (event.toString().equals("ReadMediaEvent")){
-            StringBuilder s = new StringBuilder("");
-            if(((ReadMediaEvent)event).getReadString().equalsIgnoreCase("content")) {
-                for (MediaFile m : mR.readMediaList()) {
-                    s.append(m.toString()).append("\n");
-                }
-            } else {
-                for (MediaFile m : mR.readFilteredMediaElementsByClass(((ReadMediaEvent)event).getReadString())) {
-                    s.append(m.toString()).append("\n");
+    public void onEvent(EventObject eventObject) {
+        if (eventObject.toString().equals("ReadMediaEvent")){
+            event = eventObject;
+            for (MediaFileRepository repository : mediaFileRepoList.getRepoList()) {
+                if(repository.isActiveRepository()) {
+                    this.execute(repository);
                 }
             }
-            outputHandler.handle(new CliOutputEvent(event,s.toString()));
         }
+    }
+
+    public void execute(MediaFileRepository mR) {
+        StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository()+ "\n");
+        if(((ReadMediaEvent)event).getReadString().equalsIgnoreCase("content")) {
+            for (MediaFile m : mR.readMediaList()) {
+                s.append(m.toString()).append("\n");
+            }
+        } else {
+            for (MediaFile m : mR.readFilteredMediaElementsByClass(((ReadMediaEvent)event).getReadString())) {
+                s.append(m.toString()).append("\n");
+            }
+        }
+        outputHandler.handle(new CliOutputEvent(event,s.toString()));
     }
 }

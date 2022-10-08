@@ -1,10 +1,6 @@
 package ui.cli.parser;
 
-import domain_logic.MediaFileRepository;
-import domain_logic.enums.Tag;
-import domain_logic.files.AudioVideoFile;
-import domain_logic.files.MediaFile;
-import domain_logic.producer.UploaderImpl;
+import domain_logic.MediaFileRepoList;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,49 +12,46 @@ import ui.cli.ConsoleManagement;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.time.Duration;
-import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class ParsePersistenceTest {
     /*
     todo Speicherzugriff auf System laut Anforderungen nicht erlaubt,
     Datei wird im Projektordner angelegt sollte daher zumindest Betriebssystem unabhängig sein
      */
-
-    MediaFileRepository mediaFileRepository;
+    MediaFileRepoList mediaFileRepoList;
+    ConsoleManagement consoleManagement;
     EventHandler inputHandler;
     EventHandler outputHandler;
-    ConsoleManagement consoleManagement;
+    ParseCreate parseCreate;
+    ParsePersistence parsePersistence;
 
     @BeforeEach
     void setUp() {
-        mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
+        mediaFileRepoList = new MediaFileRepoList(new BigDecimal(1000000000));
         inputHandler = new EventHandler();
         outputHandler = new EventHandler();
-        inputHandler.add(new SaveListener(mediaFileRepository,outputHandler));
-        inputHandler.add(new LoadListener(mediaFileRepository,outputHandler));
+        inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandler));
+        inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
+        inputHandler.add(new SaveListener(mediaFileRepoList,outputHandler));
+        inputHandler.add(new LoadListener(mediaFileRepoList,outputHandler));
         consoleManagement = mock(ConsoleManagement.class);
         outputHandler.add(new CliOutputListener(consoleManagement));
+        parseCreate = new ParseCreate(inputHandler);
+        parsePersistence = new ParsePersistence(inputHandler);
     }
+
+     /*
+    Test with standard repository active (repository number 1)
+    todo check text output with one or more repositories
+     */
 
     @Test
     void testSaveJos() {
-        UploaderImpl up1 = new UploaderImpl("Hans");
-        MediaFile audioVideoFile = new AudioVideoFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.Animal)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(300),
-                320,
-                1920);;
-
-        mediaFileRepository.insertUploader(up1);
-        mediaFileRepository.insertMediaFile(audioVideoFile);
-
-        ParsePersistence parsePersistence = new ParsePersistence(inputHandler);
+        parseCreate.execute("Produzent1");
+        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
 
         parsePersistence.execute("Jos Save");
 
@@ -67,40 +60,24 @@ class ParsePersistenceTest {
 
     @Test
     void testLoadJos() {
-        UploaderImpl up1 = new UploaderImpl("Hans");
-        MediaFile audioVideoFile = new AudioVideoFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.Animal)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(300),
-                320,
-                1920);;
-        ParsePersistence parsePersistence = new ParsePersistence(inputHandler);
+        parseCreate.execute("Produzent1");
+        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
 
-        mediaFileRepository.insertUploader(up1);
-        mediaFileRepository.insertMediaFile(audioVideoFile);
-        if (!mediaFileRepository.safeJos()) {
+        if (!mediaFileRepoList.safeJos()) {
             fail();
         }
 
         parsePersistence.execute("Jos Load");
 
-        assertEquals(1,mediaFileRepository.getCurrentNumberOfMediaElements());
+        assertEquals(1,mediaFileRepoList.getCopyOfRepoByNumber(0).getCurrentNumberOfMediaElements());
     }
 
     @Test
     void testLoadJosCliOutput() {
-        UploaderImpl up1 = new UploaderImpl("Hans");
-        MediaFile audioVideoFile = new AudioVideoFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.Animal)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(300),
-                320,
-                1920);;
-        ParsePersistence parsePersistence = new ParsePersistence(inputHandler);
+        parseCreate.execute("Produzent1");
+        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
 
-        mediaFileRepository.insertUploader(up1);
-        mediaFileRepository.insertMediaFile(audioVideoFile);
-        if (!mediaFileRepository.safeJos()) {
+        if (!mediaFileRepoList.safeJos()) {
             fail();
         }
 

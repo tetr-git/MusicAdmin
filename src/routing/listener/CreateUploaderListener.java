@@ -9,8 +9,8 @@ import routing.handler.EventHandler;
 import java.util.EventObject;
 
 public class CreateUploaderListener implements EventListener {
-    private MediaFileRepoList mediaFileRepoList;
-    private EventHandler outputHandler;
+    private final MediaFileRepoList mediaFileRepoList;
+    private final EventHandler outputHandler;
     private EventObject event;
 
 
@@ -24,7 +24,7 @@ public class CreateUploaderListener implements EventListener {
         if (eventObject.toString().equals("CreateUploaderEvent")){
             event = eventObject;
             for (MediaFileRepository repository : mediaFileRepoList.getRepoList()) {
-                if(repository.isActive()) {
+                if(repository.isActiveRepository()) {
                     this.execute(repository);
                 }
             }
@@ -32,12 +32,14 @@ public class CreateUploaderListener implements EventListener {
     }
 
     public void execute(MediaFileRepository mR) {
-        String response = "not added";
+        StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository()+ "\n");
         if (mR.insertUploaderFromString(((CreateUploaderEvent)event).getUploaderString())) {
-            response = "added Uploader";
+            s.append("added uploader ").append(((CreateUploaderEvent)event).getUploaderString());
+        } else {
+            s.append("not added uploader ").append(((CreateUploaderEvent)event).getUploaderString());
         }
         CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event,response);
+        outputEvent = new CliOutputEvent(event,s.toString());
         outputHandler.handle(outputEvent);
     }
 }

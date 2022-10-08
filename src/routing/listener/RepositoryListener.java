@@ -7,12 +7,12 @@ import routing.handler.EventHandler;
 
 import java.util.EventObject;
 
-public class SetRepositoryStatusListener implements EventListener {
+public class RepositoryListener implements EventListener {
     private MediaFileRepoList mediaFileRepoList;
     private EventHandler outputHandler;
 
 
-    public SetRepositoryStatusListener(MediaFileRepoList mediaFileRepoList, EventHandler outputHandler) {
+    public RepositoryListener(MediaFileRepoList mediaFileRepoList, EventHandler outputHandler) {
         this.mediaFileRepoList = mediaFileRepoList;
         this.outputHandler = outputHandler;
     }
@@ -26,7 +26,7 @@ public class SetRepositoryStatusListener implements EventListener {
             if (arg.length == 1 && arg[0].equalsIgnoreCase("storage")) {
                 mediaFileRepoList.detachAllRepositories();
                 returnString = "detached all Repositories";
-            } else if (arg.length>1){
+            } else if (arg.length>1 && arg[0].equalsIgnoreCase("storage")){
                 mediaFileRepoList.changeStateAllRepositories(arg);
                 returnString = "detached x";
             }

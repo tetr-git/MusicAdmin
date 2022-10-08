@@ -1,89 +1,78 @@
 package ui.cli.parser;
 
 import domain_logic.MediaFileRepoList;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
+import ui.cli.ConsoleManagement;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class ParseCreateTest {
 
-    @Test
-    void checkParseCreateWithOneActiveMediaFileRepository() {
-        MediaFileRepoList mediaFileRepoList = new MediaFileRepoList (new BigDecimal(10000000));
-        EventHandler inputHandler = new EventHandler();
-        EventHandler outputHandler = new EventHandler();
+    MediaFileRepoList mediaFileRepoList;
+    ConsoleManagement consoleManagement;
+    EventHandler inputHandler;
+    EventHandler outputHandler;
+    ParseCreate parseCreate;
+
+    @BeforeEach
+    void setUp() {
+        mediaFileRepoList = new MediaFileRepoList(new BigDecimal(10000000));
+        inputHandler = new EventHandler();
+        outputHandler = new EventHandler();
         inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandler));
         inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
-        ParseCreate parseCreate = new ParseCreate(inputHandler);
+        consoleManagement = mock(ConsoleManagement.class);
+        parseCreate = new ParseCreate(inputHandler);
+    }
 
+    /*
+    Test with standard repository active (repository number 1)
+    todo check text output with one or more repositories
+     */
+
+    @Test
+    void checkParseCreateUploaderWithStandardRepositoryActive() {
         parseCreate.execute("Produzent1");
 
-        assertEquals("Produzent1",mediaFileRepoList.getRepoByNumber(0).readUploaderList().getFirst().getName());
-        //verify(mediaFileRepoList).getRepoByIndex(0).insertUploaderFromString("Produzent1");
+        assertEquals("Produzent1",mediaFileRepoList.getCopyOfRepoByNumber(0).readUploaderList().getFirst().getName());
+        //verify(mediaFileRepoList).getRepoByNumber(0).insertUploaderFromString("Produzent1");
+
     }
-    /*
+
     @Test
     void parseToCreateUploaderEvent() {
-        MediaFileRepository mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
-        EventHandler inputHandler = new EventHandler();
-        EventHandler outputHandler = new EventHandler();
-        inputHandler.add(new CreateMediaListener(mediaFileRepository, outputHandler));
-        inputHandler.add(new CreateUploaderListener(mediaFileRepository,outputHandler));
-        ParseCreate parseCreate = new ParseCreate(inputHandler);
-
         parseCreate.execute("Produzent1");
 
-        assertEquals("Produzent1",mediaFileRepository.readUploaderList().getFirst().getName());
+        assertEquals("Produzent1",mediaFileRepoList.getCopyOfRepoByNumber(0).readUploaderList().getFirst().getName());
     }
 
     @Test
     void parseToCreateMediaEvent() {
-        MediaFileRepository mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
-        EventHandler inputHandler = new EventHandler();
-        EventHandler outputHandler = new EventHandler();
-        inputHandler.add(new CreateMediaListener(mediaFileRepository, outputHandler));
-        inputHandler.add(new CreateUploaderListener(mediaFileRepository,outputHandler));
-        ParseCreate parseCreate = new ParseCreate(inputHandler);
-
         parseCreate.execute("Produzent1");
         parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
 
-        assertEquals(1,mediaFileRepository.readMediaList().size());
+        assertEquals(1,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
     }
 
     @Test
     void parseMultipleUploaderStrings() {
-        MediaFileRepository mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
-        EventHandler inputHandler = new EventHandler();
-        EventHandler outputHandler = new EventHandler();
-        inputHandler.add(new CreateMediaListener(mediaFileRepository, outputHandler));
-        inputHandler.add(new CreateUploaderListener(mediaFileRepository,outputHandler));
-        ParseCreate parseCreate = new ParseCreate(inputHandler);
-
         parseCreate.execute("Produzent1");
         parseCreate.execute("Produzent1");
         parseCreate.execute("Produzent2");
         parseCreate.execute("Produzent3");
 
-        assertEquals(3,mediaFileRepository.readUploaderList().size());
+        assertEquals(3,mediaFileRepoList.getCopyOfRepoByNumber(0).readUploaderList().size());
     }
 
     @Test
     void parseAllPossibleMediaTypeStrings() {
-        MediaFileRepository mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
-        EventHandler inputHandler = new EventHandler();
-        EventHandler outputHandler = new EventHandler();
-        inputHandler.add(new CreateMediaListener(mediaFileRepository, outputHandler));
-        inputHandler.add(new CreateUploaderListener(mediaFileRepository,outputHandler));
-        ParseCreate parseCreate = new ParseCreate(inputHandler);
-
         parseCreate.execute("Produzent1");
 
         parseCreate.execute("audio Produzent1 Animal,Tutorial,Lifestyle,News 500 360 550 ");
@@ -101,8 +90,8 @@ class ParseCreateTest {
         parseCreate.execute("video Produzent1 Lifestyle 500 360 2");
         parseCreate.execute("video Produzent1 Lifestyle,News 500 360");
 
-        assertEquals(14,mediaFileRepository.readMediaList().size());
+        assertEquals(14,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
     }
 
-     */
+
 }

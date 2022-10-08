@@ -1,178 +1,126 @@
 package ui.cli.parser;
 
-import domain_logic.MediaFileRepository;
-import domain_logic.enums.Tag;
-import domain_logic.files.AudioFile;
-import domain_logic.files.AudioVideoFile;
-import domain_logic.files.LicensedAudioFile;
-import domain_logic.files.MediaFile;
-import domain_logic.producer.UploaderImpl;
+import domain_logic.MediaFileRepoList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.*;
 import ui.cli.ConsoleManagement;
-import ui.cli.parser.ParseRead;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.*;
 
 import static org.mockito.Mockito.*;
 
 class ParseReadTest {
 
-    MediaFileRepository mediaFileRepository;
+    MediaFileRepoList mediaFileRepoList;
     EventHandler inputHandler;
     EventHandler outputHandler;
+    EventHandler outputHandlerDump;
     ConsoleManagement consoleManagement;
+    ParseCreate parseCreate;
+    ParseRead parseRead;
     SimpleDateFormat sdf;
     Date todayAsDate;
 
     @BeforeEach
     void setUp() {
-        mediaFileRepository = new MediaFileRepository(new BigDecimal(1000000000));
+        mediaFileRepoList = new MediaFileRepoList(new BigDecimal(1000000000));
         inputHandler = new EventHandler();
         outputHandler = new EventHandler();
-        inputHandler.add(new ReadMediaListener(mediaFileRepository,outputHandler));
-        inputHandler.add(new ReadUploaderListener(mediaFileRepository,outputHandler));
-        inputHandler.add(new ReadTagListener(mediaFileRepository,outputHandler));
+        outputHandlerDump = new EventHandler();
+        inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandlerDump));
+        inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandlerDump));
+        inputHandler.add(new ReadMediaListener(mediaFileRepoList,outputHandler));
+        inputHandler.add(new ReadUploaderListener(mediaFileRepoList,outputHandler));
+        inputHandler.add(new ReadTagListener(mediaFileRepoList,outputHandler));
         consoleManagement = mock(ConsoleManagement.class);
         outputHandler.add(new CliOutputListener(consoleManagement));
+
+        parseCreate = new ParseCreate(inputHandler);
+        parseRead = new ParseRead(inputHandler);
 
         //get date from today
         sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar today = Calendar.getInstance();
         todayAsDate = today.getTime();
-
     }
+
+    /*
+    Test with standard repository active (repository number )
+    todo check text output with one or more repositories
+     */
 
     @Test
     void ReadUploader() {
 
-        UploaderImpl up1 = new UploaderImpl("Hans");
-        MediaFile audioImpl = new AudioFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(215),
-                320);
+        EventHandler i = new EventHandler();
+        EventHandler o = new EventHandler();
+        i.add(new CreateUploaderListener(mediaFileRepoList,o));
+        ConsoleManagement c = mock(ConsoleManagement.class);
+        o.add(new CliOutputListener(c));
 
-        mediaFileRepository.insertUploader(up1);
-        mediaFileRepository.insertMediaFile(audioImpl);
+        ParseCreate parseCreateUploader = new ParseCreate(i);
 
-        ParseRead parseRead = new ParseRead(inputHandler);
+        parseCreateUploader.execute("Produzent1");
 
-        parseRead.execute("uploader");
-        verify(consoleManagement).writeToConsole("Hans\t1\n");
+        verify(c).writeToConsole("Repository: 0\n" +
+                "added uploader Produzent1");
     }
 
     @Test
     void ReadMedia() {
-
-        ParseRead parseRead = new ParseRead(inputHandler);
-
-        UploaderImpl up1 = new UploaderImpl("Hans");
-        MediaFile audioImpl = new AudioFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(215),
-                320);
-
-        mediaFileRepository.insertUploader(up1);
-        mediaFileRepository.insertMediaFile(audioImpl);
+        parseCreate.execute("Produzent1");
+        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
 
         parseRead.execute("content");
 
-        verify(consoleManagement).writeToConsole("1\tAudio\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\t320\n");
+        verify(consoleManagement, times(1)).writeToConsole("Repository: 0\n" +
+                "1\tInteractiveVideo\tProduzent1\t[Lifestyle, News]\t0\t500.0\tPT8M20S\t250000.0\t"+sdf.format(todayAsDate)+"\t\t0\n");
+
     }
 
     @Test
     void ReadMediaFilteredByType() {
-
-        UploaderImpl up1 = new UploaderImpl("Hans");
-        UploaderImpl up2 = new UploaderImpl("Bert");
-        MediaFile audioVideoFile = new AudioVideoFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.Animal)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(300),
-                320,
-                1920);
-        MediaFile licensedAudioFile = new LicensedAudioFile(up1,
-                Collections.singleton(Tag.Lifestyle),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(600),
-                999,
-                "Sony");
-        MediaFile audioFile = new AudioFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(215),
-                320);
-
-        mediaFileRepository.insertUploader(up1);
-        mediaFileRepository.insertUploader(up2);
-        mediaFileRepository.insertMediaFile(audioVideoFile);
-        mediaFileRepository.insertMediaFile(licensedAudioFile);
-        mediaFileRepository.insertMediaFile(audioFile);
-
-        ParseRead parseRead = new ParseRead(inputHandler);
+        parseCreate.execute("Hans");
+        parseCreate.execute("Bert");
+        parseCreate.execute("audioVideo Hans Lifestyle,News 500 360");
+        parseCreate.execute("licensedAudio Bert Lifestyle 500 360");
+        parseCreate.execute("audio Hans Lifestyle,News 500 360");
 
         parseRead.execute("content audio");
-        verify(consoleManagement).writeToConsole("3\tAudio\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\t320\n");
+
+        verify(consoleManagement).writeToConsole("Repository: 0\n" +
+                "3\tAudio\tHans\t[Lifestyle, News]\t0\t500.0\tPT8M20S\t250000.0\t"+sdf.format(todayAsDate)+"\t0\n");
     }
 
     @Test
     void ReadExistingTags() {
 
-        UploaderImpl up1 = new UploaderImpl("Hans");
-        MediaFile audioVideoFile = new AudioVideoFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.Animal)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(300),
-                320,
-                1920);
-        MediaFile licensedAudioFile = new LicensedAudioFile(up1,
-                Collections.singleton(Tag.Lifestyle),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(600),
-                999,
-                "Sony");
-
-        mediaFileRepository.insertUploader(up1);
-        mediaFileRepository.insertMediaFile(audioVideoFile);
-        mediaFileRepository.insertMediaFile(licensedAudioFile);
-        ParseRead parseRead = new ParseRead(inputHandler);
+        parseCreate.execute("Hans");
+        parseCreate.execute("audioVideo Hans Lifestyle,News 500 360");
+        parseCreate.execute("licensedAudio Bert Lifestyle 500 360");
+        parseCreate.execute("audio Hans Lifestyle,News 500 360");
 
         parseRead.execute("tag i");
 
-        verify(consoleManagement).writeToConsole("Animal\tLifestyle\t");
+        verify(consoleManagement).writeToConsole("Repository: 0\n" +
+                "Lifestyle\tNews\t");
     }
 
     @Test
     void ReadNotExistingTags() {
 
-        UploaderImpl up1 = new UploaderImpl("Hans");
-        MediaFile audioVideoFile = new AudioVideoFile(up1,
-                new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.Animal)),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(300),
-                320,
-                1920);
-        MediaFile licensedAudioFile = new LicensedAudioFile(up1,
-                Collections.singleton(Tag.Lifestyle),
-                new BigDecimal("48.000"),
-                Duration.ofSeconds(600),
-                999,
-                "Sony");
+        parseCreate.execute("Hans");
+        parseCreate.execute("audioVideo Hans Lifestyle,News 500 360");
+        parseCreate.execute("licensedAudio Bert Lifestyle 500 360");
+        parseCreate.execute("audio Hans Lifestyle,News 500 360");
 
-        mediaFileRepository.insertUploader(up1);
-        mediaFileRepository.insertMediaFile(audioVideoFile);
-        mediaFileRepository.insertMediaFile(licensedAudioFile);
-
-        ParseRead parseRead = new ParseRead(inputHandler);
         parseRead.execute("tag e");
 
-        verify(consoleManagement).writeToConsole("Tutorial\tNews\t");
+        verify(consoleManagement).writeToConsole("Repository: 0\n" +
+                "Animal\tTutorial\t");
     }
 }

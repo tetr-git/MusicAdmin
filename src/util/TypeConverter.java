@@ -1,6 +1,6 @@
 package util;
 
-public  class TypeConverter {
+public class TypeConverter {
 
     public static boolean isNumericInteger(String strNum) {
 

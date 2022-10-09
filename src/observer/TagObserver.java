@@ -21,15 +21,30 @@ public class TagObserver implements Observer {
     @Override
     public void update() {
         ArrayList<Tag> tagsCurrent = mR.listEnumTags();
+        StringBuilder stringBuilder = new StringBuilder("Repository["+ mR.getNumberOfRepository()+"]");
+        boolean change = false;
         for (Tag tagsNew : tagsCurrent) {
             if (!oldListOfTags.contains(tagsNew)){
-                System.out.println("Tag "+tagsNew +" added");
+                stringBuilder.append("\tTag ").append(tagsNew).append(" added");
+                change= true;
             }
         }
         for (Tag tagsOld : oldListOfTags) {
             if (!tagsCurrent.contains(tagsOld)) {
-                System.out.println("Tag " + tagsOld + " removed");
+                stringBuilder.append("\tTag ").append(tagsOld).append(" removed");
+                change = true;
             }
         }
+        if (change) {
+            System.out.println(stringBuilder);
+        }
+        oldListOfTags = tagsCurrent;
     }
+
+    @Override
+    public OberserverTyp getType() {
+        return OberserverTyp.tag;
+    }
+
+
 }

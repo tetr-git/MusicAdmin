@@ -42,12 +42,11 @@ class TagObserverTest {
         mediaFileRepository.insertUploader(uploader);
 
         TagObserver tagObserver = new TagObserver(mediaFileRepository);
-        mediaFileRepository.register(tagObserver);
+        mediaFileRepository.attachObserver(tagObserver);
 
         mediaFileRepository.insertMediaFile(mediaFile);
 
-        assertEquals("Tag Lifestyle added\n" +
-                "Tag News added", outputStreamCaptor.toString().trim());
+        assertEquals("Repository[0]\tTag Lifestyle added\tTag News added", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -65,11 +64,11 @@ class TagObserverTest {
         mediaFileRepository.insertMediaFile(mediaFile);
 
         TagObserver tagObserver = new TagObserver(mediaFileRepository);
-        mediaFileRepository.register(tagObserver);
+        mediaFileRepository.attachObserver(tagObserver);
 
         mediaFileRepository.insertMediaFile(mediaFile2);
 
-        assertEquals("Tag Animal added", outputStreamCaptor.toString().trim());
+        assertEquals("Repository[0]\tTag Animal added", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -87,11 +86,11 @@ class TagObserverTest {
         mediaFileRepository.insertMediaFile(mediaFile);
         mediaFileRepository.insertMediaFile(mediaFile2);
         TagObserver tagObserver = new TagObserver(mediaFileRepository);
-        mediaFileRepository.register(tagObserver);
+        mediaFileRepository.attachObserver(tagObserver);
 
         mediaFileRepository.deleteMediaFiles("2");
 
-        assertEquals("Tag Animal removed", outputStreamCaptor.toString().trim());
+        assertEquals("Repository[0]\tTag Animal removed", outputStreamCaptor.toString().trim());
     }
 
     @AfterEach

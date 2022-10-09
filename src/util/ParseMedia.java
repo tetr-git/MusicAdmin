@@ -11,106 +11,110 @@ public final class ParseMedia {
     //todo delete empty constructor
     //todo use ParseMedia in Event for Kapeselung
     public MediaAttributesCollection parseToCollection(String[] arg) {
-        String errorMessage;
-        switch (arg[0].toLowerCase()) {
-            case "audio":
-                if (arg.length == 6) {
-                    //full argumentList
-                    return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg), addInteger(arg[5]));
+        String errorMessage = "wrong tags";
+        if (arg.length>4) {
+            if (!collectTags(arg[2]).isEmpty()||(arg[2].equals(","))) {
+                switch (arg[0].toLowerCase()) {
+                    case "audio":
+                        if (arg.length == 6) {
+                            //full argumentList
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg), addInteger(arg[5]));
+                        }
+                        if (arg.length == 5) {
+                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg), 0);
+                        }
+                        errorMessage = "wrong number of attributes for audio file (5/6)";
+                        break;
+                    case "audiovideo":
+                        if (arg.length == 7) {
+                            //full argumentList
+                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    addInteger(arg[5]), addInteger(arg[6]));
+                        }
+                        if (arg.length == 5) {
+                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    0, 0);
+                        }
+                        errorMessage = "wrong number of attributes for audiovideo file (5/7)";
+                        break;
+                    case "interactivevideo":
+                        if (arg.length == 7) {
+                            //full argumentList
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    (arg[5]), addInteger(arg[6]));
+                        }
+                        if (arg.length == 5) {
+                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1] , collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    "", 0);
+                        }
+                        errorMessage = "wrong number of attributes for interactivevideo file (5/7)";
+                        break;
+                    case "licensedaudio":
+                        if (arg.length == 7) {
+                            //full argumentList
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    addInteger(arg[5]), arg[6]);
+                        }
+                        if (arg.length == 5) {
+                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1] , collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    0, "");
+                        }
+                        errorMessage = "wrong number of attributes for licensedaudio file (5/7)";
+                        break;
+                    case "licensedaudiovideo":
+                        if (arg.length == 8) {
+                            //full argumentList
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    addInteger(arg[5]), arg[6], addInteger(arg[7]));
+                        }
+                        if (arg.length == 5) {
+                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    0, "", 0);
+                        }
+                        errorMessage = "wrong number of attributes for licensedaudiovideo file (5/8)";
+                        break;
+                    case "licensedvideo":
+                        if (arg.length == 7) {
+                            //full argumentList
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    arg[5], addInteger(arg[6]));
+                        }
+                        if (arg.length == 5) {
+                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    "", 0);
+                        }
+                        errorMessage = "wrong number of attributes for licensedvideo file (5/7)";
+                        break;
+                    case "video":
+                        if (arg.length == 6) {
+                            //full argumentList
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    addInteger(arg[5]));
+                        }
+                        if (arg.length == 5) {
+                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                                    addBigDecimalBitrate(arg[3]), addDuration(arg),
+                                    0);
+                        }
+                        errorMessage = "wrong number of attributes for video file (5/6)";
+                        break;
+                    default:
+                        errorMessage = "Wrong File Type";
                 }
-                if (arg.length == 5) {
-                    return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg), 0);
-                }
-                errorMessage = "wrong number of attributes for audio file (5/6)";
-                break;
-            case "audiovideo":
-                if (arg.length == 7) {
-                    //full argumentList
-                    return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            addInteger(arg[5]), addInteger(arg[6]));
-                }
-                if (arg.length == 5) {
-                    return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            0, 0);
-                }
-                errorMessage = "wrong number of attributes for audiovideo file (5/7)";
-                break;
-            case "interactivevideo":
-                if (arg.length == 7) {
-                    //full argumentList
-                    return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            (arg[5]), addInteger(arg[6]));
-                }
-                if (arg.length == 5) {
-                    return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1] , collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            "", 0);
-                }
-                errorMessage = "wrong number of attributes for interactivevideo file (5/7)";
-                break;
-            case "licensedaudio":
-                if (arg.length == 7) {
-                    //full argumentList
-                    return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            addInteger(arg[5]), arg[6]);
-                }
-                if (arg.length == 5) {
-                    return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1] , collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            0, "");
-                }
-                errorMessage = "wrong number of attributes for licensedaudio file (5/7)";
-                break;
-            case "licensedaudiovideo":
-                if (arg.length == 8) {
-                    //full argumentList
-                    return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            addInteger(arg[5]), arg[6], addInteger(arg[7]));
-                }
-                if (arg.length == 5) {
-                    return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            0, "", 0);
-                }
-                errorMessage = "wrong number of attributes for licensedaudiovideo file (5/8)";
-                break;
-            case "licensedvideo":
-                if (arg.length == 7) {
-                    //full argumentList
-                    return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            arg[5], addInteger(arg[6]));
-                }
-                if (arg.length == 5) {
-                    return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            "", 0);
-                }
-                errorMessage = "wrong number of attributes for licensedvideo file (5/7)";
-                break;
-            case "video":
-                if (arg.length == 6) {
-                    //full argumentList
-                    return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            addInteger(arg[5]));
-                }
-                if (arg.length == 5) {
-                    return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
-                            addBigDecimalBitrate(arg[3]), addDuration(arg),
-                            0);
-                }
-                errorMessage = "wrong number of attributes for video file (5/6)";
-                break;
-            default:
-                errorMessage = "Wrong File Type";
+            }
         }
         return new MediaAttributesCollection("", errorMessage);
     }

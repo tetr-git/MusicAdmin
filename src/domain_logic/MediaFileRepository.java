@@ -4,6 +4,7 @@ import domain_logic.enums.Tag;
 import domain_logic.files.MediaFile;
 import domain_logic.producer.Uploader;
 import domain_logic.producer.UploaderImpl;
+import observer.Observable;
 import observer.Observer;
 
 import java.io.*;
@@ -12,7 +13,7 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class MediaFileRepository implements Serializable, MediaFileRepositoryInterface {
+public class MediaFileRepository implements Serializable, Observable {
 
     static final long serialVersionUID = 1L;
     private List<MediaFile> mediaFileList = new LinkedList<>();
@@ -154,26 +155,21 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
         return false;
     }
 
-    /**
-     * Read uploader with counted media elements hash map.
-     *
-     * @return hashMap with Uploader and Number of owned uploaded MediaElements
-     */
-    public HashMap<Uploader, Integer> readUploaderWithCountedMediaElements() {
-        HashMap<Uploader, Integer> hashMap = new HashMap<>();
+    public LinkedHashMap<Uploader, Integer> readUploaderWithCountedMediaElements() {
+        LinkedHashMap<Uploader, Integer> map = new LinkedHashMap<>();
         //Loop to show existing uploader without any added mediaElements
         for (Uploader u : uploaderList) {
-            hashMap.put(u, 0);
+            map.put(u, 0);
         }
         for (Uploader u : uploaderList) {
             int counter = 0;
             for (MediaFile m : mediaFileList) {
-                if (m.getUploader().equals(u)) {
-                    hashMap.replace(u, ++counter);
+                if (m.getUploader().getName().equals(u.getName())) {
+                    map.replace(u, ++counter);
                 }
             }
         }
-        return hashMap;
+        return map;
     }
 
     public ArrayList<Tag> listEnumTags() {
@@ -228,12 +224,12 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
     }
 
     @Override
-    public void register(observer.Observer observer) {
+    public void attachObserver(observer.Observer observer) {
         this.observerList.add(observer);
     }
 
     @Override
-    public void deregister(observer.Observer observer) {
+    public void detachObserver(observer.Observer observer) {
         this.observerList.remove(observer);
     }
 
@@ -254,7 +250,7 @@ public class MediaFileRepository implements Serializable, MediaFileRepositoryInt
 
     //RepoList Functionality
 
-    private int numberOfRepository;
+    private int numberOfRepository = 0;
 
     public int getNumberOfRepository() {
         return numberOfRepository;

@@ -41,11 +41,11 @@ class CapacityObserverTest {
         mediaFileRepository.insertUploader(uploader);
 
         CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);
-        mediaFileRepository.register(capacityObserver);
+        mediaFileRepository.attachObserver(capacityObserver);
 
         mediaFileRepository.insertMediaFile(mediaFile);
 
-        assertEquals("Reached 90% of maxCapacity", outputStreamCaptor.toString().trim());
+        assertEquals("Repository[0] reached 90% of maxCapacity", outputStreamCaptor.toString().trim());
     }
 
     @AfterEach

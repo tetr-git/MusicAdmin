@@ -60,8 +60,8 @@ class ParseReadTest {
 
         parseRead.execute("uploader");
 
-        verify(consoleManagement).writeToConsole("Repository: 0\n" +
-                "Produzent1\t0\n");
+        verify(consoleManagement).writeToConsole("Repository[0]\n" +
+                "Produzent1\t0");
     }
 
     @Test
@@ -116,5 +116,29 @@ class ParseReadTest {
 
         verify(consoleManagement).writeToConsole("Repository: 0\n" +
                 "Animal\tTutorial\t");
+    }
+
+    @Test
+    void ReadUploaderWithCountedMedia() {
+
+        parseCreate.execute("Hans");
+        parseCreate.execute("Bert");
+        parseCreate.execute("audioVideo Hans Lifestyle,News 500 360");
+        parseCreate.execute("licensedAudio Bert Lifestyle 500 360");
+        parseCreate.execute("audio Hans Lifestyle,News 500 360");
+
+        parseRead.execute("uploader");
+
+        verify(consoleManagement).writeToConsole("Repository[0]\n" +
+                "Hans\t2\n" +
+                "Bert\t1");
+    }
+
+    @Test
+    void ReadUploaderWithCountedMediaNoUploader() {
+
+        parseRead.execute("uploader");
+
+        verify(consoleManagement).writeToConsole("Repository[0] is empty");
     }
 }

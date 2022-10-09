@@ -8,6 +8,7 @@ import routing.handler.EventHandler;
 
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ReadUploaderListener implements EventListener {
     private final MediaFileRepoList mediaFileRepoList;
@@ -33,11 +34,14 @@ public class ReadUploaderListener implements EventListener {
     }
 
     private void execute(MediaFileRepository mR) {
-        StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository()+ "\n");
+        StringBuilder s = new StringBuilder("Repository["+ mR.getNumberOfRepository()+ "]");
         //source https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
-        HashMap<Uploader,Integer> map= mR.readUploaderWithCountedMediaElements();
+        LinkedHashMap<Uploader,Integer> map= mR.readUploaderWithCountedMediaElements();
         for (HashMap.Entry<Uploader, Integer> entry : map.entrySet()) {
-            s.append(entry.getKey().getName()).append("\t").append(entry.getValue()).append("\n");
+            s.append("\n").append(entry.getKey().getName()).append("\t").append(entry.getValue());
+        }
+        if (mR.readUploaderWithCountedMediaElements().isEmpty()) {
+            s.append(" is empty");
         }
         outputHandler.handle(new CliOutputEvent(event,s.toString()));
     }

@@ -1,4 +1,6 @@
 import domain_logic.MediaFileRepoList;
+import observer.CapacityObserver;
+import observer.OberserverTyp;
 import routing.handler.EventHandler;
 import routing.listener.*;
 import ui.cli.ConsoleManagement;
@@ -27,6 +29,8 @@ public class Cli {
         }
         if (startCli){
             MediaFileRepoList mediaFileRepoList = new MediaFileRepoList(new BigDecimal(mediaFileRepositorySize));
+            mediaFileRepoList.attachObserverToList(OberserverTyp.capacity);
+            mediaFileRepoList.attachObserverToList(OberserverTyp.tag);
             EventHandler inputHandler = new EventHandler();
             ConsoleManagement consoleManagement = new ConsoleManagement(inputHandler);
             EventHandler outputHandler = new EventHandler();
@@ -39,6 +43,7 @@ public class Cli {
             inputHandler.add(new ReadUploaderListener(mediaFileRepoList,outputHandler));
             inputHandler.add(new ReadTagListener(mediaFileRepoList,outputHandler));
             inputHandler.add(new ReadTagListener(mediaFileRepoList,outputHandler));
+            inputHandler.add(new RepositoryListener(mediaFileRepoList,outputHandler));
             inputHandler.add(new SaveListener(mediaFileRepoList,outputHandler));
             CliOutputListener cliOutputListener = new CliOutputListener(consoleManagement);
             outputHandler.add(cliOutputListener);

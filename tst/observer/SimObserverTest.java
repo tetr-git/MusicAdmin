@@ -46,7 +46,7 @@ class SimObserverTest {
         mediaFileRepository.insertMediaFile(mediaFile);
 
         SimObserver simObserver = new SimObserver(mediaFileRepository);
-        mediaFileRepository.register(simObserver);
+        mediaFileRepository.attachObserver(simObserver);
 
         mediaFileRepository.insertMediaFile(mediaFile2);
 
@@ -66,7 +66,7 @@ class SimObserverTest {
         mediaFileRepository.insertMediaFile(mediaFile);
 
         SimObserver simObserver = new SimObserver(mediaFileRepository);
-        mediaFileRepository.register(simObserver);
+        mediaFileRepository.attachObserver(simObserver);
 
         mediaFileRepository.deleteMediaFiles("1");
 

@@ -1,18 +1,21 @@
 package domain_logic;
 
+import domain_logic.enums.Tag;
 import domain_logic.files.MediaFile;
 import domain_logic.producer.Uploader;
+import observer.*;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static util.TypeConverter.addInteger;
 import static util.TypeConverter.isNumericInteger;
 
-public class MediaFileRepoList implements Serializable{
+public class MediaFileRepoList implements Serializable {
     static final long serialVersionUID = 1L;
     private LinkedList<MediaFileRepository> repoList = new LinkedList<>();
     private BigDecimal maxCapacity;
@@ -24,6 +27,7 @@ public class MediaFileRepoList implements Serializable{
         repoList.add(repoZero);
         repoZero.setNumberOfRepository(0);
         repoZero.setActiveRepository(true);
+        attachCurrentObserversToNewInstance(0);
     }
 
     public LinkedList<MediaFileRepository> getRepoList() {
@@ -39,6 +43,7 @@ public class MediaFileRepoList implements Serializable{
             MediaFileRepository newRepo = new MediaFileRepository(maxCapacity);
             repoList.add(newRepo);
             newRepo.setNumberOfRepository(index);
+            attachCurrentObserversToNewInstance(index);
         }
     }
 
@@ -57,6 +62,11 @@ public class MediaFileRepoList implements Serializable{
                     if (!originalRepo.readMediaList().isEmpty()) {
                         for (MediaFile mediaFile : originalRepo.readMediaList()) {
                             copyRepo.insertMediaFile(mediaFile);
+                        }
+                    }
+                    if (!originalRepo.getObserverList().isEmpty()) {
+                        for (Observer observer : originalRepo.getObserverList()) {
+                           copyRepo.attachObserver(observer);
                         }
                     }
                 }
@@ -91,11 +101,12 @@ public class MediaFileRepoList implements Serializable{
         for (String repoString : inputRepoNumbers) {
             if (isNumericInteger(repoString)) {
                 int repoInt = addInteger(repoString);
-                if (repoInt > -1) {
+                if (repoInt>-1 && repoInt<3) {
                     boolean add = false;
                     for (MediaFileRepository addRepo : repoList) {
                         if (!(addRepo.getNumberOfRepository() == repoInt)) {
                             add = true;
+                            break;
                         }
                     }
                     if (add) {
@@ -155,5 +166,48 @@ public class MediaFileRepoList implements Serializable{
         }
 
         return true;
+    }
+
+    //observerFunctionality
+    private List<OberserverTyp> oberserverTypeEnumList = new LinkedList<>();
+
+    public void attachObserverToList(OberserverTyp observerTyp) {
+        this.oberserverTypeEnumList.add(observerTyp);
+        if (!repoList.isEmpty()) {
+            for (MediaFileRepository repo : repoList) {
+                if (observerTyp.equals(OberserverTyp.tag)) {
+                    TagObserver tagObserver = new TagObserver(repo);
+                    repo.attachObserver(tagObserver);
+                } else if (observerTyp.equals(OberserverTyp.capacity)) {
+                    CapacityObserver tagObserver = new CapacityObserver(repo);
+                    repo.attachObserver(tagObserver);
+                }
+            }
+        }
+    }
+
+    public void detachObserverToList(OberserverTyp oberserverTyp) {
+        this.oberserverTypeEnumList.remove(oberserverTyp);
+    }
+
+    private void attachCurrentObserversToNewInstance(int index) {
+        if (!repoList.isEmpty()) {
+            for (MediaFileRepository repo : repoList) {
+                if (repo.getNumberOfRepository()==index) {
+                    if (!oberserverTypeEnumList.isEmpty()) {
+                        for (OberserverTyp oberserverTyp : oberserverTypeEnumList) {
+                            if (oberserverTyp.equals(OberserverTyp.tag)) {
+                                TagObserver tagObserver = new TagObserver(repo);
+                                repo.attachObserver(tagObserver);
+                            }
+                            if (oberserverTyp.equals(OberserverTyp.capacity)) {
+                                CapacityObserver capacityObserver = new CapacityObserver(repo);
+                                repo.attachObserver(capacityObserver);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

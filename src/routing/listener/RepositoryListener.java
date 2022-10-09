@@ -1,6 +1,7 @@
 package routing.listener;
 
 import domain_logic.MediaFileRepoList;
+import domain_logic.MediaFileRepository;
 import routing.events.CliOutputEvent;
 import routing.events.SetRepositoryStatusEvent;
 import routing.handler.EventHandler;
@@ -27,10 +28,22 @@ public class RepositoryListener implements EventListener {
             String returnString = "try again";
             if (arg.length == 1 && arg[0].equalsIgnoreCase("storage")) {
                 mediaFileRepoList.detachAllRepositories();
-                returnString = "detached all Repositories";
+                returnString = "all instances deactivated";
             } else if (arg.length>1 && arg[0].equalsIgnoreCase("storage")){
+                StringBuilder s = new StringBuilder();
                 mediaFileRepoList.changeStateAllRepositories(arg);
-                returnString = "detached x";
+                for(MediaFileRepository mediaFileRepository : mediaFileRepoList.getRepoList()) {
+                    if (mediaFileRepository.isActiveRepository()) {
+                        s.append("Repository[").
+                                append(mediaFileRepository.getNumberOfRepository()).
+                                append("] active\t" );
+                    } else {
+                        s.append("Repository[").
+                                append(mediaFileRepository.getNumberOfRepository()).
+                                append("] not active\t");
+                    }
+                }
+                returnString = s.toString();
             }
             outputEvent = new CliOutputEvent(event,returnString);
             outputHandler.handle(outputEvent);

@@ -422,7 +422,7 @@ class MediaFileRepositoryTest {
     void getObserverList() {
         CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);
 
-        mediaFileRepository.register(capacityObserver);
+        mediaFileRepository.attachObserver(capacityObserver);
 
         assertEquals(1,mediaFileRepository.getObserverList().size());
     }
@@ -432,8 +432,8 @@ class MediaFileRepositoryTest {
         CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);
         SimObserver simObserver = new SimObserver(mediaFileRepository);
 
-        mediaFileRepository.register(capacityObserver);
-        mediaFileRepository.register(simObserver);
+        mediaFileRepository.attachObserver(capacityObserver);
+        mediaFileRepository.attachObserver(simObserver);
 
         assertEquals(2,mediaFileRepository.getObserverList().size());
     }
@@ -443,10 +443,10 @@ class MediaFileRepositoryTest {
         CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);
         SimObserver simObserver = new SimObserver(mediaFileRepository);
 
-        mediaFileRepository.register(capacityObserver);
-        mediaFileRepository.register(simObserver);
+        mediaFileRepository.attachObserver(capacityObserver);
+        mediaFileRepository.attachObserver(simObserver);
 
-        mediaFileRepository.deregister(capacityObserver);
+        mediaFileRepository.detachObserver(capacityObserver);
 
         assertEquals(1,mediaFileRepository.getObserverList().size());
     }
@@ -455,7 +455,7 @@ class MediaFileRepositoryTest {
     void notifyObservers() {
         CapacityObserver capacityObserver = mock(CapacityObserver.class);
 
-        mediaFileRepository.register(capacityObserver);
+        mediaFileRepository.attachObserver(capacityObserver);
 
         UploaderImpl up1 = new UploaderImpl("Hans");
         MediaFile audioImpl = new AudioFile(up1,

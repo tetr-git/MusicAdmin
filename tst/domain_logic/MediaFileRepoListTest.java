@@ -1,5 +1,6 @@
 package domain_logic;
 
+import observer.OberserverTyp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import static org.mockito.Mockito.mock;
 class MediaFileRepoListTest {
 
     /*
-    tested as well detail in parsers
+    tested details also in parsers
      */
 
     MediaFileRepoList mediaFileRepoList;
@@ -74,10 +75,10 @@ class MediaFileRepoListTest {
         mediaFileRepoList.changeStateAllRepositories(setActive);
         boolean checkIfRepoIsActive = true;
 
-        String[] deactivateAllAndActivateAnotherNewInstance = {"storage","3"};
+        String[] deactivateAllAndActivateAnotherNewInstance = {"storage","2"};
         mediaFileRepoList.changeStateAllRepositories(deactivateAllAndActivateAnotherNewInstance);
         for (MediaFileRepository mediaFileRepository :mediaFileRepoList.getRepoList()) {
-            if (!(mediaFileRepository.getNumberOfRepository()==3)) {
+            if (!(mediaFileRepository.getNumberOfRepository()==2)) {
                 if (!mediaFileRepository.isActiveRepository()) {
                     checkIfRepoIsActive = false;
                 } else {
@@ -85,7 +86,7 @@ class MediaFileRepoListTest {
                 }
             }
         }
-        assertTrue(!checkIfRepoIsActive&&mediaFileRepoList.getCopyOfRepoByNumber(3).isActiveRepository());
+        assertTrue(!checkIfRepoIsActive&&mediaFileRepoList.getCopyOfRepoByNumber(2).isActiveRepository());
     }
     //todo könnte eventuell besser
     @Test
@@ -116,4 +117,24 @@ class MediaFileRepoListTest {
         if (!fileJos.delete())
             throw new FileNotFoundException( "File couldn't be deleted!" );
     }
+
+    @Test
+    void testAttachObserverInRepo() {
+        MediaFileRepoList cleanRepo = new MediaFileRepoList(new BigDecimal(100000));
+
+        cleanRepo.attachObserverToList(OberserverTyp.capacity);
+
+        assertEquals(1,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+    }
+    //todo improve handling
+    @Test
+    void testAttachAllObserverInRepo() {
+        MediaFileRepoList cleanRepo = new MediaFileRepoList(new BigDecimal(100000));
+
+        cleanRepo.attachObserverToList(OberserverTyp.capacity);
+        cleanRepo.attachObserverToList(OberserverTyp.tag);
+
+        assertEquals(2,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+    }
+
 }

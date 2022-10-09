@@ -17,7 +17,13 @@ public class CapacityObserver implements Observer {
     public void update() {
         BigDecimal newCapacity = mR.getCurrentCapacity();
         if((newCapacity.compareTo(mR.getMaxCapacity().multiply(BigDecimal.valueOf(0.9)))) > 0) {
-            System.out.println("Reached 90% of maxCapacity");
+            System.out.println("Repository["+ mR.getNumberOfRepository()+"] reached 90% of maxCapacity");
         }
     }
+
+    @Override
+    public OberserverTyp getType() {
+        return OberserverTyp.capacity;
+    }
+
 }

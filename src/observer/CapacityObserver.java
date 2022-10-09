@@ -20,10 +20,4 @@ public class CapacityObserver implements Observer {
             System.out.println("Repository["+ mR.getNumberOfRepository()+"] reached 90% of maxCapacity");
         }
     }
-
-    @Override
-    public OberserverTyp getType() {
-        return OberserverTyp.capacity;
-    }
-
 }

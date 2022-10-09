@@ -21,11 +21,4 @@ public class SimObserver implements Observer {
         }
         currentNumberOfMediaElements = newAmount;
     }
-
-    @Override
-    public OberserverTyp getType() {
-        return OberserverTyp.sim;
-    }
-
-
 }

@@ -41,10 +41,5 @@ public class TagObserver implements Observer {
         oldListOfTags = tagsCurrent;
     }
 
-    @Override
-    public OberserverTyp getType() {
-        return OberserverTyp.tag;
-    }
-
 
 }

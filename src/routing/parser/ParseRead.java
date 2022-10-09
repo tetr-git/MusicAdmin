@@ -1,4 +1,4 @@
-package ui.cli.parser;
+package routing.parser;
 
 
 import routing.events.ReadMediaEvent;

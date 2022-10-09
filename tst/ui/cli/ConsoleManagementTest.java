@@ -3,11 +3,8 @@ package ui.cli;
 import domain_logic.MediaFileRepository;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
-import ui.cli.parser.ParseCreate;
+import routing.parser.ParseCreate;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

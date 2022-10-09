@@ -8,6 +8,8 @@ import routing.listener.CliOutputListener;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
 import routing.listener.DeleteListener;
+import routing.parser.ParseCreate;
+import routing.parser.ParseDelete;
 import ui.cli.ConsoleManagement;
 
 

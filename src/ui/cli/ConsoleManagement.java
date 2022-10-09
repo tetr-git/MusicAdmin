@@ -1,7 +1,7 @@
 package ui.cli;
 
 import routing.handler.EventHandler;
-import ui.cli.parser.*;
+import routing.parser.*;
 
 import java.util.Scanner;
 

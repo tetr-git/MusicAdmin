@@ -1,5 +1,6 @@
 package ui.gui;
 
+import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
 import domain_logic.enums.Tag;
 import domain_logic.files.MediaFile;
@@ -17,7 +18,6 @@ import routing.events.CreateMediaEvent;
 import routing.events.CreateUploaderEvent;
 import routing.events.DeleteEvent;
 import routing.handler.EventHandler;
-import routing.listener.CreateMediaListener;
 import util.MediaStringGenerator;
 import util.ParseMedia;
 
@@ -26,15 +26,17 @@ import java.util.ArrayList;
 
 
 public class ViewModel {
-    private MediaFileRepository mediaFileRepository;
+    private MediaFileRepoList mediaFileRepoList;
     private ArrayList<MediaWrapper> mW;
     private ParseMedia parseMedia;
+    private MediaFileRepository zeroRepo;
 
     public ViewModel(){
-        this.mediaFileRepository = new MediaFileRepository(new BigDecimal(10000000));
+        this.mediaFileRepoList = new MediaFileRepoList(new BigDecimal(10000000));
         this.addHandler();
         this.addRandomExamples();
         this.genMediaWrapperArrayList();
+        this.zeroRepo = mediaFileRepoList.getCopyOfRepoByNumber(0);
     }
 
     private void addRandomExamples() {
@@ -50,7 +52,7 @@ public class ViewModel {
 
     private void genMediaWrapperArrayList() {
         mW = new ArrayList<>();
-        for (MediaFile m : mediaFileRepository.readMediaList()) {
+        for (MediaFile m : zeroRepo.readMediaList()) {
             MediaWrapper mediaWrapper = new MediaWrapper(m);
             mW.add(mediaWrapper);
         }
@@ -88,8 +90,8 @@ public class ViewModel {
     private void updateProperties(){
         this.genMediaWrapperArrayList();
         mediaTable.setItems(FXCollections.observableArrayList(mW));
-        uploaderTable.setItems(FXCollections.observableArrayList(mediaFileRepository.readUploaderList()));
-        tagsTable.setItems(FXCollections.observableArrayList(mediaFileRepository.listEnumTags()));
+        uploaderTable.setItems(FXCollections.observableArrayList(zeroRepo.readUploaderList()));
+        tagsTable.setItems(FXCollections.observableArrayList(zeroRepo.listEnumTags()));
 
         input.clear();
 

@@ -51,23 +51,11 @@ class ParsePersistenceTest {
      */
 
     @Test
-    void testSaveJos() {
-        parseCreate.execute("Produzent1");
-        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
-
-        parsePersistence.execute("Jos Save");
-
-        parsePersistence.execute("Jos Load");
-
-
-    }
-
-    @Test
     void testSaveJosCliOutput() {
         parseCreate.execute("Produzent1");
         parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
 
-        parsePersistence.execute("Jos Save");
+        parsePersistence.execute("SaveJos");
 
         verify(consoleManagement).writeToConsole("Jos saved");
     }
@@ -81,7 +69,7 @@ class ParsePersistenceTest {
             fail();
         }
 
-        parsePersistence.execute("Jos Load");
+        parsePersistence.execute("LoadJOS");
 
         assertEquals(1,mediaFileRepoList.getCopyOfRepoByNumber(0).getCurrentNumberOfMediaElements());
     }
@@ -95,9 +83,18 @@ class ParsePersistenceTest {
             fail();
         }
 
-        parsePersistence.execute("Jos Load");
+        parsePersistence.execute("LoadJOS");
 
         verify(consoleManagement).writeToConsole("Jos Loaded");
+    }
+    @Test
+    void testLoadJosWithoutSaving() {
+
+        parsePersistence.execute("LoadJOS");
+
+        verify(consoleManagement).writeToConsole("Couldn't load File");
+
+        mediaFileRepoList.safeJos();
     }
 
     @AfterEach

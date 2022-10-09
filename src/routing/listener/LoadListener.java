@@ -23,7 +23,7 @@ public class LoadListener implements EventListener {
             if (mediaFileRepoList.loadJos()){
                 response = "Jos Loaded";
             } else {
-                response = "Couldn't load";
+                response = "Couldn't load File";
             }
             CliOutputEvent outputEvent = new CliOutputEvent(eventObject,response);
             outputHandler.handle(outputEvent);

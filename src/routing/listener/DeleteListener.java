@@ -35,7 +35,7 @@ public class DeleteListener implements EventListener {
         //todo if uploader with files gets deleted wrong message
         String response = "";
         if (mR.deleteUploader(((DeleteEvent)event).getDeleteString())) {
-            response += "Uploader deleted ";
+            response += "Uploader deleted";
         } else if (mR.deleteMediaFiles(((DeleteEvent)event).getDeleteString())) {
             response += "Media deleted";
         } else {

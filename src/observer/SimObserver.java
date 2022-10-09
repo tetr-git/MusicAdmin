@@ -2,9 +2,12 @@ package observer;
 
 import domain_logic.MediaFileRepository;
 
-public class SimObserver implements Observer {
+import java.io.Serializable;
+
+public class SimObserver implements Observer, Serializable {
     private MediaFileRepository mR;
     private int currentNumberOfMediaElements;
+    static final long serialVersionUID = 1L;
 
     public SimObserver(MediaFileRepository mR) {
         this.mR = mR;

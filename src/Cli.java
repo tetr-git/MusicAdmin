@@ -42,7 +42,6 @@ public class Cli {
             inputHandler.add(new ReadMediaListener(mediaFileRepoList,outputHandler));
             inputHandler.add(new ReadUploaderListener(mediaFileRepoList,outputHandler));
             inputHandler.add(new ReadTagListener(mediaFileRepoList,outputHandler));
-            inputHandler.add(new ReadTagListener(mediaFileRepoList,outputHandler));
             inputHandler.add(new RepositoryListener(mediaFileRepoList,outputHandler));
             inputHandler.add(new SaveListener(mediaFileRepoList,outputHandler));
             CliOutputListener cliOutputListener = new CliOutputListener(consoleManagement);

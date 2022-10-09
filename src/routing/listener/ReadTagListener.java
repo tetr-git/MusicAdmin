@@ -32,24 +32,31 @@ public class ReadTagListener implements EventListener {
     }
 
     public void execute(MediaFileRepository mR) {
-        StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository()+ "\n");
+        StringBuilder s = new StringBuilder("Repository[ "+ mR.getNumberOfRepository()+"]");
         ArrayList<Tag> tagsCurrent = mR.listEnumTags();
         Tag[] listOfAllTags = Tag.values();
         if (!tagsCurrent.isEmpty()) {
             if(((ReadTagEvent)event).getReadTagString().equalsIgnoreCase("e")) {
+                s.append(" not existing tags: \n");
                 for (Tag tag : listOfAllTags) {
                     if (!tagsCurrent.contains(tag)) {
                         s.append(tag).append("\t");
                     }
                 }
             }else if(((ReadTagEvent)event).getReadTagString().equalsIgnoreCase("i")) {
+                s.append(" existing tags: \n");
                 for (Tag tag : listOfAllTags) {
                     if (tagsCurrent.contains(tag)) {
                         s.append(tag).append("\t");
                     }
                 }
+            } else {
+                s = new StringBuilder("Wrong Input");
             }
+        } else {
+            s = new StringBuilder("Repository["+ mR.getNumberOfRepository()+ "] no tags found");
         }
+
         outputHandler.handle(new CliOutputEvent(event,s.toString()));
     }
 }

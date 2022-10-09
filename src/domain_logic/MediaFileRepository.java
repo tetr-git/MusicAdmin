@@ -190,10 +190,10 @@ public class MediaFileRepository implements Serializable, Observable {
 
     //todo string mediaType
 
-    public ArrayList<MediaFile> readFilteredMediaElementsByClass(String tyoe) {
+    public ArrayList<MediaFile> readFilteredMediaElementsByClass(String type) {
         ArrayList<MediaFile> list = new ArrayList<>();
         for (MediaFile m : mediaFileList) {
-            if (m.typeString().equalsIgnoreCase(tyoe)) {
+            if (m.typeString().equalsIgnoreCase(type)) {
                 list.add(m);
             }
         }

@@ -153,7 +153,7 @@ public class MediaFileRepoList implements Serializable {
         try{
             File file = new File(fileNameJos);
             if (!file.exists())
-                throw new FileNotFoundException( "File not found!" );
+                return false;
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileNameJos));
             MediaFileRepoList loadedList = (MediaFileRepoList) objectInputStream.readObject();
             this.repoList = loadedList.getRepoList();

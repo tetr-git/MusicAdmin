@@ -1,9 +1,10 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -161,6 +162,344 @@ class CliTest {
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
         assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_checkRequirementSheetExampleInputs() {
+        String userInput = "Produzent1" + System.getProperty("line.separator") +
+                "InteractiveVideo Produzent1 Lifestyle,News 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                "LicensedAudioVideo Produzent1 , 8000 600 EdBangerRecords 44100 720" + System.getProperty("line.separator") +
+                "LicensedVideo Produzent1 News 1000 1800" + System.getProperty("line.separator") +
+                ":r" + System.getProperty("line.separator")+
+                "uploader" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "Produzent1\t3";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_readContent() {
+        String userInput = "Produzent1" + System.getProperty("line.separator") +
+                "InteractiveVideo Produzent1 Lifestyle,News 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                "LicensedAudioVideo Produzent1 , 8000 600 EdBangerRecords 44100 720" + System.getProperty("line.separator") +
+                "LicensedVideo Produzent1 News 1000 1800" + System.getProperty("line.separator") +
+                ":r" + System.getProperty("line.separator")+
+                "content" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        //Date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar today = Calendar.getInstance();
+        Date todayAsDate = today.getTime();
+
+        String expectedOutput = "LicensedVideo\t3\t"+sdf.format(todayAsDate)+"\t0";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_readContentFilteredByType() {
+        String userInput = "Produzent1" + System.getProperty("line.separator") +
+                "InteractiveVideo Produzent1 Lifestyle,News 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                "LicensedAudioVideo Produzent1 , 8000 600 EdBangerRecords 44100 720" + System.getProperty("line.separator") +
+                "LicensedVideo Produzent1 News 1000 1800" + System.getProperty("line.separator") +
+                ":r" + System.getProperty("line.separator")+
+                "content LicensedVideo" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        //Date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar today = Calendar.getInstance();
+        Date todayAsDate = today.getTime();
+
+        String expectedOutput = "LicensedVideo\t3\t"+sdf.format(todayAsDate)+"\t0";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_readExistingTags() {
+        String userInput = "Produzent1" + System.getProperty("line.separator") +
+                "InteractiveVideo Produzent1 Lifestyle,News 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":r" + System.getProperty("line.separator")+
+                "tag e" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "Animal\tTutorial\t";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_readNonExistingTags() {
+        String userInput = "Produzent1" + System.getProperty("line.separator") +
+                "InteractiveVideo Produzent1 Lifestyle,News 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":r" + System.getProperty("line.separator")+
+                "tag i" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "Lifestyle\tNews\t";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_readTagsNoTagsInRepo() {
+        String userInput = "Produzent1" + System.getProperty("line.separator") +
+                "InteractiveVideo Produzent1 , 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":r" + System.getProperty("line.separator")+
+                "tag i" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "create:     # read:       # Repository[0] no tags found";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_readTagsWrongInput() {
+        String userInput = "Produzent1" + System.getProperty("line.separator") +
+                "InteractiveVideo Produzent1 news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":r" + System.getProperty("line.separator")+
+                "tag x" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "create:     # read:       # Wrong Input";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_DeleteMedia() {
+        String userInput = "Produzent1" + System.getProperty("line.separator") +
+                "InteractiveVideo Produzent1 news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":d" + System.getProperty("line.separator")+
+                "1" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "Media deleted";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_DeleteUploader() {
+        String userInput = "1" + System.getProperty("line.separator") +
+                "InteractiveVideo 1 news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":d" + System.getProperty("line.separator")+
+                "1" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "Uploader deleted";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_DeleteWrongInput() {
+        String userInput = "1" + System.getProperty("line.separator") +
+                "InteractiveVideo 1 news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":d" + System.getProperty("line.separator")+
+                "4" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "create:     # delete:     # nothing deleted";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_UpdateCounter() {
+        String userInput = "Oizo" + System.getProperty("line.separator") +
+                "InteractiveVideo Oizo news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":u" + System.getProperty("line.separator")+
+                "1" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "create:     # update:     # Repository[0] Counter of MediaFile with Address 1 updated";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_UpdateCounterWrongNumber() {
+        String userInput = "Oizo" + System.getProperty("line.separator") +
+                "InteractiveVideo Oizo news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":u" + System.getProperty("line.separator")+
+                "5" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "create:     # update:     # Repository[0] Counter not updated updated";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+    }
+
+    @Test
+    void CliWithoutNet_SaveJos() throws FileNotFoundException {
+        String userInput = "Oizo" + System.getProperty("line.separator") +
+                "InteractiveVideo Oizo news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":p" + System.getProperty("line.separator")+
+                "saveJos" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "create:     # persistence:# Jos saved";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+
+        File file = new File("mediaFileRepoJos");
+        if (!file.delete())
+            throw new FileNotFoundException( "File couldn't be deleted!" );
+    }
+
+    @Test
+    void CliWithoutNet_LoadJos() throws FileNotFoundException {
+        String userInput = "Oizo" + System.getProperty("line.separator") +
+                "InteractiveVideo Oizo news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
+                ":p" + System.getProperty("line.separator")+
+                "saveJos" + System.getProperty("line.separator")+
+                ":d" + System.getProperty("line.separator")+
+                "Oizo" + System.getProperty("line.separator")+
+                ":p" + System.getProperty("line.separator")+
+                "LoadJos" + System.getProperty("line.separator")+
+                ":r" + System.getProperty("line.separator")+
+                "uploader" + System.getProperty("line.separator")+
+                ":exit" + System.getProperty("line.separator");
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        String expectedOutput = "Oizo\t1";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        String[] arg = {"1000000"};
+        Cli.main(arg);
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String output = lines[lines.length-2];
+        assertEquals(expectedOutput,output);
+
+        File file = new File("mediaFileRepoJos");
+        if (!file.delete())
+            throw new FileNotFoundException( "File couldn't be deleted!" );
     }
 
     @AfterEach

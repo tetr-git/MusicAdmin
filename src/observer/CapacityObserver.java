@@ -2,10 +2,12 @@ package observer;
 
 import domain_logic.MediaFileRepository;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class CapacityObserver implements Observer {
+public class CapacityObserver implements Observer, Serializable {
     private MediaFileRepository mR;
+    static final long serialVersionUID = 1L;
 
     public CapacityObserver(MediaFileRepository mR) {
         this.mR = mR;

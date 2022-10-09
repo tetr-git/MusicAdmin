@@ -7,6 +7,9 @@ import routing.events.CliOutputEvent;
 import routing.events.ReadMediaEvent;
 import routing.handler.EventHandler;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.EventObject;
 
 public class ReadMediaListener implements EventListener {
@@ -32,14 +35,25 @@ public class ReadMediaListener implements EventListener {
     }
 
     public void execute(MediaFileRepository mR) {
-        StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository()+ "\n");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository());
         if(((ReadMediaEvent)event).getReadString().equalsIgnoreCase("content")) {
             for (MediaFile m : mR.readMediaList()) {
-                s.append(m.toString()).append("\n");
+                s.append("\n").
+                        append(m.typeString()).append("\t").
+                        append(m.getAddress()).append("\t").
+                        append(sdf.format(m.getUploadDate())).append("\t").
+                        append(m.getAccessCount());
             }
         } else {
             for (MediaFile m : mR.readFilteredMediaElementsByClass(((ReadMediaEvent)event).getReadString())) {
-                s.append(m.toString()).append("\n");
+                s.append("\n").
+                        append(m.typeString()).append("\t").
+                        append(m.getAddress()).append("\t").
+                        append(sdf.format(m.getUploadDate())).append("\t").
+                        append(m.getAccessCount());
             }
         }
         outputHandler.handle(new CliOutputEvent(event,s.toString()));

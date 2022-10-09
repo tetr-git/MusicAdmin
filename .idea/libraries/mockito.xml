@@ -1,6 +1,9 @@
 <component name="libraryTable">
   <library name="mockito" type="repository">
     <properties maven-id="org.mockito:mockito-core:RELEASE" />
+    <ANNOTATIONS>
+      <root url="file://$USER_HOME$/IdeaProjects/javafx-sdk-18.0.1/lib" />
+    </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/mockito-core-4.8.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/byte-buddy-1.12.14.jar!/" />

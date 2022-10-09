@@ -50,9 +50,9 @@ class ParseStorageTest {
     @Test
     void checkActivatingOfTwoInstances() {
         parseStorage.execute("storage");
-        parseStorage.execute("storage 0 2");
+        parseStorage.execute("storage 1 2");
 
-        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository()&&
+        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(1).isActiveRepository()&&
                 mediaFileRepoList.getCopyOfRepoByNumber(2).isActiveRepository());
     }
 
@@ -62,7 +62,8 @@ class ParseStorageTest {
         parseStorage.execute("storage 0 2");
         parseStorage.execute("storage 1");
 
-        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(1).isActiveRepository());
+        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(1).isActiveRepository() &&
+                !(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository())) ;
     }
 
    @Test

@@ -137,7 +137,7 @@ class MediaFileRepositoryTest {
         UploaderImpl uploader = new UploaderImpl("Hans");
         MediaFile mediaFile = new AudioFile(uploader,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader);
 
@@ -149,7 +149,7 @@ class MediaFileRepositoryTest {
         UploaderImpl uploader = new UploaderImpl("Hans");
         MediaFile mediaFile = new AudioFile(uploader,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.00000"), Duration.ofSeconds(215009),320);
+                new BigDecimal("48000"), Duration.ofSeconds(21500),320);
 
         mediaFileRepository.insertUploader(uploader);
 
@@ -161,7 +161,7 @@ class MediaFileRepositoryTest {
         UploaderImpl uploader = new UploaderImpl("Hans");
         MediaFile mediaFile = new AudioFile(uploader,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         assertFalse(mediaFileRepository.insertMediaFile(mediaFile));
     }
@@ -172,12 +172,12 @@ class MediaFileRepositoryTest {
         UploaderImpl up1 = new UploaderImpl("Hans");
         MediaFile audioImpl = new AudioFile(up1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(215),
                 320);
         MediaFile audioVideoImpl = new AudioVideoFile(up1,
                 new ArrayList<>(Collections.singletonList(Tag.Lifestyle)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(300),
                 320,
                 1920);
@@ -194,7 +194,7 @@ class MediaFileRepositoryTest {
         UploaderImpl uploader = new UploaderImpl("Hans");
         MediaFile mediaFile = new AudioFile(uploader,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader);
         mediaFileRepository.insertMediaFile(mediaFile);
@@ -209,10 +209,10 @@ class MediaFileRepositoryTest {
 
         MediaFile mediaFile1 = new AudioFile(uploader1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
         MediaFile mediaFile2 = new AudioFile(uploader2,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader1);
         mediaFileRepository.insertUploader(uploader2);
@@ -230,10 +230,10 @@ class MediaFileRepositoryTest {
 
         MediaFile mediaFile1 = new AudioFile(uploader1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
         MediaFile mediaFile2 = new AudioFile(uploader2,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader1);
         mediaFileRepository.insertUploader(uploader2);
@@ -250,7 +250,7 @@ class MediaFileRepositoryTest {
 
         MediaFile mediaFile1 = new AudioFile(uploader1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader1);
         mediaFileRepository.insertMediaFile(mediaFile1);
@@ -265,10 +265,10 @@ class MediaFileRepositoryTest {
 
         MediaFile mediaFile1 = new AudioFile(uploader1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
         MediaFile mediaFile2 = new AudioFile(uploader2,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader1);
         mediaFileRepository.insertUploader(uploader2);
@@ -284,7 +284,7 @@ class MediaFileRepositoryTest {
         UploaderImpl uploader1 = new UploaderImpl("hans");
         MediaFile mediaFile1 = new AudioFile(uploader1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader1);
         mediaFileRepository.insertMediaFile(mediaFile1);
@@ -298,7 +298,7 @@ class MediaFileRepositoryTest {
         UploaderImpl uploader1 = new UploaderImpl("hans");
         MediaFile mediaFile1 = new AudioFile(uploader1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader1);
         mediaFileRepository.insertMediaFile(mediaFile1);
@@ -311,7 +311,7 @@ class MediaFileRepositoryTest {
         UploaderImpl uploader1 = new UploaderImpl("hans");
         MediaFile mediaFile1 = new AudioFile(uploader1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
 
         mediaFileRepository.insertUploader(uploader1);
         mediaFileRepository.insertMediaFile(mediaFile1);
@@ -326,18 +326,18 @@ class MediaFileRepositoryTest {
         UploaderImpl up2 = new UploaderImpl("Bert");
         MediaFile audioFile = new AudioFile(up1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(215),
                 320);
         MediaFile audioVideoFile = new AudioVideoFile(up1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.Animal)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(300),
                 320,
                 1920);
         MediaFile licensedAudioFile = new LicensedAudioFile(up1,
                 Collections.singleton(Tag.Lifestyle),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(600),
                 999,
                 "Sony");
@@ -369,7 +369,7 @@ class MediaFileRepositoryTest {
         UploaderImpl up1 = new UploaderImpl("Hans");
         MediaFile audioImpl = new AudioFile(up1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(215),
                 320);
 
@@ -388,7 +388,7 @@ class MediaFileRepositoryTest {
         UploaderImpl up1 = new UploaderImpl("Hans");
         MediaFile audioImpl = new AudioFile(up1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(215),
                 320);
 
@@ -408,7 +408,7 @@ class MediaFileRepositoryTest {
         UploaderImpl up1 = new UploaderImpl("Hans");
         MediaFile audioImpl = new AudioFile(up1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(215),
                 320);
 
@@ -460,7 +460,7 @@ class MediaFileRepositoryTest {
         UploaderImpl up1 = new UploaderImpl("Hans");
         MediaFile audioImpl = new AudioFile(up1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(215),
                 320);
         mediaFileRepository.insertUploader(up1);
@@ -474,7 +474,7 @@ class MediaFileRepositoryTest {
         UploaderImpl up1 = new UploaderImpl("Hans");
         MediaFile audioImpl = new AudioFile(up1,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"),
+                new BigDecimal("48000"),
                 Duration.ofSeconds(215),
                 320);
         mediaFileRepository.insertUploader(up1);

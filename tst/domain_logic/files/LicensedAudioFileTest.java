@@ -50,6 +50,6 @@ class LicensedAudioFileTest {
 
     @Test
     void testToString() {
-        assertEquals("\tLicensedAudio\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\t320\tUniversal",mediaElement.toString());
+        assertEquals("\tLicensedAudio\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10.320000\t"+sdf.format(todayAsDate)+"\t320\tUniversal",mediaElement.toString());
     }
 }

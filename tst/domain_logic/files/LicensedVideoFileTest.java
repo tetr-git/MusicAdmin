@@ -49,7 +49,7 @@ class LicensedVideoFileTest {
 
     @Test
     void testToString() {
-        assertEquals("\tLicensedVideo\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\tUniversal\t1080",
+        assertEquals("\tLicensedVideo\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10.320000\t"+sdf.format(todayAsDate)+"\tUniversal\t1080",
                 mediaElement.toString());
     }
 }

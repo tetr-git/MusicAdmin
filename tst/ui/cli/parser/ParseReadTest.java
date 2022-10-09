@@ -56,30 +56,23 @@ class ParseReadTest {
 
     @Test
     void ReadUploader() {
+        parseCreate.execute("Produzent1");
 
-        EventHandler i = new EventHandler();
-        EventHandler o = new EventHandler();
-        i.add(new CreateUploaderListener(mediaFileRepoList,o));
-        ConsoleManagement c = mock(ConsoleManagement.class);
-        o.add(new CliOutputListener(c));
+        parseRead.execute("uploader");
 
-        ParseCreate parseCreateUploader = new ParseCreate(i);
-
-        parseCreateUploader.execute("Produzent1");
-
-        verify(c).writeToConsole("Repository: 0\n" +
-                "added uploader Produzent1");
+        verify(consoleManagement).writeToConsole("Repository: 0\n" +
+                "Produzent1\t0\n");
     }
 
     @Test
     void ReadMedia() {
         parseCreate.execute("Produzent1");
-        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
+        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 5000 3600");
 
         parseRead.execute("content");
 
         verify(consoleManagement, times(1)).writeToConsole("Repository: 0\n" +
-                "1\tInteractiveVideo\tProduzent1\t[Lifestyle, News]\t0\t500.0\tPT8M20S\t250000.0\t"+sdf.format(todayAsDate)+"\t\t0\n");
+                "1\tInteractiveVideo\tProduzent1\t[Lifestyle, News]\t0\t5000.0\tPT1H23M20S\t25000.00\t"+sdf.format(todayAsDate)+"\t\t0\n");
 
     }
 
@@ -89,12 +82,12 @@ class ParseReadTest {
         parseCreate.execute("Bert");
         parseCreate.execute("audioVideo Hans Lifestyle,News 500 360");
         parseCreate.execute("licensedAudio Bert Lifestyle 500 360");
-        parseCreate.execute("audio Hans Lifestyle,News 500 360");
+        parseCreate.execute("audio Hans Lifestyle,News 5000 360");
 
         parseRead.execute("content audio");
 
         verify(consoleManagement).writeToConsole("Repository: 0\n" +
-                "3\tAudio\tHans\t[Lifestyle, News]\t0\t500.0\tPT8M20S\t250000.0\t"+sdf.format(todayAsDate)+"\t0\n");
+                "3\tAudio\tHans\t[Lifestyle, News]\t0\t5000.0\tPT1H23M20S\t25000.00\t"+sdf.format(todayAsDate)+"\t0\n");
     }
 
     @Test

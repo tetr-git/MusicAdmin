@@ -36,7 +36,7 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
         this.accessCount = 0;
         this.bitrate = bitrate;
         this.length = length;
-        this.size = bitrate.multiply(new BigDecimal(length.getSeconds()));
+        this.size = (bitrate.multiply(BigDecimal.valueOf(length.getSeconds() * 0.001)));
 
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);

@@ -161,7 +161,7 @@ public class CreateMediaListener implements EventListener {
         }
         String s;
         if (addedMedia) {
-            s = "Repository: "+ mR.getNumberOfRepository()+ " added Media" + (String) arg.getType();
+            s = "Repository ["+ mR.getNumberOfRepository()+ "] added Media" + (String) arg.getType();
         } else {
             s = "Repository: "+ mR.getNumberOfRepository()+ " Media " + (String) arg.getType()+ " not added";
         }

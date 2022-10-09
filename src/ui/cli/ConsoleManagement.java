@@ -1,76 +1,71 @@
 package ui.cli;
 
-import domain_logic.MediaFileRepository;
 import routing.handler.EventHandler;
-import routing.listener.CliOutputListener;
-import routing.listener.CreateMediaListener;
-import routing.listener.CreateUploaderListener;
 import ui.cli.parser.*;
 
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ConsoleManagement {
-    EventHandler inputHandler;
     private CliModeEnum mode= CliModeEnum.c;
 
     ParseCreate parseCreate;
     ParseDelete parseDelete;
     ParsePersistence parsePersistence;
     ParseRead parseRead;
+    ParseStorage parseStorage;
     ParseUpdate parseUpdate;
+    Scanner scanner;
+    boolean exitMarker = false;
 
     public ConsoleManagement(EventHandler inputHandler) {
-        this.inputHandler = inputHandler;
-    }
-
-    public void start() {
-
         parseCreate = new ParseCreate(inputHandler);
         parseDelete = new ParseDelete(inputHandler);
         parsePersistence = new ParsePersistence(inputHandler);
         parseRead = new ParseRead(inputHandler);
+        parseStorage = new ParseStorage(inputHandler);
         parseUpdate = new ParseUpdate(inputHandler);
-
+        scanner = new Scanner(System.in);
     }
 
     public void run() {
         String input;
-        Scanner scanner = new Scanner(System.in);
         do {
-            System.out.print("# ");
+            System.out.print(mode.toString()+"# ");
             input = scanner.nextLine();
             if (input.charAt(0) == ':') {
-                System.out.println(this.switchMode(input));
+                switchMode(input);
             } else {
-                this.parseToEvent(input);
+                parseToEvent(input);
             }
-        } while (!input.equals("0"));
-        System.out.println("Bye");
+        } while (!exitMarker);
     }
 
-    private String switchMode(String input) {
+    private void switchMode(String input) {
         switch (input) {
             case ":c":
-                this.mode = CliModeEnum.c;
-                return "Insert mode";
+                mode = CliModeEnum.c;
+                break;
             case ":d":
-                this.mode = CliModeEnum.d;
-                return "Deletion mode";
+                mode = CliModeEnum.d;
+                break;
             case ":u":
-                this.mode = CliModeEnum.u;
-                return "Update mode";
+                mode = CliModeEnum.u;
+                break;
             case ":r":
-                this.mode = CliModeEnum.r;
-                return "Read mode";
+                mode = CliModeEnum.r;
+                break;
             case ":p":
-                this.mode = CliModeEnum.p;
-                return "Persistent mode";
-            case ":config":
-                this.mode = CliModeEnum.c;
-                return "Config mode";
+                mode = CliModeEnum.p;
+                break;
+            case ":s":
+                mode = CliModeEnum.s;
+                break;
+            case ":exit":
+                exitMarker = true;
+                break;
             default:
-                return "Error: invalid mode specified";
+                System.out.println("Error: invalid mode specified");
+                break;
         }
     }
 
@@ -78,14 +73,22 @@ public class ConsoleManagement {
         switch (mode) {
             case c:
                 parseCreate.execute(input);
+                break;
             case d:
                 parseDelete.execute(input);
+                break;
             case u:
                 parseUpdate.execute(input);
+                 break;
             case r:
                 parseRead.execute(input);
+                break;
             case p:
                 parsePersistence.execute(input);
+                break;
+            case s:
+                parseStorage.execute(input);
+                break;
         }
     }
 

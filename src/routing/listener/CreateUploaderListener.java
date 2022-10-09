@@ -32,7 +32,7 @@ public class CreateUploaderListener implements EventListener {
     }
 
     public void execute(MediaFileRepository mR) {
-        StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository()+ "\n");
+        StringBuilder s = new StringBuilder("Repository["+ mR.getNumberOfRepository()+"] ");
         if (mR.insertUploaderFromString(((CreateUploaderEvent)event).getUploaderString())) {
             s.append("added uploader ").append(((CreateUploaderEvent)event).getUploaderString());
         } else {

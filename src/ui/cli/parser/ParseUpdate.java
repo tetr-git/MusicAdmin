@@ -12,7 +12,6 @@ public class ParseUpdate {
     }
 
     public void execute(String input) {
-
         eventHandler.handle(new ChangeEvent(input,input));
     }
 }

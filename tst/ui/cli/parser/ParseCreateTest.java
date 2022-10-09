@@ -93,5 +93,15 @@ class ParseCreateTest {
         assertEquals(14,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
     }
 
+    @Test
+    void parseExamplesFromRequirements() {
+        parseCreate.execute("Produzent1");
+        parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 5000 3600 Abstimmung 1080");
+        parseCreate.execute("LicensedAudioVideo Produzent1 , 8000 600 EdBangerRecords 44100 720");
+        parseCreate.execute("LicensedVideo Produzent1 News 1000 1800");
+
+        assertEquals(3,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
+    }
+
 
 }

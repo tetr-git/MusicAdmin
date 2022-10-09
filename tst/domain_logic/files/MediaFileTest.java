@@ -58,7 +58,7 @@ class MediaFileTest {
 
     @Test
     void getSize() {
-        assertEquals(bitrate.multiply(new BigDecimal(length.getSeconds())), mediaFile.getSize());
+        assertEquals(bitrate.multiply(BigDecimal.valueOf(length.getSeconds() * 0.001)), mediaFile.getSize());
     }
 
     @Test
@@ -101,7 +101,7 @@ class MediaFileTest {
 
     @Test
     void testToString() {
-        assertEquals("\tAudio\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\t320",
+        assertEquals("\tAudio\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10.320000\t"+sdf.format(todayAsDate)+"\t320",
                 mediaFile.toString());
     }
 }

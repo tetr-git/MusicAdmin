@@ -32,7 +32,7 @@ public class ReadUploaderListener implements EventListener {
         }
     }
 
-    public void execute(MediaFileRepository mR) {
+    private void execute(MediaFileRepository mR) {
         StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository()+ "\n");
         //source https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
         HashMap<Uploader,Integer> map= mR.readUploaderWithCountedMediaElements();

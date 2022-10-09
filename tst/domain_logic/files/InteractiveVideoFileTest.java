@@ -50,7 +50,7 @@ class InteractiveVideoFileTest {
 
     @Test
     void testToString() {
-        assertEquals("\tInteractiveVideo\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10320.000\t"+sdf.format(todayAsDate)+"\tNews\t1080",
+        assertEquals("\tInteractiveVideo\tHans\t[Lifestyle, News]\t0\t48.000\tPT3M35S\t10.320000\t"+sdf.format(todayAsDate)+"\tNews\t1080",
                 mediaElement.toString());
     }
 }

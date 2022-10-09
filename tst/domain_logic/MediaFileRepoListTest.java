@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 class MediaFileRepoListTest {
 
     /*
-    tested in detail in Parsers
+    tested as well detail in parsers
      */
 
     MediaFileRepoList mediaFileRepoList;
@@ -107,7 +107,7 @@ class MediaFileRepoListTest {
         mediaFileRepoList.safeJos();
 
         String[] changeStatesAfterSave = {"storage","1"};
-        //turns of instance 0 -> isActiveRepository false;
+        //turns off instance 0 -> isActiveRepository false;
         mediaFileRepoList.changeStateAllRepositories(changeStatesAfterSave);
         mediaFileRepoList.loadJos();
 

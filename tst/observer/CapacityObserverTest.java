@@ -32,12 +32,12 @@ class CapacityObserverTest {
 
     @Test
     void testCaseMediaElementAdded() {
-        MediaFileRepository mediaFileRepository= new MediaFileRepository(new BigDecimal(11000));
+        MediaFileRepository mediaFileRepository= new MediaFileRepository(new BigDecimal(10400));
         String hans = "hans";
         UploaderImpl uploader = new UploaderImpl(hans);
         MediaFile mediaFile = new AudioFile(uploader,
                 new ArrayList<>(Arrays.asList(Tag.Lifestyle, Tag.News)),
-                new BigDecimal("48.000"), Duration.ofSeconds(215),320);
+                new BigDecimal("48000"), Duration.ofSeconds(215),320);
         mediaFileRepository.insertUploader(uploader);
 
         CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);

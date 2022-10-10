@@ -62,6 +62,13 @@ class MediaFileRepositoryTest {
     }
 
     @Test
+    void insertEmptyStringUploader() {
+        UploaderImpl uploader = new UploaderImpl("");
+
+        assertFalse(mediaFileRepository.insertUploader(uploader));
+    }
+
+    @Test
     void insertExistingUploader(){
         UploaderImpl uploader1 = new UploaderImpl("Hans");
 

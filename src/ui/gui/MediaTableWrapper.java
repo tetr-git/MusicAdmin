@@ -7,7 +7,7 @@ import util.FormatIntervalToString;
 import java.util.Arrays;
 
 
-public class MediaWrapper {
+public class MediaTableWrapper {
 
     private String type;
     private String address;
@@ -22,10 +22,12 @@ public class MediaWrapper {
     private String resolution;
     private String typeInteractive;
     private String holder;
+    private String instance;
 
 
-    public MediaWrapper(MediaFile mediaElement) {
+    public MediaTableWrapper(MediaFile mediaElement, int instanceOfRepository) {
         type = mediaElement.getClass().getSimpleName();
+        instance = String.valueOf(instanceOfRepository);
         address = mediaElement.getAddress();
         tags = Arrays.toString(mediaElement.getTags().toArray());
         accessCount = String.valueOf(mediaElement.getAccessCount());
@@ -72,6 +74,10 @@ public class MediaWrapper {
 
     public String getType() {
         return type;
+    }
+
+    public String getInstance() {
+        return instance;
     }
 
     public String getAddress() {

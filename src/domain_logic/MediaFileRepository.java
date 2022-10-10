@@ -47,6 +47,9 @@ public class MediaFileRepository implements Serializable, Observable {
 
     public boolean insertUploader(UploaderImpl addU) {
         mItemLock.lock();
+        if(addU.getName().equalsIgnoreCase("")) {
+            return false;
+        }
         for (Uploader i : uploaderList) {
             if (i.getName().equalsIgnoreCase(addU.getName())) {
                 return false;
@@ -130,7 +133,7 @@ public class MediaFileRepository implements Serializable, Observable {
         updateAllMediaElementAddresses();
         return deleteSuccessful;
     }
-
+    //todo last thing but why?
     private void updateAllMediaElementAddresses () {
         mItemLock.lock();
         int addressInt = 1;
@@ -142,6 +145,7 @@ public class MediaFileRepository implements Serializable, Observable {
         }
         finally {
             mItemLock.unlock();
+
         }
     }
 

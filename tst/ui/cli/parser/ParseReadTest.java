@@ -74,7 +74,7 @@ class ParseReadTest {
         parseRead.execute("content");
 
         verify(consoleManagement, times(1)).writeToConsole("Repository: 0\n" +
-                "1\tInteractiveVideo\tProduzent1\t[Lifestyle, News]\t0\t5000.0\tPT1H23M20S\t25000.00\t"+sdf.format(todayAsDate)+"\t\t0\n");
+                "InteractiveVideo\t1\t"+sdf.format(todayAsDate)+"\t0");
 
     }
 
@@ -89,7 +89,7 @@ class ParseReadTest {
         parseRead.execute("content audio");
 
         verify(consoleManagement).writeToConsole("Repository: 0\n" +
-                "3\tAudio\tHans\t[Lifestyle, News]\t0\t5000.0\tPT1H23M20S\t25000.00\t"+sdf.format(todayAsDate)+"\t0\n");
+                "Audio\t3\t"+sdf.format(todayAsDate)+"\t0");
     }
 
     @Test
@@ -102,7 +102,7 @@ class ParseReadTest {
 
         parseRead.execute("tag i");
 
-        verify(consoleManagement).writeToConsole("Repository: 0\n" +
+        verify(consoleManagement).writeToConsole("Repository[ 0] existing tags: \n" +
                 "Lifestyle\tNews\t");
     }
 
@@ -116,7 +116,7 @@ class ParseReadTest {
 
         parseRead.execute("tag e");
 
-        verify(consoleManagement).writeToConsole("Repository: 0\n" +
+        verify(consoleManagement).writeToConsole("Repository[ 0] not existing tags: \n" +
                 "Animal\tTutorial\t");
     }
 

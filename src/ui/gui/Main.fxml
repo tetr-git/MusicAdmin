@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.gui.ViewModel">
+   <children>
+      <GridPane minWidth="240.0" prefWidth="240.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" maxWidth="360.0" minWidth="360.0" prefWidth="360.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="110.0" prefWidth="110.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="110.0" prefWidth="110.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="110.0" prefWidth="110.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="110.0" prefWidth="110.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="110.0" prefWidth="110.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TextField fx:id="input" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></TextField>
+            <Button mnemonicParsing="false" onAction="#buttonClickAdd" prefWidth="70.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Button>
+            <Button minWidth="90.0" mnemonicParsing="false" onAction="#buttonClickDelete" prefWidth="70.0" text="Delete" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Button>
+            <Button minWidth="90.0" mnemonicParsing="false" onAction="#buttonClickUpdate" prefWidth="90.0" text="Update" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <CheckBox id="checkBoxInstanceZero" fx:id="instanceZero" mnemonicParsing="false" selected="true" text="Instance 0 active" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <CheckBox id="checkBoxInstanceOne" fx:id="instanceOne" mnemonicParsing="false" text="Instance 1 active" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <CheckBox id="checkBoxInstanceTwo" fx:id="instanceTwo" mnemonicParsing="false" text="Instance 2 active" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button minWidth="90.0" mnemonicParsing="false" onAction="#buttonClickSaveJos" prefWidth="70.0" text="Save Jos" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button minWidth="90.0" mnemonicParsing="false" onAction="#buttonClickLoadJos" prefWidth="70.0" text="Load Jos" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button maxWidth="160.0" minWidth="160.0" mnemonicParsing="false" onAction="#buttonClickUpdateInstanceActivity" prefWidth="160.0" text="Change Instances Activity" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+      </GridPane>
+      <AnchorPane prefHeight="750.0" VBox.vgrow="ALWAYS">
+         <children>
+            <StackPane prefHeight="1000.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <GridPane alignment="CENTER" prefHeight="891.0" prefWidth="1280.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="200.0" prefHeight="500.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <StackPane prefHeight="302.0" prefWidth="1250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <TableView fx:id="mediaTable" prefHeight="250.0" prefWidth="1000.0">
+                                       <columns>
+                                          <TableColumn fx:id="mediaTableInstance" prefWidth="58.77210879325867" text="Instance" />
+                                          <TableColumn fx:id="mediaTableAddress" prefWidth="59.154476165771484" text="Address" />
+                                          <TableColumn fx:id="mediaTableMediaType" prefWidth="68.34549713134766" text="Type" />
+                                          <TableColumn fx:id="mediaTableMediaUploader" prefWidth="115.0" text="Uploader" />
+                                          <TableColumn fx:id="mediaTableTags" prefWidth="119.43386840820312" text="Tags" />
+                                          <TableColumn fx:id="mediaTableAccessCount" prefWidth="79.10299682617188" text="Access Count" />
+                                          <TableColumn fx:id="mediaTableBitrate" prefWidth="67.8824462890625" text="Bitrate" />
+                                          <TableColumn fx:id="mediaTableMediaLength" prefWidth="68.16180419921875" text="Length" />
+                                          <TableColumn fx:id="mediaTableSamplingRate" prefWidth="84.2720947265625" text="Sampling Rate" />
+                                          <TableColumn fx:id="mediaTableResolution" prefWidth="70.2720947265625" text="Resolution" />
+                                          <TableColumn fx:id="mediaTableHolder" prefWidth="78.044189453125" text="Holder" />
+                                          <TableColumn fx:id="mediaTableInteractiveType" prefWidth="123.955810546875" text="Interactive Type" />
+                                          <TableColumn fx:id="mediaTableMediaUploadDate" prefWidth="122.0592041015625" text="Upload Date" />
+                                          <TableColumn fx:id="mediaTableSize" prefWidth="133.4407958984375" text="Size" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="1">
+                           <children>
+                              <SplitPane dividerPositions="0.5004006410256411" prefHeight="160.0" prefWidth="1250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane minHeight="160.0" minWidth="100.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <TableView fx:id="tagsTable" maxHeight="100.0" maxWidth="620.0" minHeight="100.0" minWidth="620.0" prefHeight="100.0" prefWidth="620.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <columns>
+                                                <TableColumn fx:id="tagInstance" minWidth="100.0" prefWidth="100.0" text="Instance" />
+                                                <TableColumn fx:id="tagColumn" minWidth="200.0" prefWidth="535.0" text="Tags in Use" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="160.0" minWidth="100.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <TableView fx:id="uploaderTable" maxHeight="100.0" maxWidth="620.0" minHeight="100.0" minWidth="620.0" prefHeight="160.0" prefWidth="620.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <columns>
+                                                <TableColumn fx:id="uploaderInstance" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" resizable="false" text="Instance" />
+                                                <TableColumn fx:id="uploaderColumn" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="410.0" resizable="false" text="Uploader" />
+                                                <TableColumn fx:id="uploaderAmountColumn" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="Files" />
+                                             </columns>
+                                          </TableView>
+                                       </children></AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

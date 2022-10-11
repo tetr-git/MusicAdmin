@@ -13,15 +13,12 @@ public final class GenRandomMediaElem {
         return new String[]{random(mediaType), random(uploaderArray), ",", random(bitRateArray).toString(), random(durationArray).toString()};
     }
 
-    //source: http://www.java2s.com/example/java-utility-method/random-element/randomelement-t-array-f117b.html
+    /**
+     *
+     * @source http://www.java2s.com/example/java-utility-method/random-element/randomelement-t-array-f117b.html
+     */
     private <T> T random(T[] array) {
         int randomIndex = this.rand.nextInt(array.length);
         return array[randomIndex];
     }
-    /*
-    //source:https://stackoverflow.com/questions/1972392/pick-a-random-value-from-an-enum
-
-    private String randomSingleTag(){
-         return Tag.values()[new Random().nextInt(Tag.values().length)];
-     */
 }

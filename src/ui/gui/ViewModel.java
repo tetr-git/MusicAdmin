@@ -172,8 +172,8 @@ public class ViewModel {
     public CheckBox instanceTwo;
     private final StringProperty inputProperty = new SimpleStringProperty();
 
-    /*
-    @author:
+    /**
+    @author
        https://stackoverflow.com/questions/70175587/how-do-you-use-a-javafx-tableview-with-java-records
        https://stackoverflow.com/questions/38049734/java-setcellvaluefactory-lambda-vs-propertyvaluefactory-advantages-disadvant
      */
@@ -210,7 +210,6 @@ public class ViewModel {
     private EventHandler inputHandler;
     private EventHandler outputHandler;
 
-    //https://gist.github.com/james-d/8602638
     private void addHandler() {
         inputHandler = new EventHandler();
         outputHandler = new EventHandler();

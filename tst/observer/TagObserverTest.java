@@ -24,7 +24,10 @@ class TagObserverTest {
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
-    //@source: https://www.baeldung.com/java-testing-system-out-println
+    /**
+     * @source: https://www.baeldung.com/java-testing-system-out-println
+     */
+
 
     @BeforeEach
     public void setUp() {

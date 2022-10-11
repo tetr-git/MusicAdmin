@@ -35,7 +35,10 @@ public class ReadUploaderListener implements EventListener {
 
     private void execute(MediaFileRepository mR) {
         StringBuilder s = new StringBuilder("Repository[" + mR.getNumberOfRepository() + "]");
-        //source https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
+        /**
+         *  source https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
+         */
+
         LinkedHashMap<Uploader, Integer> map = mR.readUploaderWithCountedMediaElements();
         for (HashMap.Entry<Uploader, Integer> entry : map.entrySet()) {
             s.append("\n").append(entry.getKey().getName()).append("\t").append(entry.getValue());

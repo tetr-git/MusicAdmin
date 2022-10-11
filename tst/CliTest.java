@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CliTest {
 
-    /*
-    sources for change of System.in and System.out
+    /**
+    @source for change of System.in and System.out
     https://www.danvega.dev/blog/2020/12/16/testing-standard-in-out-java/
     https://sehun.me/test-user-input-without-a-mock-framework-junit-69b8b052b6f2
      */

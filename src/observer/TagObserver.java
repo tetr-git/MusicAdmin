@@ -16,7 +16,9 @@ public class TagObserver implements Observer, Serializable {
         oldListOfTags = mR.listEnumTags();
     }
 
-    //@source https://www.geeksforgeeks.org/bigdecimal-compareto-function-in-java/
+    /**
+     * @source https://www.geeksforgeeks.org/bigdecimal-compareto-function-in-java/
+     */
 
     @Override
     public void update() {

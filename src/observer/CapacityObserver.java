@@ -13,7 +13,10 @@ public class CapacityObserver implements Observer, Serializable {
         this.mR = mR;
     }
 
-    //@source https://www.geeksforgeeks.org/bigdecimal-compareto-function-in-java/
+    /**
+     * @source https://www.geeksforgeeks.org/bigdecimal-compareto-function-in-java/
+     */
+    //@source
 
     @Override
     public void update() {

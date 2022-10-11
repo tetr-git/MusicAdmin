@@ -108,9 +108,7 @@ public class MediaFileRepository implements Serializable, Observable {
     }
 
     /**
-     * Delete media files.
-     *
-     * @author https://stackoverflow.com/questions/223918/iterating-through-a-collection-avoiding-concurrentmodificationexception-when-re#comment56183223_23908758
+     * @source https://stackoverflow.com/questions/223918/iterating-through-a-collection-avoiding-concurrentmodificationexception-when-re#comment56183223_23908758
      */
     public boolean deleteMediaFiles(String address) {
         mItemLock.lock();
@@ -131,7 +129,6 @@ public class MediaFileRepository implements Serializable, Observable {
         return deleteSuccessful;
     }
 
-    //todo last thing but why?
     private void updateAllMediaElementAddresses() {
         mItemLock.lock();
         int addressInt = 1;
@@ -174,7 +171,6 @@ public class MediaFileRepository implements Serializable, Observable {
     }
 
     public ArrayList<Tag> listEnumTags() {
-        //List<Tag> tagList = Arrays.asList(Tag.values());
         ArrayList<Tag> tagList = new ArrayList<>();
         for (MediaFile m : mediaFileList) {
             Collection<Tag> collection = m.getTags();
@@ -188,9 +184,6 @@ public class MediaFileRepository implements Serializable, Observable {
         return tagList;
     }
 
-
-    //todo string mediaType
-
     public ArrayList<MediaFile> readFilteredMediaElementsByClass(String type) {
         ArrayList<MediaFile> list = new ArrayList<>();
         for (MediaFile m : mediaFileList) {
@@ -201,11 +194,7 @@ public class MediaFileRepository implements Serializable, Observable {
         return list;
     }
 
-    /**
-     * @param mediaType for example "audio"
-     * @return number of choosen Mediafile
-     * todo replace string mediaType
-     */
+
     public int NumberOfMediaType(String mediaType) {
         int counter = 0;
         for (MediaFile m : mediaFileList) {
@@ -221,7 +210,7 @@ public class MediaFileRepository implements Serializable, Observable {
     private final List<observer.Observer> observerList = new LinkedList<observer.Observer>();
 
     public List<observer.Observer> getObserverList() {
-        return observerList;
+        return new LinkedList<>(observerList);
     }
 
     @Override

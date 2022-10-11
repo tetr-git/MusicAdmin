@@ -4,7 +4,7 @@ import java.util.EventObject;
 
 public class CreateUploaderEvent extends EventObject {
 
-    private String uploaderString;
+    private final String uploaderString;
 
     public CreateUploaderEvent(Object source, String uploaderString) {
         super(source);

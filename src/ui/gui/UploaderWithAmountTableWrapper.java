@@ -4,9 +4,9 @@ import domain_logic.producer.Uploader;
 
 public class UploaderWithAmountTableWrapper {
 
-    private String uploader;
-    private String instance;
-    private String numberOfMediaFiles;
+    private final String uploader;
+    private final String instance;
+    private final String numberOfMediaFiles;
 
     public UploaderWithAmountTableWrapper(Uploader uploader, int numberOfMediaFiles, int instance) {
         this.instance = String.valueOf(instance);

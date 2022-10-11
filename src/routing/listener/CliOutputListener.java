@@ -6,7 +6,7 @@ import ui.cli.ConsoleManagement;
 import java.util.EventObject;
 
 public class CliOutputListener implements EventListener {
-    private ConsoleManagement cM;
+    private final ConsoleManagement cM;
 
     public CliOutputListener(ConsoleManagement cM) {
         this.cM = cM;
@@ -15,7 +15,7 @@ public class CliOutputListener implements EventListener {
     @Override
     public void onEvent(EventObject event) {
         if (event.toString().equals("CliOutputEvent")) {
-            cM.writeToConsole(((CliOutputEvent)event).getWrite());
+            cM.writeToConsole(((CliOutputEvent) event).getWrite());
         }
     }
 }

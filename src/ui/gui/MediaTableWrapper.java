@@ -9,20 +9,20 @@ import java.util.Arrays;
 
 public class MediaTableWrapper {
 
-    private String type;
-    private String address;
-    private String tags;
-    private String accessCount;
-    private String bitrate;
-    private String length;
-    private String size;
-    private String uploader;
-    private String uploadDate;
+    private final String type;
+    private final String address;
+    private final String tags;
+    private final String accessCount;
+    private final String bitrate;
+    private final String length;
+    private final String size;
+    private final String uploader;
+    private final String uploadDate;
     private String samplingRate;
     private String resolution;
     private String typeInteractive;
     private String holder;
-    private String instance;
+    private final String instance;
 
 
     public MediaTableWrapper(MediaFile mediaElement, int instanceOfRepository) {
@@ -38,38 +38,45 @@ public class MediaTableWrapper {
         uploadDate = mediaElement.getUploadDate().toString();
         //audio
         try {
-            samplingRate = String.valueOf(((Audio)mediaElement).getSamplingRate());
-        } catch (Exception ignored) {}
+            samplingRate = String.valueOf(((Audio) mediaElement).getSamplingRate());
+        } catch (Exception ignored) {
+        }
         //audioVideo
         try {
-            samplingRate = String.valueOf(((Audio)mediaElement).getSamplingRate());
-            resolution = String.valueOf(((AudioVideo)mediaElement).getResolution());
-        } catch (Exception ignored) {}
+            samplingRate = String.valueOf(((Audio) mediaElement).getSamplingRate());
+            resolution = String.valueOf(((AudioVideo) mediaElement).getResolution());
+        } catch (Exception ignored) {
+        }
         //InteractiveVideo
         try {
-            resolution = String.valueOf(((InteractiveVideo)mediaElement).getResolution());
-            typeInteractive =((InteractiveVideo)mediaElement).getType();
-        } catch (Exception ignored) {}
+            resolution = String.valueOf(((InteractiveVideo) mediaElement).getResolution());
+            typeInteractive = ((InteractiveVideo) mediaElement).getType();
+        } catch (Exception ignored) {
+        }
         //licensedAudio
         try {
-            samplingRate = String.valueOf(((LicensedAudio)mediaElement).getSamplingRate());
-            holder = ((LicensedAudio)mediaElement).getHolder();
-        } catch (Exception ignored) {}
+            samplingRate = String.valueOf(((LicensedAudio) mediaElement).getSamplingRate());
+            holder = ((LicensedAudio) mediaElement).getHolder();
+        } catch (Exception ignored) {
+        }
         //licensedAudioVideo
         try {
-            samplingRate = String.valueOf(((LicensedAudioVideo)mediaElement).getSamplingRate());
-            holder = ((LicensedAudioVideo)mediaElement).getHolder();
-            resolution = String.valueOf(((LicensedAudioVideo)mediaElement).getResolution());
-        } catch (Exception ignored) {}
+            samplingRate = String.valueOf(((LicensedAudioVideo) mediaElement).getSamplingRate());
+            holder = ((LicensedAudioVideo) mediaElement).getHolder();
+            resolution = String.valueOf(((LicensedAudioVideo) mediaElement).getResolution());
+        } catch (Exception ignored) {
+        }
         //licensedVideo
         try {
-            holder = ((LicensedVideo)mediaElement).getHolder();
-            resolution = String.valueOf(((LicensedVideo)mediaElement).getResolution());
-        } catch (Exception ignored) {}
+            holder = ((LicensedVideo) mediaElement).getHolder();
+            resolution = String.valueOf(((LicensedVideo) mediaElement).getResolution());
+        } catch (Exception ignored) {
+        }
         //video
         try {
-            resolution = String.valueOf(((Video)mediaElement).getResolution());
-        } catch (Exception ignored) {}
+            resolution = String.valueOf(((Video) mediaElement).getResolution());
+        } catch (Exception ignored) {
+        }
     }
 
     public String getType() {

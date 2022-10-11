@@ -8,16 +8,16 @@ public class UploaderImpl implements Uploader, Serializable {
     private final String name;
 
     public UploaderImpl(String name) {
-            this.name = name;
-        }
+        this.name = name;
+    }
 
-        @Override
-        public String getName() {
-            return name;
-        }
+    @Override
+    public String getName() {
+        return name;
+    }
 
-        @Override
-        public String toString() {
-            return "Uploader:" + name + " ";
-        }
+    @Override
+    public String toString() {
+        return "Uploader:" + name + " ";
+    }
 }

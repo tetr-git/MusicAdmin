@@ -2,15 +2,12 @@ package observer;
 
 import domain_logic.MediaFileRepository;
 import domain_logic.enums.Tag;
-import routing.events.ReadTagEvent;
 
-import java.awt.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class TagObserver implements Observer, Serializable {
-    private MediaFileRepository mR;
+    private final MediaFileRepository mR;
     private ArrayList<Tag> oldListOfTags;
     static final long serialVersionUID = 1L;
 
@@ -24,12 +21,12 @@ public class TagObserver implements Observer, Serializable {
     @Override
     public void update() {
         ArrayList<Tag> tagsCurrent = mR.listEnumTags();
-        StringBuilder stringBuilder = new StringBuilder("Repository["+ mR.getNumberOfRepository()+"]");
+        StringBuilder stringBuilder = new StringBuilder("Repository[" + mR.getNumberOfRepository() + "]");
         boolean change = false;
         for (Tag tagsNew : tagsCurrent) {
-            if (!oldListOfTags.contains(tagsNew)){
+            if (!oldListOfTags.contains(tagsNew)) {
                 stringBuilder.append("\tTag ").append(tagsNew).append(" added");
-                change= true;
+                change = true;
             }
         }
         for (Tag tagsOld : oldListOfTags) {

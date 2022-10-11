@@ -14,6 +14,6 @@ public class ParseStorage {
 
     public void execute(String input) {
         String[] arg = input.trim().split("\\s+");
-        eventHandler.handle(new SetRepositoryStatusEvent(arg,new RepoCollection((arg))));
+        eventHandler.handle(new SetRepositoryStatusEvent(arg, new RepoCollection((arg))));
     }
 }

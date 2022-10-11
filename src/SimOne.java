@@ -17,11 +17,11 @@ public class SimOne {
         EventHandler inputHandler = new EventHandler();
         EventHandler outputHandler = new EventHandler();
         ConsoleManagement consoleManagement = new ConsoleManagement(inputHandler);
-        inputHandler.add(new CreateMediaListener(mediaFileRepoList,outputHandler));
-        inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
-        inputHandler.add(new DeleteListener(mediaFileRepoList,outputHandler));
+        inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandler));
+        inputHandler.add(new CreateUploaderListener(mediaFileRepoList, outputHandler));
+        inputHandler.add(new DeleteListener(mediaFileRepoList, outputHandler));
         outputHandler.add(new CliOutputListener(consoleManagement));
-        SimulationOne simulationOne = new SimulationOne(mediaFileRepoList,inputHandler);
+        SimulationOne simulationOne = new SimulationOne(mediaFileRepoList, inputHandler);
         simulationOne.start();
     }
 }

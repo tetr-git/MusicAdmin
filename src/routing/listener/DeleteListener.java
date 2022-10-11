@@ -21,28 +21,28 @@ public class DeleteListener implements EventListener {
 
     @Override
     public void onEvent(EventObject eventObject) {
-        if (eventObject.toString().equals("DeleteEvent")){
+        if (eventObject.toString().equals("DeleteEvent")) {
             event = eventObject;
             for (MediaFileRepository repository : mediaFileRepoList.getRepoList()) {
-                if(repository.isActiveRepository()) {
+                if (repository.isActiveRepository()) {
                     this.execute(repository);
                 }
             }
         }
     }
 
-    private void execute( MediaFileRepository mR) {
+    private void execute(MediaFileRepository mR) {
         //todo if uploader with files gets deleted wrong message
         String response = "";
-        if (mR.deleteUploader(((DeleteEvent)event).getDeleteString())) {
+        if (mR.deleteUploader(((DeleteEvent) event).getDeleteString())) {
             response += "Uploader deleted";
-        } else if (mR.deleteMediaFiles(((DeleteEvent)event).getDeleteString())) {
+        } else if (mR.deleteMediaFiles(((DeleteEvent) event).getDeleteString())) {
             response += "Media deleted";
         } else {
             response = "nothing deleted";
         }
         CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event,response);
+        outputEvent = new CliOutputEvent(event, response);
         outputHandler.handle(outputEvent);
     }
 }

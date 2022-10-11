@@ -2,7 +2,10 @@ package domain_logic;
 
 import domain_logic.files.MediaFile;
 import domain_logic.producer.Uploader;
-import observer.*;
+import observer.CapacityObserver;
+import observer.OberserverTyp;
+import observer.Observer;
+import observer.TagObserver;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -50,11 +53,11 @@ public class MediaFileRepoList implements Serializable {
         MediaFileRepository copyRepo = new MediaFileRepository(maxCapacity);
         if (checkRepoAtIndexExists(number)) {
             for (MediaFileRepository originalRepo : repoList) {
-                if (originalRepo.getNumberOfRepository()==number){
+                if (originalRepo.getNumberOfRepository() == number) {
                     copyRepo.setNumberOfRepository(originalRepo.getNumberOfRepository());
                     copyRepo.setActiveRepository(originalRepo.isActiveRepository());
                     if (!originalRepo.readUploaderList().isEmpty()) {
-                        for (Uploader u :originalRepo.readUploaderList()) {
+                        for (Uploader u : originalRepo.readUploaderList()) {
                             copyRepo.insertUploaderFromString(u.getName());
                         }
                     }
@@ -65,7 +68,7 @@ public class MediaFileRepoList implements Serializable {
                     }
                     if (!originalRepo.getObserverList().isEmpty()) {
                         for (Observer observer : originalRepo.getObserverList()) {
-                           copyRepo.attachObserver(observer);
+                            copyRepo.attachObserver(observer);
                         }
                     }
                 }
@@ -77,7 +80,7 @@ public class MediaFileRepoList implements Serializable {
     private boolean checkRepoAtIndexExists(int index) {
         if (!repoList.isEmpty()) {
             for (MediaFileRepository repo : repoList) {
-                if (repo.getNumberOfRepository()==index) {
+                if (repo.getNumberOfRepository() == index) {
                     return true;
                 }
             }
@@ -86,7 +89,7 @@ public class MediaFileRepoList implements Serializable {
     }
 
     public void detachAllRepositories() {
-        if(!repoList.isEmpty()) {
+        if (!repoList.isEmpty()) {
             for (MediaFileRepository repo : repoList) {
                 repo.setActiveRepository(false);
             }
@@ -100,7 +103,7 @@ public class MediaFileRepoList implements Serializable {
         for (String repoString : inputRepoNumbers) {
             if (isNumericInteger(repoString)) {
                 int repoInt = addInteger(repoString);
-                if (repoInt>-1 && repoInt<3) {
+                if (repoInt > -1 && repoInt < 3) {
                     boolean add = false;
                     for (MediaFileRepository addRepo : repoList) {
                         if (!(addRepo.getNumberOfRepository() == repoInt)) {
@@ -124,20 +127,20 @@ public class MediaFileRepoList implements Serializable {
     //jos functionality
 
     private final String fileNameJos = "mediaFileRepoJos";
-    private File fileJos;
 
     public boolean safeJos() {
         mItemLock.lock();
         try {
-            fileJos = new File(fileNameJos);
+            File fileJos = new File(fileNameJos);
             if (!fileJos.exists()) {
-                fileJos.createNewFile();
+                if (!fileJos.createNewFile()) {
+                    throw new RuntimeException("couldn't create File");
+                }
             }
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileNameJos));
             objectOutputStream.writeObject(this);
             objectOutputStream.close();
-        }
-        catch ( Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         } finally {
@@ -149,7 +152,7 @@ public class MediaFileRepoList implements Serializable {
     public boolean loadJos() {
 
         mItemLock.lock();
-        try{
+        try {
             File file = new File(fileNameJos);
             if (!file.exists())
                 return false;
@@ -168,7 +171,7 @@ public class MediaFileRepoList implements Serializable {
     }
 
     //observerFunctionality
-    private List<OberserverTyp> oberserverTypeEnumList = new LinkedList<>();
+    private final List<OberserverTyp> oberserverTypeEnumList = new LinkedList<>();
 
     public void attachObserverToList(OberserverTyp observerTyp) {
         this.oberserverTypeEnumList.add(observerTyp);
@@ -192,7 +195,7 @@ public class MediaFileRepoList implements Serializable {
     private void attachCurrentObserversToNewInstance(int index) {
         if (!repoList.isEmpty()) {
             for (MediaFileRepository repo : repoList) {
-                if (repo.getNumberOfRepository()==index) {
+                if (repo.getNumberOfRepository() == index) {
                     if (!oberserverTypeEnumList.isEmpty()) {
                         for (OberserverTyp oberserverTyp : oberserverTypeEnumList) {
                             if (oberserverTyp.equals(OberserverTyp.tag)) {

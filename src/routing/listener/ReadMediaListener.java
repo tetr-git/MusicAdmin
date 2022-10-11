@@ -8,13 +8,11 @@ import routing.events.ReadMediaEvent;
 import routing.handler.EventHandler;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.EventObject;
 
 public class ReadMediaListener implements EventListener {
     private final MediaFileRepoList mediaFileRepoList;
-    private EventHandler outputHandler;
+    private final EventHandler outputHandler;
     private EventObject event;
 
     public ReadMediaListener(MediaFileRepoList mediaFileRepoList, EventHandler outputHandler) {
@@ -24,10 +22,10 @@ public class ReadMediaListener implements EventListener {
 
     @Override
     public void onEvent(EventObject eventObject) {
-        if (eventObject.toString().equals("ReadMediaEvent")){
+        if (eventObject.toString().equals("ReadMediaEvent")) {
             event = eventObject;
             for (MediaFileRepository repository : mediaFileRepoList.getRepoList()) {
-                if(repository.isActiveRepository()) {
+                if (repository.isActiveRepository()) {
                     this.execute(repository);
                 }
             }
@@ -38,8 +36,8 @@ public class ReadMediaListener implements EventListener {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        StringBuilder s = new StringBuilder("Repository: "+ mR.getNumberOfRepository());
-        if(((ReadMediaEvent)event).getReadString().equalsIgnoreCase("content")) {
+        StringBuilder s = new StringBuilder("Repository: " + mR.getNumberOfRepository());
+        if (((ReadMediaEvent) event).getReadString().equalsIgnoreCase("content")) {
             for (MediaFile m : mR.readMediaList()) {
                 s.append("\n").
                         append(m.typeString()).append("\t").
@@ -48,7 +46,7 @@ public class ReadMediaListener implements EventListener {
                         append(m.getAccessCount());
             }
         } else {
-            for (MediaFile m : mR.readFilteredMediaElementsByClass(((ReadMediaEvent)event).getReadString())) {
+            for (MediaFile m : mR.readFilteredMediaElementsByClass(((ReadMediaEvent) event).getReadString())) {
                 s.append("\n").
                         append(m.typeString()).append("\t").
                         append(m.getAddress()).append("\t").
@@ -56,6 +54,6 @@ public class ReadMediaListener implements EventListener {
                         append(m.getAccessCount());
             }
         }
-        outputHandler.handle(new CliOutputEvent(event,s.toString()));
+        outputHandler.handle(new CliOutputEvent(event, s.toString()));
     }
 }

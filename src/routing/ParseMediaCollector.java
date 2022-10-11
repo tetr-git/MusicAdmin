@@ -11,8 +11,8 @@ public final class ParseMediaCollector {
 
     public MediaAttributesCollection parseToCollection(String[] arg) {
         String errorMessage = "wrong tags";
-        if (arg.length>4) {
-            if (!collectTags(arg[2]).isEmpty()||(arg[2].equals(","))) {
+        if (arg.length > 4) {
+            if (!collectTags(arg[2]).isEmpty() || (arg[2].equals(","))) {
                 switch (arg[0].toLowerCase()) {
                     case "audio":
                         if (arg.length == 6) {
@@ -21,7 +21,7 @@ public final class ParseMediaCollector {
                                     addBigDecimalBitrate(arg[3]), addDuration(arg), addInteger(arg[5]));
                         }
                         if (arg.length == 5) {
-                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
                                     addBigDecimalBitrate(arg[3]), addDuration(arg), 0);
                         }
                         errorMessage = "wrong number of attributes for audio file (5/6)";
@@ -29,12 +29,12 @@ public final class ParseMediaCollector {
                     case "audiovideo":
                         if (arg.length == 7) {
                             //full argumentList
-                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
                                     addBigDecimalBitrate(arg[3]), addDuration(arg),
                                     addInteger(arg[5]), addInteger(arg[6]));
                         }
                         if (arg.length == 5) {
-                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
                                     addBigDecimalBitrate(arg[3]), addDuration(arg),
                                     0, 0);
                         }
@@ -48,7 +48,7 @@ public final class ParseMediaCollector {
                                     (arg[5]), addInteger(arg[6]));
                         }
                         if (arg.length == 5) {
-                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1] , collectTags(arg[2]),
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
                                     addBigDecimalBitrate(arg[3]), addDuration(arg),
                                     "", 0);
                         }
@@ -62,7 +62,7 @@ public final class ParseMediaCollector {
                                     addInteger(arg[5]), arg[6]);
                         }
                         if (arg.length == 5) {
-                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1] , collectTags(arg[2]),
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
                                     addBigDecimalBitrate(arg[3]), addDuration(arg),
                                     0, "");
                         }
@@ -76,7 +76,7 @@ public final class ParseMediaCollector {
                                     addInteger(arg[5]), arg[6], addInteger(arg[7]));
                         }
                         if (arg.length == 5) {
-                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
                                     addBigDecimalBitrate(arg[3]), addDuration(arg),
                                     0, "", 0);
                         }
@@ -90,7 +90,7 @@ public final class ParseMediaCollector {
                                     arg[5], addInteger(arg[6]));
                         }
                         if (arg.length == 5) {
-                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
                                     addBigDecimalBitrate(arg[3]), addDuration(arg),
                                     "", 0);
                         }
@@ -104,7 +104,7 @@ public final class ParseMediaCollector {
                                     addInteger(arg[5]));
                         }
                         if (arg.length == 5) {
-                            return new MediaAttributesCollection(arg[0].toLowerCase(),arg[1], collectTags(arg[2]),
+                            return new MediaAttributesCollection(arg[0].toLowerCase(), arg[1], collectTags(arg[2]),
                                     addBigDecimalBitrate(arg[3]), addDuration(arg),
                                     0);
                         }
@@ -160,6 +160,7 @@ public final class ParseMediaCollector {
         }
         return i;
     }
+
     //todo delete -> util
     private static boolean isNumeric(String strNum) {
         if (strNum == null) {

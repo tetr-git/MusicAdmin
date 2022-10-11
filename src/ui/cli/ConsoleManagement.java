@@ -6,7 +6,7 @@ import routing.parser.*;
 import java.util.Scanner;
 
 public class ConsoleManagement {
-    private CliModeEnum mode= CliModeEnum.c;
+    private CliModeEnum mode = CliModeEnum.c;
 
     ParseCreate parseCreate;
     ParseDelete parseDelete;
@@ -30,7 +30,7 @@ public class ConsoleManagement {
     public void run() {
         String input;
         do {
-            System.out.print(mode.toString()+"# ");
+            System.out.print(mode.toString() + "# ");
             input = scanner.nextLine();
             if (input.charAt(0) == ':') {
                 switchMode(input);
@@ -79,7 +79,7 @@ public class ConsoleManagement {
                 break;
             case u:
                 parseUpdate.execute(input);
-                 break;
+                break;
             case r:
                 parseRead.execute(input);
                 break;

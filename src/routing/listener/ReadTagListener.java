@@ -7,7 +7,8 @@ import routing.events.CliOutputEvent;
 import routing.events.ReadTagEvent;
 import routing.handler.EventHandler;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EventObject;
 
 public class ReadTagListener implements EventListener {
     private final MediaFileRepoList mediaFileRepoList;
@@ -21,10 +22,10 @@ public class ReadTagListener implements EventListener {
 
     @Override
     public void onEvent(EventObject eventObject) {
-        if (eventObject.toString().equals("ReadTagEvent")){
+        if (eventObject.toString().equals("ReadTagEvent")) {
             event = eventObject;
             for (MediaFileRepository repository : mediaFileRepoList.getRepoList()) {
-                if(repository.isActiveRepository()) {
+                if (repository.isActiveRepository()) {
                     this.execute(repository);
                 }
             }
@@ -32,18 +33,18 @@ public class ReadTagListener implements EventListener {
     }
 
     public void execute(MediaFileRepository mR) {
-        StringBuilder s = new StringBuilder("Repository[ "+ mR.getNumberOfRepository()+"]");
+        StringBuilder s = new StringBuilder("Repository[ " + mR.getNumberOfRepository() + "]");
         ArrayList<Tag> tagsCurrent = mR.listEnumTags();
         Tag[] listOfAllTags = Tag.values();
         if (!tagsCurrent.isEmpty()) {
-            if(((ReadTagEvent)event).getReadTagString().equalsIgnoreCase("e")) {
+            if (((ReadTagEvent) event).getReadTagString().equalsIgnoreCase("e")) {
                 s.append(" not existing tags: \n");
                 for (Tag tag : listOfAllTags) {
                     if (!tagsCurrent.contains(tag)) {
                         s.append(tag).append("\t");
                     }
                 }
-            }else if(((ReadTagEvent)event).getReadTagString().equalsIgnoreCase("i")) {
+            } else if (((ReadTagEvent) event).getReadTagString().equalsIgnoreCase("i")) {
                 s.append(" existing tags: \n");
                 for (Tag tag : listOfAllTags) {
                     if (tagsCurrent.contains(tag)) {
@@ -54,9 +55,9 @@ public class ReadTagListener implements EventListener {
                 s = new StringBuilder("Wrong Input");
             }
         } else {
-            s = new StringBuilder("Repository["+ mR.getNumberOfRepository()+ "] no tags found");
+            s = new StringBuilder("Repository[" + mR.getNumberOfRepository() + "] no tags found");
         }
 
-        outputHandler.handle(new CliOutputEvent(event,s.toString()));
+        outputHandler.handle(new CliOutputEvent(event, s.toString()));
     }
 }

@@ -1,9 +1,9 @@
 package routing.parser;
 
+import routing.ParseMediaCollector;
 import routing.events.CreateMediaEvent;
 import routing.events.CreateUploaderEvent;
 import routing.handler.EventHandler;
-import routing.ParseMediaCollector;
 
 public class ParseCreate {
 
@@ -16,7 +16,7 @@ public class ParseCreate {
     public void execute(String input) {
         String[] arg = input.trim().split("\\s+");
         if (arg.length == 1) {
-            eventHandler.handle(new CreateUploaderEvent(arg[0],arg[0]));
+            eventHandler.handle(new CreateUploaderEvent(arg[0], arg[0]));
         } else {
             ParseMediaCollector parseMediaCollector = new ParseMediaCollector();
             eventHandler.handle(new CreateMediaEvent(arg, parseMediaCollector.parseToCollection(arg)));

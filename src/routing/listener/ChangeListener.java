@@ -23,7 +23,7 @@ public class ChangeListener implements EventListener {
         if (eventObject.toString().equals("ChangeEvent")) {
             event = eventObject;
             for (MediaFileRepository repository : mediaFileRepoList.getRepoList()) {
-                if(repository.isActiveRepository()) {
+                if (repository.isActiveRepository()) {
                     this.execute(repository);
                 }
             }
@@ -32,12 +32,12 @@ public class ChangeListener implements EventListener {
 
     public void execute(MediaFileRepository mR) {
         String response;
-        if (mR.updateAccessCounterMediaFile(((ChangeEvent)event).getStorageNameString())) {
-            response = "Repository["+ mR.getNumberOfRepository()+ "] Counter of MediaFile with Address "+ (((ChangeEvent)event).getStorageNameString()) +" updated";
+        if (mR.updateAccessCounterMediaFile(((ChangeEvent) event).getStorageNameString())) {
+            response = "Repository[" + mR.getNumberOfRepository() + "] Counter of MediaFile with Address " + (((ChangeEvent) event).getStorageNameString()) + " updated";
         } else
-            response = "Repository["+ mR.getNumberOfRepository()+ "] Counter not updated updated";
+            response = "Repository[" + mR.getNumberOfRepository() + "] Counter not updated updated";
         CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event,response);
+        outputEvent = new CliOutputEvent(event, response);
         outputHandler.handle(outputEvent);
     }
 }

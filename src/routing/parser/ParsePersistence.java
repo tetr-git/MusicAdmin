@@ -13,10 +13,10 @@ public class ParsePersistence {
     }
 
     public void execute(String input) {
-        if (input.equalsIgnoreCase("loadJos")){
-            eventHandler.handle(new LoadEvent(input,input));
+        if (input.equalsIgnoreCase("loadJos")) {
+            eventHandler.handle(new LoadEvent(input, input));
         } else if (input.equalsIgnoreCase("saveJos")) {
-            eventHandler.handle(new SaveEvent(input,input));
+            eventHandler.handle(new SaveEvent(input, input));
         }
     }
 }

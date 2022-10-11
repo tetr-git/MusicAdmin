@@ -21,10 +21,10 @@ public class CreateUploaderListener implements EventListener {
 
     @Override
     public void onEvent(EventObject eventObject) {
-        if (eventObject.toString().equals("CreateUploaderEvent")){
+        if (eventObject.toString().equals("CreateUploaderEvent")) {
             event = eventObject;
             for (MediaFileRepository repository : mediaFileRepoList.getRepoList()) {
-                if(repository.isActiveRepository()) {
+                if (repository.isActiveRepository()) {
                     this.execute(repository);
                 }
             }
@@ -32,14 +32,14 @@ public class CreateUploaderListener implements EventListener {
     }
 
     public void execute(MediaFileRepository mR) {
-        StringBuilder s = new StringBuilder("Repository["+ mR.getNumberOfRepository()+"] ");
-        if (mR.insertUploaderFromString(((CreateUploaderEvent)event).getUploaderString())) {
-            s.append("added uploader ").append(((CreateUploaderEvent)event).getUploaderString());
+        StringBuilder s = new StringBuilder("Repository[" + mR.getNumberOfRepository() + "] ");
+        if (mR.insertUploaderFromString(((CreateUploaderEvent) event).getUploaderString())) {
+            s.append("added uploader ").append(((CreateUploaderEvent) event).getUploaderString());
         } else {
-            s.append("not added uploader ").append(((CreateUploaderEvent)event).getUploaderString());
+            s.append("not added uploader ").append(((CreateUploaderEvent) event).getUploaderString());
         }
         CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event,s.toString());
+        outputEvent = new CliOutputEvent(event, s.toString());
         outputHandler.handle(outputEvent);
     }
 }

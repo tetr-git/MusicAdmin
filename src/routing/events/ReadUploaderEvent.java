@@ -4,9 +4,9 @@ import java.util.EventObject;
 
 public class ReadUploaderEvent extends EventObject {
 
-    private String read;
+    private final String read;
 
-    public ReadUploaderEvent(Object source , String read) {
+    public ReadUploaderEvent(Object source, String read) {
         super(source);
         this.read = read;
     }

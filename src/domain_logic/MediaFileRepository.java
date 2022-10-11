@@ -7,7 +7,7 @@ import domain_logic.producer.UploaderImpl;
 import observer.Observable;
 import observer.Observer;
 
-import java.io.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
@@ -16,16 +16,16 @@ import java.util.concurrent.locks.ReentrantLock;
 public class MediaFileRepository implements Serializable, Observable {
 
     static final long serialVersionUID = 1L;
-    private List<MediaFile> mediaFileList = new LinkedList<>();
-    private List<Uploader> uploaderList = new LinkedList<>();
-    private BigDecimal maxCapacity;
+    private final List<MediaFile> mediaFileList = new LinkedList<>();
+    private final List<Uploader> uploaderList = new LinkedList<>();
+    private final BigDecimal maxCapacity;
     private final Lock mItemLock = new ReentrantLock();
 
     public MediaFileRepository(BigDecimal maxCapacity) {
         this.maxCapacity = maxCapacity;
     }
 
-    public LinkedList <MediaFile> readMediaList() {
+    public LinkedList<MediaFile> readMediaList() {
         return new LinkedList<>(mediaFileList);
     }
 
@@ -47,7 +47,7 @@ public class MediaFileRepository implements Serializable, Observable {
 
     public boolean insertUploader(UploaderImpl addU) {
         mItemLock.lock();
-        if(addU.getName().equalsIgnoreCase("")) {
+        if (addU.getName().equalsIgnoreCase("")) {
             return false;
         }
         for (Uploader i : uploaderList) {
@@ -76,8 +76,7 @@ public class MediaFileRepository implements Serializable, Observable {
                 }
             }
             return uploaderList.removeIf(uploader -> uploader.getName().equalsIgnoreCase(delU));
-        }
-        finally {
+        } finally {
             mItemLock.unlock();
         }
     }
@@ -103,16 +102,15 @@ public class MediaFileRepository implements Serializable, Observable {
                 }
             }
             return false;
-        }
-        finally {
+        } finally {
             mItemLock.unlock();
         }
     }
+
     /**
      * Delete media files.
      *
      * @author https://stackoverflow.com/questions/223918/iterating-through-a-collection-avoiding-concurrentmodificationexception-when-re#comment56183223_23908758
-     *
      */
     public boolean deleteMediaFiles(String address) {
         mItemLock.lock();
@@ -126,24 +124,23 @@ public class MediaFileRepository implements Serializable, Observable {
                     deleteSuccessful = true;
                 }
             }
-        }
-        finally {
+        } finally {
             mItemLock.unlock();
         }
         updateAllMediaElementAddresses();
         return deleteSuccessful;
     }
+
     //todo last thing but why?
-    private void updateAllMediaElementAddresses () {
+    private void updateAllMediaElementAddresses() {
         mItemLock.lock();
         int addressInt = 1;
         try {
             for (MediaFile m : mediaFileList) {
-               m.setAddress(String.valueOf(addressInt));
-               addressInt++;
+                m.setAddress(String.valueOf(addressInt));
+                addressInt++;
             }
-        }
-        finally {
+        } finally {
             mItemLock.unlock();
 
         }
@@ -221,7 +218,7 @@ public class MediaFileRepository implements Serializable, Observable {
 
     //observer functionality
 
-    private List<observer.Observer> observerList = new LinkedList<observer.Observer>();
+    private final List<observer.Observer> observerList = new LinkedList<observer.Observer>();
 
     public List<observer.Observer> getObserverList() {
         return observerList;
@@ -239,7 +236,7 @@ public class MediaFileRepository implements Serializable, Observable {
 
     @Override
     public void notifyObservers() {
-        for(Observer observer: this.observerList) {
+        for (Observer observer : this.observerList) {
             observer.update();
         }
     }

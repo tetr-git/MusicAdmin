@@ -7,7 +7,7 @@ public final class MediaAttributesCollection {
     private final int size;
     private final String type;
 
-    public MediaAttributesCollection(String type, Object ... attributes) {
+    public MediaAttributesCollection(String type, Object... attributes) {
         this.size = attributes.length;
         this.attributes = Arrays.copyOf(attributes, size);
         this.type = type;

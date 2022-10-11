@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.locks.Lock;
 
-public class ThreadDeleteCargo extends Thread{
+public class ThreadDeleteCargo extends Thread {
 
-    private MediaFileRepoList mediaFileRepoList;
-    private EventHandler eventHandler;
-    private Lock lock;
+    private final MediaFileRepoList mediaFileRepoList;
+    private final EventHandler eventHandler;
+    private final Lock lock;
     Random rand = new Random();
 
     public ThreadDeleteCargo(MediaFileRepoList mediaFileRepoList, EventHandler eventHandler, Lock lock) {
@@ -23,7 +23,7 @@ public class ThreadDeleteCargo extends Thread{
     }
 
     public void run() {
-        while ( true) {
+        while (true) {
 
             lock.lock();
             ArrayList<String> addresses = new ArrayList<>();
@@ -36,9 +36,9 @@ public class ThreadDeleteCargo extends Thread{
             //todo: last minute fix
             //throws out of Bound with empty list
             //if list is not empty..
-            if((addresses.size()-1>0)) {
-                int int_random = rand.nextInt(addresses.size()-1);
-                DeleteEvent deleteEvent = new DeleteEvent(stockArr[int_random],stockArr[int_random]);
+            if ((addresses.size() - 1 > 0)) {
+                int int_random = rand.nextInt(addresses.size() - 1);
+                DeleteEvent deleteEvent = new DeleteEvent(stockArr[int_random], stockArr[int_random]);
                 eventHandler.handle(deleteEvent);
             }
             lock.unlock();

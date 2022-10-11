@@ -1,7 +1,7 @@
 package domain_logic.files;
 
-import domain_logic.file_interfaces.Content;
 import domain_logic.enums.Tag;
+import domain_logic.file_interfaces.Content;
 import domain_logic.file_interfaces.MediaContent;
 import domain_logic.file_interfaces.Uploadable;
 import domain_logic.producer.Uploader;
@@ -9,11 +9,8 @@ import domain_logic.producer.UploaderImpl;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -40,8 +37,8 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
 
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE,0);
-        today.set(Calendar.SECOND,0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
         this.uploadDate = today.getTime();
         this.address = "";
     }
@@ -99,6 +96,6 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return address +"\t"+ typeString() +"\t" + uploader.getName() +"\t"+ tags +"\t"+ accessCount +"\t"+ bitrate +"\t"+ length +"\t"+ size + "\t" + sdf.format(uploadDate);
+        return address + "\t" + typeString() + "\t" + uploader.getName() + "\t" + tags + "\t" + accessCount + "\t" + bitrate + "\t" + length + "\t" + size + "\t" + sdf.format(uploadDate);
     }
 }

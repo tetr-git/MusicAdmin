@@ -1,5 +1,4 @@
 import domain_logic.MediaFileRepoList;
-import observer.CapacityObserver;
 import observer.OberserverTyp;
 import routing.handler.EventHandler;
 import routing.listener.*;
@@ -27,7 +26,7 @@ public class Cli {
         } else {
             startCli = true;
         }
-        if (startCli){
+        if (startCli) {
             MediaFileRepoList mediaFileRepoList = new MediaFileRepoList(new BigDecimal(mediaFileRepositorySize));
             mediaFileRepoList.attachObserverToList(OberserverTyp.capacity);
             mediaFileRepoList.attachObserverToList(OberserverTyp.tag);
@@ -35,15 +34,15 @@ public class Cli {
             ConsoleManagement consoleManagement = new ConsoleManagement(inputHandler);
             EventHandler outputHandler = new EventHandler();
             inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandler));
-            inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
-            inputHandler.add(new ChangeListener(mediaFileRepoList,outputHandler));
+            inputHandler.add(new CreateUploaderListener(mediaFileRepoList, outputHandler));
+            inputHandler.add(new ChangeListener(mediaFileRepoList, outputHandler));
             inputHandler.add(new DeleteListener(mediaFileRepoList, outputHandler));
-            inputHandler.add(new LoadListener(mediaFileRepoList,outputHandler));
-            inputHandler.add(new ReadMediaListener(mediaFileRepoList,outputHandler));
-            inputHandler.add(new ReadUploaderListener(mediaFileRepoList,outputHandler));
-            inputHandler.add(new ReadTagListener(mediaFileRepoList,outputHandler));
-            inputHandler.add(new RepositoryListener(mediaFileRepoList,outputHandler));
-            inputHandler.add(new SaveListener(mediaFileRepoList,outputHandler));
+            inputHandler.add(new LoadListener(mediaFileRepoList, outputHandler));
+            inputHandler.add(new ReadMediaListener(mediaFileRepoList, outputHandler));
+            inputHandler.add(new ReadUploaderListener(mediaFileRepoList, outputHandler));
+            inputHandler.add(new ReadTagListener(mediaFileRepoList, outputHandler));
+            inputHandler.add(new RepositoryListener(mediaFileRepoList, outputHandler));
+            inputHandler.add(new SaveListener(mediaFileRepoList, outputHandler));
             CliOutputListener cliOutputListener = new CliOutputListener(consoleManagement);
             outputHandler.add(cliOutputListener);
             consoleManagement.run();

@@ -4,8 +4,8 @@ import domain_logic.enums.Tag;
 
 public class TagTableWrapper {
 
-    private String instance;
-    private String tag;
+    private final String instance;
+    private final String tag;
 
     public TagTableWrapper(Tag tag, int instance) {
         this.instance = String.valueOf(instance);

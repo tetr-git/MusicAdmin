@@ -13,6 +13,6 @@ public class ParseDelete {
     }
 
     public void execute(String input) {
-        eventHandler.handle(new DeleteEvent(input,input));
+        eventHandler.handle(new DeleteEvent(input, input));
     }
 }

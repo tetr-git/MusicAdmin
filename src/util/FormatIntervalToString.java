@@ -8,7 +8,7 @@ public final class FormatIntervalToString {
         final long hr = TimeUnit.MILLISECONDS.toHours(interval);
         final long min = TimeUnit.MILLISECONDS.toMinutes(interval) % 60;
         final long sec = TimeUnit.MILLISECONDS.toSeconds(interval) % 60;
-        return String.format("%02d:%02d:%02d", hr, min, sec );
+        return String.format("%02d:%02d:%02d", hr, min, sec);
         //doesn't return ms
     }
 }

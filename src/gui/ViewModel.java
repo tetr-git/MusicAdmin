@@ -85,6 +85,7 @@ public class ViewModel {
     private TableColumn<TagTableWrapper, String> tagColumn = new TableColumn<>();
     @FXML
     private TableColumn<TagTableWrapper, String> tagInstance = new TableColumn<>();
+
     public ViewModel() {
         this.mediaFileRepoList = new MediaFileRepoList(new BigDecimal(10000000));
         this.addHandler();

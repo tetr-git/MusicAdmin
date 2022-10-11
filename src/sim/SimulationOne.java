@@ -9,12 +9,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class SimulationOne {
 
-
-    //todo Erstellen Sie einen thread der kontinuierlich versucht ein zufälliges Frachtstück einzufügen.
-    // Erstellen Sie einen weiteren thread der kontinuierlich die Liste der enthaltenen Frachtstücke abruft,
-    // daraus zufällig eins auswählt und entfernt.
-    // Diese Simulation sollte nicht terminieren und nicht synchronisiert arbeiten.
-
     final Lock lock = new ReentrantLock();
     private final MediaFileRepoList mediaFileRepoList;
     private final EventHandler inputHandler;

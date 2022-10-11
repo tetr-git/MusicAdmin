@@ -3,7 +3,7 @@ package routing.parser;
 import routing.events.CreateMediaEvent;
 import routing.events.CreateUploaderEvent;
 import routing.handler.EventHandler;
-import util.ParseMedia;
+import routing.ParseMediaCollector;
 
 public class ParseCreate {
 
@@ -18,8 +18,8 @@ public class ParseCreate {
         if (arg.length == 1) {
             eventHandler.handle(new CreateUploaderEvent(arg[0],arg[0]));
         } else {
-            ParseMedia parseMedia = new ParseMedia();
-            eventHandler.handle(new CreateMediaEvent(arg, parseMedia.parseToCollection(arg)));
+            ParseMediaCollector parseMediaCollector = new ParseMediaCollector();
+            eventHandler.handle(new CreateMediaEvent(arg, parseMediaCollector.parseToCollection(arg)));
         }
     }
 }

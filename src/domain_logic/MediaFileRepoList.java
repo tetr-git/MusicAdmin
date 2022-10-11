@@ -1,6 +1,5 @@
 package domain_logic;
 
-import domain_logic.enums.Tag;
 import domain_logic.files.MediaFile;
 import domain_logic.producer.Uploader;
 import observer.*;
@@ -186,7 +185,7 @@ public class MediaFileRepoList implements Serializable {
         }
     }
 
-    public void detachObserverToList(OberserverTyp oberserverTyp) {
+    public void detachObserverFromList(OberserverTyp oberserverTyp) {
         this.oberserverTypeEnumList.remove(oberserverTyp);
     }
 

@@ -14,8 +14,7 @@ import javafx.scene.control.*;
 import routing.events.*;
 import routing.handler.EventHandler;
 import routing.listener.*;
-import util.MediaStringGenerator;
-import util.ParseMedia;
+import routing.ParseMediaCollector;
 import util.RepoCollection;
 
 import java.math.BigDecimal;
@@ -29,7 +28,7 @@ public class ViewModel {
     private LinkedList<MediaTableWrapper> mediaTableWrapperList;
     private LinkedList<UploaderWithAmountTableWrapper> uploaderWrapperList;
     private LinkedList<TagTableWrapper> tagTableWrapperList;
-    private ParseMedia parseMedia;
+    private ParseMediaCollector parseMediaCollector;
 
 
     public ViewModel(){
@@ -46,9 +45,9 @@ public class ViewModel {
         inputHandler.handle(new CreateUploaderEvent("Moritz", "Moritz"));
         String[] arg = new String[]{"Audio","Max", "News", "10", "10", "320"};
         String[] arg2 = new String[]{"Audio","Moritz", "Tutorial", "10", "10", "320"};
-        parseMedia = new ParseMedia();
-        inputHandler.handle(new CreateMediaEvent(arg, parseMedia.parseToCollection(arg)));
-        inputHandler.handle(new CreateMediaEvent(arg2,parseMedia.parseToCollection(arg2)));
+        parseMediaCollector = new ParseMediaCollector();
+        inputHandler.handle(new CreateMediaEvent(arg, parseMediaCollector.parseToCollection(arg)));
+        inputHandler.handle(new CreateMediaEvent(arg2, parseMediaCollector.parseToCollection(arg2)));
     }
 
     private void genMediaWrapperArrayList() {
@@ -122,7 +121,7 @@ public class ViewModel {
         if (arg.length == 1) {
             inputHandler.handle(new CreateUploaderEvent(arg[0],arg[0]));
         } else {
-            inputHandler.handle(new CreateMediaEvent(arg,parseMedia.parseToCollection(arg)));
+            inputHandler.handle(new CreateMediaEvent(arg, parseMediaCollector.parseToCollection(arg)));
         }
         this.updateProperties();
     }

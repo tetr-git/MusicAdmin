@@ -1,7 +1,6 @@
 package domain_logic;
 
 import observer.OberserverTyp;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -56,6 +55,20 @@ class MediaFileRepoListTest {
     }
 
     @Test
+    void detachAllRepositoriesWithParseString() {
+        String[] setActive = {"storage"};
+        mediaFileRepoList.changeStateAllRepositories(setActive);
+        boolean checkIfRepoActive = false;
+        for (MediaFileRepository mediaFileRepository : mediaFileRepoList.getRepoList()) {
+            if (mediaFileRepository.isActiveRepository()) {
+                checkIfRepoActive = true;
+                break;
+            }
+        }
+        assertFalse(checkIfRepoActive);
+    }
+
+    @Test
     void changeStateAllRepositoriesAddNewInstances() {
         String[] setActive = {"storage", "2", "1", "0"};
         boolean checkIfRepoIsActive = false;
@@ -88,7 +101,9 @@ class MediaFileRepoListTest {
         }
         assertTrue(!checkIfRepoIsActive&&mediaFileRepoList.getCopyOfRepoByNumber(2).isActiveRepository());
     }
-    //todo könnte eventuell besser
+    /*
+    Zugriff auf Speicher um Jos Funktionalität zusichern
+     */
     @Test
     void checkIfJosFileIsCreated() throws FileNotFoundException {
         String fileNameJos = "mediaFileRepoJos";
@@ -126,7 +141,7 @@ class MediaFileRepoListTest {
 
         assertEquals(1,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
     }
-    //todo improve handling
+
     @Test
     void testAttachAllObserverInRepo() {
         MediaFileRepoList cleanRepo = new MediaFileRepoList(new BigDecimal(100000));
@@ -137,4 +152,31 @@ class MediaFileRepoListTest {
         assertEquals(2,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
     }
 
+    @Test
+    void testAttachedObserverContent() {
+        MediaFileRepoList cleanRepo = new MediaFileRepoList(new BigDecimal(100000));
+
+        cleanRepo.attachObserverToList(OberserverTyp.capacity);
+
+        assertEquals(1,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+    }
+
+    @Test
+    void detachObserverFromList() {
+        MediaFileRepoList cleanRepo = new MediaFileRepoList(new BigDecimal(100000));
+
+        cleanRepo.attachObserverToList(OberserverTyp.capacity);
+        cleanRepo.detachObserverFromList(OberserverTyp.tag);
+
+        assertEquals(1,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+    }
+
+    @Test
+    void detachObserveFromEmptyList() {
+        MediaFileRepoList cleanRepo = new MediaFileRepoList(new BigDecimal(100000));
+
+        cleanRepo.detachObserverFromList(OberserverTyp.tag);
+
+        assertEquals(0,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+    }
 }

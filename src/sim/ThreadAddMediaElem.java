@@ -3,7 +3,7 @@ package sim;
 import domain_logic.MediaFileRepository;
 import routing.events.CreateMediaEvent;
 import routing.handler.EventHandler;
-import util.ParseMedia;
+import routing.ParseMediaCollector;
 
 import java.util.concurrent.locks.Lock;
 
@@ -26,8 +26,8 @@ public class ThreadAddMediaElem extends Thread{
             lock.lock();
             GenRandomMediaElem m = new GenRandomMediaElem();
             String[] arg = m.generateRandomMedia();
-            ParseMedia parseMedia = new ParseMedia();
-            CreateMediaEvent e = new CreateMediaEvent(arg,parseMedia.parseToCollection(arg));
+            ParseMediaCollector parseMediaCollector = new ParseMediaCollector();
+            CreateMediaEvent e = new CreateMediaEvent(arg, parseMediaCollector.parseToCollection(arg));
             eHandler.handle(e);
             lock.unlock();
         }

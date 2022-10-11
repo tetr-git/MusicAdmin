@@ -1,9 +1,8 @@
 package util;
 
-public class TypeConverter {
+public final class TypeConverter {
 
     public static boolean isNumericInteger(String strNum) {
-
         if (strNum == null) {
             return false;
         }
@@ -13,7 +12,6 @@ public class TypeConverter {
             return false;
         }
         return true;
-
     }
 
     public static int addInteger(String str) {
@@ -24,6 +22,4 @@ public class TypeConverter {
         }
         return i;
     }
-
-
 }

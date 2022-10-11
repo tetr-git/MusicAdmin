@@ -1,15 +1,14 @@
-package util;
+package routing;
 
 import domain_logic.enums.Tag;
+import util.MediaAttributesCollection;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
 
-public final class ParseMedia {
+public final class ParseMediaCollector {
 
-    //todo delete empty constructor
-    //todo use ParseMedia in Event for Kapeselung
     public MediaAttributesCollection parseToCollection(String[] arg) {
         String errorMessage = "wrong tags";
         if (arg.length>4) {

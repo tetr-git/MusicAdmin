@@ -42,6 +42,6 @@ class ParseUpdateTest {
 
         parseUpdate.execute("1");
 
-        assertEquals(1,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().getFirst().getAccessCount());
+        assertEquals(1,mediaFileRepoList.getSingleRepository(0).readMediaList().getFirst().getAccessCount());
     }
 }

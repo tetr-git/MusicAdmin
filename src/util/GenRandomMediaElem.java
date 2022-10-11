@@ -3,16 +3,14 @@ package util;
 import java.util.Random;
 
 public final class GenRandomMediaElem {
-    private final String[] uploaderArray = {"Max","Moritz"};
+    private final String[] uploaderArray = {"MrOizo","DjMehdi","SebastiAn"};
     private final String[] mediaType = {"Audio","AudioVideo","InteractiveVideo","LicensedAudio","LicensedAudioVideo","LicensedVideo","Video"};
     private final Integer[] bitRateArray = {128,320,768};
     private final Integer[] durationArray ={60,120,180,360,720};
-    private final Integer[] samplingRateArray ={44000,48000,96000};
-    private final String[] exampleTag = {"News","Lifestyle","Animal","Tutorial"};
     Random rand = new Random();
 
     public String[] generateRandomMedia() {
-        return new String[]{random(mediaType),random(uploaderArray), random(exampleTag), random(bitRateArray).toString(), random(durationArray).toString(), random(samplingRateArray).toString()};
+        return new String[]{random(mediaType),random(uploaderArray),",", random(bitRateArray).toString(), random(durationArray).toString()};
     }
 
     //source: http://www.java2s.com/example/java-utility-method/random-element/randomelement-t-array-f117b.html

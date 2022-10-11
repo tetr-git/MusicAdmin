@@ -36,7 +36,7 @@ class MediaFileRepoListTest {
         String[] strings = {"2"};
         mediaFileRepoList.changeStateAllRepositories(strings);
 
-        assertEquals(2,mediaFileRepoList.getCopyOfRepoByNumber(2).getNumberOfRepository());
+        assertEquals(2,mediaFileRepoList.getSingleRepository(2).getNumberOfRepository());
     }
 
     @Test
@@ -99,7 +99,7 @@ class MediaFileRepoListTest {
                 }
             }
         }
-        assertTrue(!checkIfRepoIsActive&&mediaFileRepoList.getCopyOfRepoByNumber(2).isActiveRepository());
+        assertTrue(!checkIfRepoIsActive&&mediaFileRepoList.getSingleRepository(2).isActiveRepository());
     }
     /*
     Zugriff auf Speicher um Jos Funktionalität zusichern
@@ -127,7 +127,7 @@ class MediaFileRepoListTest {
         mediaFileRepoList.changeStateAllRepositories(changeStatesAfterSave);
         mediaFileRepoList.loadJos();
 
-        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository());
+        assertTrue(mediaFileRepoList.getSingleRepository(0).isActiveRepository());
 
         if (!fileJos.delete())
             throw new FileNotFoundException( "File couldn't be deleted!" );
@@ -139,7 +139,7 @@ class MediaFileRepoListTest {
 
         cleanRepo.attachObserverToList(OberserverTyp.capacity);
 
-        assertEquals(1,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+        assertEquals(1,cleanRepo.getSingleRepository(0).getObserverList().size());
     }
 
     @Test
@@ -149,7 +149,7 @@ class MediaFileRepoListTest {
         cleanRepo.attachObserverToList(OberserverTyp.capacity);
         cleanRepo.attachObserverToList(OberserverTyp.tag);
 
-        assertEquals(2,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+        assertEquals(2,cleanRepo.getSingleRepository(0).getObserverList().size());
     }
 
     @Test
@@ -158,7 +158,7 @@ class MediaFileRepoListTest {
 
         cleanRepo.attachObserverToList(OberserverTyp.capacity);
 
-        assertEquals(1,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+        assertEquals(1,cleanRepo.getSingleRepository(0).getObserverList().size());
     }
 
     @Test
@@ -168,7 +168,7 @@ class MediaFileRepoListTest {
         cleanRepo.attachObserverToList(OberserverTyp.capacity);
         cleanRepo.detachObserverFromList(OberserverTyp.tag);
 
-        assertEquals(1,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+        assertEquals(1,cleanRepo.getSingleRepository(0).getObserverList().size());
     }
 
     @Test
@@ -177,6 +177,6 @@ class MediaFileRepoListTest {
 
         cleanRepo.detachObserverFromList(OberserverTyp.tag);
 
-        assertEquals(0,cleanRepo.getCopyOfRepoByNumber(0).getObserverList().size());
+        assertEquals(0,cleanRepo.getSingleRepository(0).getObserverList().size());
     }
 }

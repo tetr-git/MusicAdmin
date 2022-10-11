@@ -42,7 +42,7 @@ class ParseCreateTest {
     void checkParseCreateUploaderWithStandardRepositoryActive() {
         parseCreate.execute("Produzent1");
 
-        assertEquals("Produzent1",mediaFileRepoList.getCopyOfRepoByNumber(0).readUploaderList().getFirst().getName());
+        assertEquals("Produzent1",mediaFileRepoList.getSingleRepository(0).readUploaderList().getFirst().getName());
         //verify(mediaFileRepoList).getRepoByNumber(0).insertUploaderFromString("Produzent1");
 
     }
@@ -51,7 +51,7 @@ class ParseCreateTest {
     void parseToCreateUploaderEvent() {
         parseCreate.execute("Produzent1");
 
-        assertEquals("Produzent1",mediaFileRepoList.getCopyOfRepoByNumber(0).readUploaderList().getFirst().getName());
+        assertEquals("Produzent1",mediaFileRepoList.getSingleRepository(0).readUploaderList().getFirst().getName());
     }
 
     @Test
@@ -59,7 +59,7 @@ class ParseCreateTest {
         parseCreate.execute("Produzent1");
         parseCreate.execute("InteractiveVideo Produzent1 Lifestyle,News 500 360");
 
-        assertEquals(1,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
+        assertEquals(1,mediaFileRepoList.getSingleRepository(0).readMediaList().size());
     }
 
     @Test
@@ -69,7 +69,7 @@ class ParseCreateTest {
         parseCreate.execute("Produzent2");
         parseCreate.execute("Produzent3");
 
-        assertEquals(3,mediaFileRepoList.getCopyOfRepoByNumber(0).readUploaderList().size());
+        assertEquals(3,mediaFileRepoList.getSingleRepository(0).readUploaderList().size());
     }
 
     @Test
@@ -91,7 +91,7 @@ class ParseCreateTest {
         parseCreate.execute("video Produzent1 Lifestyle 500 360 2");
         parseCreate.execute("video Produzent1 Lifestyle,News 500 360");
 
-        assertEquals(14,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
+        assertEquals(14,mediaFileRepoList.getSingleRepository(0).readMediaList().size());
     }
 
     @Test
@@ -101,7 +101,7 @@ class ParseCreateTest {
         parseCreate.execute("LicensedAudioVideo Produzent1 , 8000 600 EdBangerRecords 44100 720");
         parseCreate.execute("LicensedVideo Produzent1 News 1000 1800");
 
-        assertEquals(3,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
+        assertEquals(3,mediaFileRepoList.getSingleRepository(0).readMediaList().size());
     }
 
 

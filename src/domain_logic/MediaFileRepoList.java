@@ -46,7 +46,7 @@ public class MediaFileRepoList implements Serializable {
         }
     }
 
-    public MediaFileRepository getCopyOfRepoByNumber(int number) {
+    public MediaFileRepository getSingleRepository(int number) {
         MediaFileRepository copyRepo = new MediaFileRepository(maxCapacity);
         if (checkRepoAtIndexExists(number)) {
             for (MediaFileRepository originalRepo : repoList) {

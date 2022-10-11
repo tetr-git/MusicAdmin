@@ -30,14 +30,14 @@ class ParseStorageTest {
     @Test
     void checkIfInstanceZeroIsActiveByStart() {
 
-        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository());
+        assertTrue(mediaFileRepoList.getSingleRepository(0).isActiveRepository());
     }
 
     @Test
     void checkTurningOffDefaultInstance() {
         parseStorage.execute("storage");
 
-        assertFalse(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository());
+        assertFalse(mediaFileRepoList.getSingleRepository(0).isActiveRepository());
     }
 
     @Test
@@ -45,7 +45,7 @@ class ParseStorageTest {
         parseStorage.execute("storage");
         parseStorage.execute("storage 0");
 
-        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository());
+        assertTrue(mediaFileRepoList.getSingleRepository(0).isActiveRepository());
     }
 
     @Test
@@ -53,8 +53,8 @@ class ParseStorageTest {
         parseStorage.execute("storage");
         parseStorage.execute("storage 1 2");
 
-        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(1).isActiveRepository()&&
-                mediaFileRepoList.getCopyOfRepoByNumber(2).isActiveRepository());
+        assertTrue(mediaFileRepoList.getSingleRepository(1).isActiveRepository()&&
+                mediaFileRepoList.getSingleRepository(2).isActiveRepository());
     }
 
     @Test
@@ -63,15 +63,15 @@ class ParseStorageTest {
         parseStorage.execute("storage 0 2");
         parseStorage.execute("storage 1");
 
-        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(1).isActiveRepository() &&
-                !(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository())) ;
+        assertTrue(mediaFileRepoList.getSingleRepository(1).isActiveRepository() &&
+                !(mediaFileRepoList.getSingleRepository(0).isActiveRepository())) ;
     }
 
    @Test
    void checkRequirementExampleOne() {
         parseStorage.execute("storage 0");
 
-       assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository() &&
+       assertTrue(mediaFileRepoList.getSingleRepository(0).isActiveRepository() &&
                mediaFileRepoList.getRepoList().size()==1);
    }
 
@@ -79,17 +79,17 @@ class ParseStorageTest {
     void checkRequirementExampleTwo() {
         parseStorage.execute("storage 2");
 
-        assertTrue(mediaFileRepoList.getCopyOfRepoByNumber(2).isActiveRepository() &&
-                (!mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository()));
+        assertTrue(mediaFileRepoList.getSingleRepository(2).isActiveRepository() &&
+                (!mediaFileRepoList.getSingleRepository(0).isActiveRepository()));
     }
 
     @Test
     void checkRequirementExampleThree() {
         parseStorage.execute("storage 2 1");
 
-        boolean repoZero = mediaFileRepoList.getCopyOfRepoByNumber(0).isActiveRepository();
-        boolean repoOne = mediaFileRepoList.getCopyOfRepoByNumber(1).isActiveRepository();
-        boolean repoTwo = mediaFileRepoList.getCopyOfRepoByNumber(2).isActiveRepository();
+        boolean repoZero = mediaFileRepoList.getSingleRepository(0).isActiveRepository();
+        boolean repoOne = mediaFileRepoList.getSingleRepository(1).isActiveRepository();
+        boolean repoTwo = mediaFileRepoList.getSingleRepository(2).isActiveRepository();
 
         assertTrue(!(repoZero)&&repoOne&&repoTwo);
     }

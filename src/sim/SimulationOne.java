@@ -1,9 +1,11 @@
 package sim;
 
+import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
 import observer.CapacityObserver;
 import observer.SimObserver;
 import routing.handler.EventHandler;
+import routing.parser.ParseCreate;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -17,25 +19,23 @@ public class SimulationOne {
     // Diese Simulation sollte nicht terminieren und nicht synchronisiert arbeiten.
 
     final Lock lock = new ReentrantLock();
-    private MediaFileRepository mediaFileRepository;
+    private MediaFileRepoList mediaFileRepoList;
     private EventHandler inputHandler;
 
-    public SimulationOne(MediaFileRepository mediaFileRepository, EventHandler inputHandler) {
-        this.mediaFileRepository = mediaFileRepository;
+    public SimulationOne(MediaFileRepoList mediaFileRepoList, EventHandler inputHandler) {
+        this.mediaFileRepoList = mediaFileRepoList;
         this.inputHandler = inputHandler;
     }
 
     public void start () {
-        mediaFileRepository.insertUploaderFromString("Mr Oizo");
-        mediaFileRepository.insertUploaderFromString("Dj Mehdi");
-        mediaFileRepository.insertUploaderFromString("SebastiAn");
 
-        CapacityObserver capacityObserver = new CapacityObserver(mediaFileRepository);
-        SimObserver simObserver = new SimObserver(mediaFileRepository);
+        ParseCreate parseCreate = new ParseCreate(inputHandler);
+        parseCreate.execute("MrOizo");
+        parseCreate.execute("DjMehdi");
+        parseCreate.execute("SebastiAn");
 
-
-        ThreadAddMediaElem threadAddMediaElem = new ThreadAddMediaElem(mediaFileRepository,inputHandler,lock);
-        ThreadDeleteCargo threadDeleteCargo = new ThreadDeleteCargo(mediaFileRepository,inputHandler,lock);
+        ThreadAddMediaElem threadAddMediaElem = new ThreadAddMediaElem(mediaFileRepoList,inputHandler,lock);
+        ThreadDeleteCargo threadDeleteCargo = new ThreadDeleteCargo(mediaFileRepoList,inputHandler,lock);
         threadAddMediaElem.start();
         threadDeleteCargo.start();
     }

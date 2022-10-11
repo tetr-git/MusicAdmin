@@ -53,7 +53,7 @@ class ParseDeleteTest {
 
         parseDelete.execute("Produzent1");
 
-        assertEquals(1,mediaFileRepoList.getCopyOfRepoByNumber(0).readUploaderList().size());
+        assertEquals(1,mediaFileRepoList.getSingleRepository(0).readUploaderList().size());
     }
 
     @Test
@@ -63,7 +63,7 @@ class ParseDeleteTest {
 
         parseDelete.execute("Produzent1");
 
-        assertEquals(0,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
+        assertEquals(0,mediaFileRepoList.getSingleRepository(0).readMediaList().size());
     }
 
   @Test
@@ -73,7 +73,7 @@ class ParseDeleteTest {
 
       parseDelete.execute("1");
 
-      assertEquals(0,mediaFileRepoList.getCopyOfRepoByNumber(0).readMediaList().size());
+      assertEquals(0,mediaFileRepoList.getSingleRepository(0).readMediaList().size());
   }
 
 

@@ -71,7 +71,7 @@ class ParsePersistenceTest {
 
         parsePersistence.execute("LoadJOS");
 
-        assertEquals(1,mediaFileRepoList.getCopyOfRepoByNumber(0).getCurrentNumberOfMediaElements());
+        assertEquals(1,mediaFileRepoList.getSingleRepository(0).getCurrentNumberOfMediaElements());
     }
 
     @Test

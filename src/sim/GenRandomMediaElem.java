@@ -1,4 +1,4 @@
-package util;
+package sim;
 
 import java.util.Random;
 
@@ -14,7 +14,6 @@ public final class GenRandomMediaElem {
     }
 
     /**
-     *
      * @source http://www.java2s.com/example/java-utility-method/random-element/randomelement-t-array-f117b.html
      */
     private <T> T random(T[] array) {

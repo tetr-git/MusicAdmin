@@ -1,12 +1,12 @@
+import cli.ConsoleManagement;
 import domain_logic.MediaFileRepoList;
 import observer.OberserverTyp;
 import routing.handler.EventHandler;
-import routing.listener.OutputCliListener;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
 import routing.listener.DeleteListener;
+import routing.listener.OutputCliListener;
 import sim.SimulationOne;
-import ui.cli.ConsoleManagement;
 
 import java.math.BigDecimal;
 

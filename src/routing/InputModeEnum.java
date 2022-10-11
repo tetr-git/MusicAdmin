@@ -1,4 +1,4 @@
-package util;
+package routing;
 
 public enum InputModeEnum {
     c("create:     "),

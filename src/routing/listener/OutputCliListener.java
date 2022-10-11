@@ -1,7 +1,7 @@
 package routing.listener;
 
+import cli.ConsoleManagement;
 import routing.events.OutputEvent;
-import ui.cli.ConsoleManagement;
 
 import java.util.EventObject;
 

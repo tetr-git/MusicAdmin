@@ -1,4 +1,4 @@
-package ui.gui;
+package gui;
 
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
@@ -16,10 +16,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import routing.ParseMediaCollector;
+import routing.RepoCollection;
 import routing.events.*;
 import routing.handler.EventHandler;
 import routing.listener.*;
-import util.RepoCollection;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,12 +29,62 @@ import java.util.Map;
 
 public class ViewModel {
     private final MediaFileRepoList mediaFileRepoList;
+    private final StringProperty inputProperty = new SimpleStringProperty();
+    public CheckBox instanceZero;
+    public CheckBox instanceOne;
+    public CheckBox instanceTwo;
     private LinkedList<MediaTableWrapper> mediaTableWrapperList;
     private LinkedList<UploaderWithAmountTableWrapper> uploaderWrapperList;
     private LinkedList<TagTableWrapper> tagTableWrapperList;
     private ParseMediaCollector parseMediaCollector;
-
-
+    @FXML
+    private TextField input;
+    private EventHandler inputHandler;
+    private EventHandler outputHandler;
+    @FXML
+    private TableView<MediaTableWrapper> mediaTable = new TableView<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableAddress = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableInstance = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableMediaType = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableMediaUploader = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableTags = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableAccessCount = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableBitrate = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableMediaLength = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableSamplingRate = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableResolution = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableHolder = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableInteractiveType = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableMediaUploadDate = new TableColumn<>();
+    @FXML
+    private TableColumn<MediaTableWrapper, String> mediaTableSize = new TableColumn<>();
+    @FXML
+    private TableView<UploaderWithAmountTableWrapper> uploaderTable = new TableView<>();
+    @FXML
+    private TableColumn<UploaderWithAmountTableWrapper, String> uploaderColumn = new TableColumn<>();
+    @FXML
+    private TableColumn<UploaderWithAmountTableWrapper, String> uploaderAmountColumn = new TableColumn<>();
+    @FXML
+    private TableColumn<UploaderWithAmountTableWrapper, String> uploaderInstance = new TableColumn<>();
+    @FXML
+    private TableView<TagTableWrapper> tagsTable = new TableView<>();
+    @FXML
+    private TableColumn<TagTableWrapper, String> tagColumn = new TableColumn<>();
+    @FXML
+    private TableColumn<TagTableWrapper, String> tagInstance = new TableColumn<>();
     public ViewModel() {
         this.mediaFileRepoList = new MediaFileRepoList(new BigDecimal(10000000));
         this.addHandler();
@@ -119,7 +169,6 @@ public class ViewModel {
         this.updateProperties();
     }
 
-
     public void buttonClickAdd(ActionEvent actionEvent) {
         String[] arg = this.inputProperty.get().trim().split("\\s+");
         if (arg.length == 1) {
@@ -165,17 +214,9 @@ public class ViewModel {
         input.clear();
     }
 
-    @FXML
-    private TextField input;
-    public CheckBox instanceZero;
-    public CheckBox instanceOne;
-    public CheckBox instanceTwo;
-    private final StringProperty inputProperty = new SimpleStringProperty();
-
     /**
-    @author
-       https://stackoverflow.com/questions/70175587/how-do-you-use-a-javafx-tableview-with-java-records
-       https://stackoverflow.com/questions/38049734/java-setcellvaluefactory-lambda-vs-propertyvaluefactory-advantages-disadvant
+     * @author https://stackoverflow.com/questions/70175587/how-do-you-use-a-javafx-tableview-with-java-records
+     * https://stackoverflow.com/questions/38049734/java-setcellvaluefactory-lambda-vs-propertyvaluefactory-advantages-disadvant
      */
 
     @FXML
@@ -207,9 +248,6 @@ public class ViewModel {
         this.updateProperties();
     }
 
-    private EventHandler inputHandler;
-    private EventHandler outputHandler;
-
     private void addHandler() {
         inputHandler = new EventHandler();
         outputHandler = new EventHandler();
@@ -227,52 +265,5 @@ public class ViewModel {
         //CliOutputListener cliOutputListener = new CliOutputListener(consoleManagement);
         //outputHandler.add(cliOutputListener);
     }
-
-    @FXML
-    private TableView<MediaTableWrapper> mediaTable = new TableView<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableAddress = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableInstance = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableMediaType = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableMediaUploader = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableTags = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableAccessCount = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableBitrate = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableMediaLength = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableSamplingRate = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableResolution = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableHolder = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableInteractiveType = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableMediaUploadDate = new TableColumn<>();
-    @FXML
-    private TableColumn<MediaTableWrapper, String> mediaTableSize = new TableColumn<>();
-
-    @FXML
-    private TableView<UploaderWithAmountTableWrapper> uploaderTable = new TableView<>();
-    @FXML
-    private TableColumn<UploaderWithAmountTableWrapper, String> uploaderColumn = new TableColumn<>();
-    @FXML
-    private TableColumn<UploaderWithAmountTableWrapper, String> uploaderAmountColumn = new TableColumn<>();
-    @FXML
-    private TableColumn<UploaderWithAmountTableWrapper, String> uploaderInstance = new TableColumn<>();
-
-    @FXML
-    private TableView<TagTableWrapper> tagsTable = new TableView<>();
-    @FXML
-    private TableColumn<TagTableWrapper, String> tagColumn = new TableColumn<>();
-    @FXML
-    private TableColumn<TagTableWrapper, String> tagInstance = new TableColumn<>();
 
 }

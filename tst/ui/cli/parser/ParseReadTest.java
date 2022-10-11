@@ -7,7 +7,7 @@ import routing.handler.EventHandler;
 import routing.listener.*;
 import routing.parser.ParseCreate;
 import routing.parser.ParseRead;
-import ui.cli.ConsoleManagement;
+import cli.ConsoleManagement;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -49,12 +49,6 @@ class ParseReadTest {
         Calendar today = Calendar.getInstance();
         todayAsDate = today.getTime();
     }
-
-    /*
-    todo change setUp
-    Test with standard repository active (repository number )
-    todo check text output with one or more repositories
-     */
 
     @Test
     void ReadUploader() {

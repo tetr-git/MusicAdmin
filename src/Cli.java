@@ -1,9 +1,9 @@
+import cli.ConsoleManagement;
 import domain_logic.MediaFileRepoList;
 import net.ClientHandler;
 import observer.OberserverTyp;
 import routing.handler.EventHandler;
 import routing.listener.*;
-import ui.cli.ConsoleManagement;
 
 import java.math.BigDecimal;
 
@@ -17,17 +17,17 @@ public class Cli {
         boolean tcp = false;
         int mediaFileRepositorySize = 10000000;
 
-        if (args.length>0) {
+        if (args.length > 0) {
             for (String string : args) {
-                if(isNumericInteger(string)) {
+                if (isNumericInteger(string)) {
                     mediaFileRepositorySize = addInteger(string);
                     break;
                 }
             }
-            if (args.length==1&&args[0].equalsIgnoreCase("tcp")) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("tcp")) {
                 tcp = true;
             }
-            if (args.length==1&&args[0].equalsIgnoreCase("udp")) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("udp")) {
                 System.out.println("Not implemented");
                 start = false;
             }
@@ -53,7 +53,7 @@ public class Cli {
             OutputCliListener outputCliListener = new OutputCliListener(consoleManagement);
             outputHandler.add(outputCliListener);
             consoleManagement.run();
-        } else if(tcp) {
+        } else if (tcp) {
             ClientHandler clientHandler = new ClientHandler(1001);
             clientHandler.run();
         }

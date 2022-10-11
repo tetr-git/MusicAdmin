@@ -1,6 +1,6 @@
 package net;
 
-import util.InputModeEnum;
+import routing.InputModeEnum;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,11 +10,11 @@ import java.util.Scanner;
 
 public class ClientHandler {
 
-    private InputModeEnum mode = InputModeEnum.c;
     private final int port;
-    private int clientInstancePort;
     Scanner scanner;
     boolean exitMarker = false;
+    private InputModeEnum mode = InputModeEnum.c;
+    private int clientInstancePort;
 
     public ClientHandler(int port) {
         this.port = port;
@@ -23,8 +23,8 @@ public class ClientHandler {
 
     public void run() {
         try (Socket socket = new Socket("localhost", port);
-             DataInputStream in=new DataInputStream(socket.getInputStream());
-             DataOutputStream out=new DataOutputStream(socket.getOutputStream())) {
+             DataInputStream in = new DataInputStream(socket.getInputStream());
+             DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
             Scanner scanner = new Scanner(System.in);
             String input;
             do {
@@ -52,7 +52,7 @@ public class ClientHandler {
             e.printStackTrace();
         }
 
-        try (Socket socket = new Socket("localhost", clientInstancePort);
+        try (Socket socket = new Socket("localhost", clientInstancePort);USer
      */
 
     private void switchMode(String input) {

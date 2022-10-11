@@ -1,4 +1,4 @@
-package ui.gui;
+package gui;
 
 import domain_logic.enums.Tag;
 

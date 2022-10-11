@@ -33,9 +33,6 @@ public class ThreadDeleteCargo extends Thread {
             String[] stockArr = new String[addresses.size()];
             stockArr = addresses.toArray(stockArr);
             Random rand = new Random();
-            //todo: last minute fix
-            //throws out of Bound with empty list
-            //if list is not empty..
             if ((addresses.size() - 1 > 0)) {
                 int int_random = rand.nextInt(addresses.size() - 1);
                 DeleteEvent deleteEvent = new DeleteEvent(stockArr[int_random], stockArr[int_random]);

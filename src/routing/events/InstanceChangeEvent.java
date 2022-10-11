@@ -1,6 +1,6 @@
 package routing.events;
 
-import util.RepoCollection;
+import routing.RepoCollection;
 
 import java.util.EventObject;
 

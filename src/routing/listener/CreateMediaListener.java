@@ -5,10 +5,10 @@ import domain_logic.MediaFileRepository;
 import domain_logic.enums.Tag;
 import domain_logic.files.*;
 import domain_logic.producer.UploaderImpl;
-import routing.events.OutputEvent;
+import routing.MediaAttributesCollection;
 import routing.events.CreateMediaEvent;
+import routing.events.OutputEvent;
 import routing.handler.EventHandler;
-import util.MediaAttributesCollection;
 
 import java.math.BigDecimal;
 import java.time.Duration;

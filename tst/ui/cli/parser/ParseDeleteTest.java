@@ -4,13 +4,11 @@ import domain_logic.MediaFileRepoList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
-import routing.listener.OutputCliListener;
-import routing.listener.CreateMediaListener;
-import routing.listener.CreateUploaderListener;
-import routing.listener.DeleteListener;
+import routing.listener.*;
 import routing.parser.ParseCreate;
 import routing.parser.ParseDelete;
-import ui.cli.ConsoleManagement;
+import cli.ConsoleManagement;
+import routing.parser.ParseStorage;
 
 
 import java.math.BigDecimal;
@@ -26,6 +24,7 @@ class ParseDeleteTest {
     EventHandler outputHandler;
     ParseCreate parseCreate;
     ParseDelete parseDelete;
+    ParseStorage parseStorage;
 
     @BeforeEach
     void setUp() {
@@ -35,15 +34,30 @@ class ParseDeleteTest {
         inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandler));
         inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
         inputHandler.add(new DeleteListener(mediaFileRepoList,outputHandler));
+        inputHandler.add(new InstanceListener(mediaFileRepoList,outputHandler));
         consoleManagement = mock(ConsoleManagement.class);
         outputHandler.add(new OutputCliListener(consoleManagement));
         parseCreate = new ParseCreate(inputHandler);
         parseDelete= new ParseDelete(inputHandler);
+        parseStorage = new ParseStorage(inputHandler);
+    }
+
+    @Test
+    void testMultipleInstances() {
+        parseStorage.execute("storage 0 1");
+
+        parseCreate.execute("Produzent1");
+        parseCreate.execute("Produzent2");
+
+        parseDelete.execute("Produzent1");
+
+        boolean boolOne = mediaFileRepoList.getSingleRepository(0).readUploaderList().getFirst().getName().equals("Produzent2");
+        boolean boolTwo = mediaFileRepoList.getSingleRepository(1).readUploaderList().getFirst().getName().equals("Produzent2");
+        assertTrue(boolOne&&boolTwo);
     }
 
      /*
     Test with standard repository active (repository number 0)
-    todo check text output with one or more repositories
      */
 
     @Test

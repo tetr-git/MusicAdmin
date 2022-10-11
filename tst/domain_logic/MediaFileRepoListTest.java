@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 class MediaFileRepoListTest {
 
@@ -30,13 +31,22 @@ class MediaFileRepoListTest {
     }
 
 
-    //todo here additional test
     @Test
     void getCopyOfRepoByNumber() {
+        //used changeStateMethod create instance 2
         String[] strings = {"2"};
         mediaFileRepoList.changeStateAllRepositories(strings);
 
         assertEquals(2,mediaFileRepoList.getSingleRepository(2).getNumberOfRepository());
+    }
+
+    @Test
+    void getCopyOfRepoByNumberNullString() {
+        String[] strings = {""};
+        MediaFileRepoList mock = mock(MediaFileRepoList.class);
+        mediaFileRepoList.changeStateAllRepositories(strings);
+
+        verifyNoInteractions(mock);
     }
 
     @Test

@@ -1,8 +1,8 @@
 package net;
 
+import routing.InputModeEnum;
 import routing.handler.EventHandler;
 import routing.parser.*;
-import util.InputModeEnum;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,11 +14,7 @@ import java.util.ArrayList;
 
 public class ServerHandler {
 
-    private EventHandler inputHandler = null;
     private final int port;
-    private DataInputStream in;
-    private DataOutputStream out;
-    private InputModeEnum mode = InputModeEnum.c;
     private final ParseCreate parseCreate;
     private final ParseDelete parseDelete;
     private final ParsePersistence parsePersistence;
@@ -27,9 +23,11 @@ public class ServerHandler {
     private final ParseUpdate parseUpdate;
     boolean exitMarker = false;
     ArrayList<Integer> ports;
+    private DataInputStream in;
+    private DataOutputStream out;
+    private InputModeEnum mode = InputModeEnum.c;
 
     public ServerHandler(EventHandler inputHandler, int port) {
-        this.inputHandler = inputHandler;
         this.port = port;
         parseCreate = new ParseCreate(inputHandler);
         parseDelete = new ParseDelete(inputHandler);
@@ -37,26 +35,21 @@ public class ServerHandler {
         parseRead = new ParseRead(inputHandler);
         parseStorage = new ParseStorage(inputHandler);
         parseUpdate = new ParseUpdate(inputHandler);
-        ports = new ArrayList<>();
-        ports.add(port);
-        ports.add(port+1);
     }
 
-    public void run(){
-        try(ServerSocket serverSocket=new ServerSocket(port)) {
+    public void run() {
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
             try {
-                Socket socket=serverSocket.accept();
+                Socket socket = serverSocket.accept();
                 in = new DataInputStream(socket.getInputStream());
                 out = new DataOutputStream(socket.getOutputStream());
-                System.out.println("client: "+socket.getInetAddress()+":"+socket.getPort());
-                while (true){
-                    //out.writeInt(-in.readInt());
-                    //out.writeUTF("1:"+ in.readUTF());
-                    this.handleInput(in.readChar(),in.readUTF());
+                System.out.println("client: " + socket.getInetAddress() + ":" + socket.getPort());
+                while (true) {
+                    this.handleInput(in.readChar(), in.readUTF());
                 }
             } catch (EOFException e) {
                 System.out.println("client disconnect");
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } catch (IOException e) {
@@ -64,44 +57,44 @@ public class ServerHandler {
         }
     }
 
-    public void runMulti(){
+    public void runMulti() {
         boolean add = false;
         while (true) {
             int newport = 0;
             if (add) {
                 ports.add(newport);
-                add= false;
+                add = false;
             }
             for (int portNumber : ports) {
-                if (portNumber==1001) {
-                    try(ServerSocket serverSocket=new ServerSocket(portNumber)) {
+                if (portNumber == 1001) {
+                    try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
                         try {
-                            Socket socket=serverSocket.accept();
+                            Socket socket = serverSocket.accept();
                             in = new DataInputStream(socket.getInputStream());
                             out = new DataOutputStream(socket.getOutputStream());
-                            newport = ports.size()+1001;
-                            System.out.println("client: "+socket.getInetAddress()+":"+newport);
+                            newport = ports.size() + 1001;
+                            System.out.println("client: " + socket.getInetAddress() + ":" + newport);
                             out.writeInt(newport);
                             add = true;
                             socket.close();
                         } catch (EOFException e) {
                             System.out.println("added client/ client disconnected on standardport 1001");
-                        } catch (IOException e){
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    try(ServerSocket serverSocket=new ServerSocket(portNumber)) {
+                    try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
                         try {
-                            Socket socket=serverSocket.accept();
+                            Socket socket = serverSocket.accept();
                             in = new DataInputStream(socket.getInputStream());
                             out = new DataOutputStream(socket.getOutputStream());
-                            this.handleInput(in.readChar(),in.readUTF());
+                            this.handleInput(in.readChar(), in.readUTF());
                         } catch (EOFException e) {
                             System.out.println("client disconnect");
-                        } catch (IOException e){
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } catch (IOException e) {
@@ -113,10 +106,10 @@ public class ServerHandler {
     }
 
     public void handleInput(char modeChar, String input) {
-        for(InputModeEnum m: InputModeEnum.values()){
+        for (InputModeEnum m : InputModeEnum.values()) {
             char c = m.toString().charAt(0);
             int i = Character.compare(c, modeChar);
-            if (i==0) {
+            if (i == 0) {
                 mode = m;
             }
         }

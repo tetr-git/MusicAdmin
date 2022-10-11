@@ -2,16 +2,16 @@ package routing.listener;
 
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
-import routing.events.OutputEvent;
 import routing.events.DeleteEvent;
+import routing.events.OutputEvent;
 import routing.handler.EventHandler;
 
 import java.util.EventObject;
 
 public class DeleteListener implements EventListener {
     private final MediaFileRepoList mediaFileRepoList;
-    private String[] arg;
     private final EventHandler outputHandler;
+    private String[] arg;
     private EventObject event;
 
     public DeleteListener(MediaFileRepoList mediaFileRepoList, EventHandler outputHandler) {
@@ -32,7 +32,6 @@ public class DeleteListener implements EventListener {
     }
 
     private void execute(MediaFileRepository mR) {
-        //todo if uploader with files gets deleted wrong message
         String response = "";
         if (mR.deleteUploader(((DeleteEvent) event).getDeleteString())) {
             response += "Uploader deleted";

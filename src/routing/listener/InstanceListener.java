@@ -2,8 +2,8 @@ package routing.listener;
 
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
-import routing.events.OutputEvent;
 import routing.events.InstanceChangeEvent;
+import routing.events.OutputEvent;
 import routing.handler.EventHandler;
 
 import java.util.EventObject;
@@ -17,8 +17,6 @@ public class InstanceListener implements EventListener {
         this.mediaFileRepoList = mediaFileRepoList;
         this.outputHandler = outputHandler;
     }
-
-    //todo output not correct
 
     @Override
     public void onEvent(EventObject event) {

@@ -1,7 +1,7 @@
 package ui.cli;
 
 import org.junit.jupiter.api.Test;
-import util.InputModeEnum;
+import routing.InputModeEnum;
 
 import static org.junit.jupiter.api.Assertions.*;
 

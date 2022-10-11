@@ -1,13 +1,37 @@
 package routing;
 
 import domain_logic.enums.Tag;
-import util.MediaAttributesCollection;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
 
 public final class ParseMediaCollector {
+
+    private static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean isNumericInteger(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+
+    }
 
     public MediaAttributesCollection parseToCollection(String[] arg) {
         String errorMessage = "wrong tags";
@@ -120,12 +144,9 @@ public final class ParseMediaCollector {
 
     public ArrayList<Tag> collectTags(String str) {
         ArrayList<Tag> tagArrayList = new ArrayList<>();
-        //new ArrayList<Tag>(Arrays.asList(Tag.Lifestyle,Tag.News))
         if (!str.equals(",")) {
             String[] tags = str.split(",");
-            //todo check for wrong input
             for (String tag : tags) {
-                //Arrays.asList(Tag.values()).forEach(tag -> );
                 for (Tag t : Tag.values()) {
                     if (t.toString().equalsIgnoreCase(tag)) {
                         tagArrayList.add(t);
@@ -159,31 +180,5 @@ public final class ParseMediaCollector {
             i = Integer.parseInt(str);
         }
         return i;
-    }
-
-    //todo delete -> util
-    private static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean isNumericInteger(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            Integer.parseInt(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-
     }
 }

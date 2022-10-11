@@ -1,6 +1,6 @@
 package routing.events;
 
-import util.MediaAttributesCollection;
+import routing.MediaAttributesCollection;
 
 import java.util.EventObject;
 

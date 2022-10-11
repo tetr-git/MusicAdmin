@@ -9,7 +9,8 @@ import routing.handler.EventHandler;
 import routing.listener.*;
 import routing.parser.ParseCreate;
 import routing.parser.ParsePersistence;
-import ui.cli.ConsoleManagement;
+import cli.ConsoleManagement;
+import routing.parser.ParseStorage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ParsePersistenceTest {
-    /*
-    todo Speicherzugriff auf System laut Anforderungen nicht erlaubt,
+    /**
+    Speicherzugriff auf System laut Anforderungen nicht erlaubt,
     Datei wird im Projektordner angelegt sollte daher zumindest Betriebssystem unabhängig sein
      */
     MediaFileRepoList mediaFileRepoList;
@@ -29,6 +30,7 @@ class ParsePersistenceTest {
     EventHandler outputHandler;
     ParseCreate parseCreate;
     ParsePersistence parsePersistence;
+    ParseStorage parseStorage;
 
     @BeforeEach
     void setUp() {
@@ -43,12 +45,8 @@ class ParsePersistenceTest {
         outputHandler.add(new OutputCliListener(consoleManagement));
         parseCreate = new ParseCreate(inputHandler);
         parsePersistence = new ParsePersistence(inputHandler);
+        parseStorage = new ParseStorage(inputHandler);
     }
-
-     /*
-    Test with standard repository active (repository number 1)
-    todo check text output with one or more repositories
-     */
 
     @Test
     void testSaveJosCliOutput() {

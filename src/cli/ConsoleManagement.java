@@ -1,13 +1,12 @@
-package ui.cli;
+package cli;
 
+import routing.InputModeEnum;
 import routing.handler.EventHandler;
 import routing.parser.*;
-import util.InputModeEnum;
 
 import java.util.Scanner;
 
 public class ConsoleManagement {
-    private InputModeEnum mode = InputModeEnum.c;
     private final ParseCreate parseCreate;
     private final ParseDelete parseDelete;
     private final ParsePersistence parsePersistence;
@@ -16,6 +15,7 @@ public class ConsoleManagement {
     private final ParseUpdate parseUpdate;
     private final Scanner scanner;
     boolean exitMarker = false;
+    private InputModeEnum mode = InputModeEnum.c;
 
     public ConsoleManagement(EventHandler inputHandler) {
         parseCreate = new ParseCreate(inputHandler);

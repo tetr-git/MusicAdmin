@@ -6,21 +6,21 @@ import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
+import routing.listener.InstanceListener;
 import routing.parser.ParseCreate;
-import ui.cli.ConsoleManagement;
+import routing.parser.ParseStorage;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 class ParseCreateTest {
 
     MediaFileRepoList mediaFileRepoList;
-    ConsoleManagement consoleManagement;
     EventHandler inputHandler;
     EventHandler outputHandler;
     ParseCreate parseCreate;
+    ParseStorage parseStorage;
 
     @BeforeEach
     void setUp() {
@@ -29,13 +29,23 @@ class ParseCreateTest {
         outputHandler = new EventHandler();
         inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandler));
         inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
-        consoleManagement = mock(ConsoleManagement.class);
+        inputHandler.add(new InstanceListener(mediaFileRepoList,outputHandler));
         parseCreate = new ParseCreate(inputHandler);
+        parseStorage = new ParseStorage(inputHandler);
     }
 
-    /*
+    @Test
+    void checkMultiInstance() {
+
+        parseStorage.execute("storage 0 1");
+        parseCreate.execute("Produzent1");
+        boolean boolOne = mediaFileRepoList.getSingleRepository(0).readUploaderList().getFirst().getName().equals("Produzent1");
+        boolean boolTwo = mediaFileRepoList.getSingleRepository(1).readUploaderList().getFirst().getName().equals("Produzent1");
+        assertTrue(boolOne&&boolTwo);
+    }
+
+     /*
     Test with standard repository active (repository number 1)
-    todo check text output with one or more repositories
      */
 
     @Test
@@ -43,8 +53,6 @@ class ParseCreateTest {
         parseCreate.execute("Produzent1");
 
         assertEquals("Produzent1",mediaFileRepoList.getSingleRepository(0).readUploaderList().getFirst().getName());
-        //verify(mediaFileRepoList).getRepoByNumber(0).insertUploaderFromString("Produzent1");
-
     }
 
     @Test

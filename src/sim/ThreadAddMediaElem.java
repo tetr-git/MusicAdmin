@@ -4,7 +4,6 @@ import domain_logic.MediaFileRepoList;
 import routing.ParseMediaCollector;
 import routing.events.CreateMediaEvent;
 import routing.handler.EventHandler;
-import util.GenRandomMediaElem;
 
 import java.util.concurrent.locks.Lock;
 

@@ -7,7 +7,7 @@ import routing.listener.ChangeListener;
 import routing.listener.OutputCliListener;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
-import ui.cli.ConsoleManagement;
+import cli.ConsoleManagement;
 import routing.parser.ParseCreate;
 import routing.parser.ParseUpdate;
 
@@ -15,14 +15,8 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class ParseUpdateTest {
-
-    /*
-    Test with standard repository active (repository number )
-    todo check text output with one or more repositories
-     */
 
     @Test
     void execute() {

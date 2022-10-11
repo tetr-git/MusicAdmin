@@ -1,8 +1,7 @@
-package ui.gui;
+package gui;
 
 import domain_logic.file_interfaces.*;
 import domain_logic.files.MediaFile;
-import util.FormatIntervalToString;
 
 import java.util.Arrays;
 
@@ -18,11 +17,11 @@ public class MediaTableWrapper {
     private final String size;
     private final String uploader;
     private final String uploadDate;
+    private final String instance;
     private String samplingRate;
     private String resolution;
     private String typeInteractive;
     private String holder;
-    private final String instance;
 
 
     public MediaTableWrapper(MediaFile mediaElement, int instanceOfRepository) {

@@ -19,9 +19,12 @@ import static util.TypeConverter.isNumericInteger;
 
 public class MediaFileRepoList implements Serializable {
     static final long serialVersionUID = 1L;
+    private final Lock mItemLock = new ReentrantLock();
+    private final String fileNameJos = "mediaFileRepoJos";
+    //observerFunctionality
+    private final List<OberserverTyp> oberserverTypeEnumList = new LinkedList<>();
     private LinkedList<MediaFileRepository> repoList = new LinkedList<>();
     private BigDecimal maxCapacity;
-    private final Lock mItemLock = new ReentrantLock();
 
     public MediaFileRepoList(BigDecimal maxCapacity) {
         this.maxCapacity = maxCapacity;
@@ -88,6 +91,8 @@ public class MediaFileRepoList implements Serializable {
         return false;
     }
 
+    //jos functionality
+
     public void detachAllRepositories() {
         if (!repoList.isEmpty()) {
             for (MediaFileRepository repo : repoList) {
@@ -123,10 +128,6 @@ public class MediaFileRepoList implements Serializable {
             }
         }
     }
-
-    //jos functionality
-
-    private final String fileNameJos = "mediaFileRepoJos";
 
     public boolean safeJos() {
         mItemLock.lock();
@@ -169,9 +170,6 @@ public class MediaFileRepoList implements Serializable {
 
         return true;
     }
-
-    //observerFunctionality
-    private final List<OberserverTyp> oberserverTypeEnumList = new LinkedList<>();
 
     public void attachObserverToList(OberserverTyp observerTyp) {
         this.oberserverTypeEnumList.add(observerTyp);

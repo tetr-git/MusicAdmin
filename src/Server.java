@@ -16,25 +16,25 @@ public class Server {
         boolean tcp = false;
         int mediaFileRepositorySize = 10000000;
 
-        if (args.length>0) {
+        if (args.length > 0) {
             for (String string : args) {
-                if(isNumericInteger(string)) {
+                if (isNumericInteger(string)) {
                     mediaFileRepositorySize = addInteger(string);
                     break;
                 }
             }
             for (String string : args) {
-                if(string.equalsIgnoreCase("tcp")){
+                if (string.equalsIgnoreCase("tcp")) {
                     tcp = true;
                     break;
                 }
             }
-            if (args.length==1&&args[0].equalsIgnoreCase("udp")) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("udp")) {
                 System.out.println("Not implemented");
                 startserver = false;
             }
         }
-        if(startserver && tcp) {
+        if (startserver && tcp) {
             MediaFileRepoList mediaFileRepoList = new MediaFileRepoList(new BigDecimal(mediaFileRepositorySize));
             EventHandler inputHandler = new EventHandler();
             ServerHandler serverHandler = new ServerHandler(inputHandler, 1001);

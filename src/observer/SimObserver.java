@@ -5,9 +5,9 @@ import domain_logic.MediaFileRepository;
 import java.io.Serializable;
 
 public class SimObserver implements Observer, Serializable {
+    static final long serialVersionUID = 1L;
     private final MediaFileRepository mR;
     private int currentNumberOfMediaElements;
-    static final long serialVersionUID = 1L;
 
     public SimObserver(MediaFileRepository mR) {
         this.mR = mR;

@@ -20,11 +20,11 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
     static final long serialVersionUID = 1L;
     private final UploaderImpl uploader;
     private final Collection<Tag> tags;
-    private long accessCount;
     private final BigDecimal bitrate;
     private final Duration length;
     private final BigDecimal size;
     private final Date uploadDate;
+    private long accessCount;
     private String address;
 
     public MediaFile(UploaderImpl uploader, Collection<Tag> tags, BigDecimal bitrate, Duration length) {
@@ -46,6 +46,10 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
     @Override
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
@@ -85,10 +89,6 @@ public abstract class MediaFile implements Uploadable, MediaContent, Content, Se
 
     public void updateAccessCount() {
         accessCount++;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public abstract String typeString();

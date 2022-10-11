@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class CapacityObserver implements Observer, Serializable {
-    private final MediaFileRepository mR;
     static final long serialVersionUID = 1L;
+    private final MediaFileRepository mR;
 
     public CapacityObserver(MediaFileRepository mR) {
         this.mR = mR;
@@ -17,7 +17,6 @@ public class CapacityObserver implements Observer, Serializable {
      * @source https://www.geeksforgeeks.org/bigdecimal-compareto-function-in-java/
      */
     //@source
-
     @Override
     public void update() {
         BigDecimal newCapacity = mR.getCurrentCapacity();

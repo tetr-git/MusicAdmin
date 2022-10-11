@@ -20,6 +20,9 @@ public class MediaFileRepository implements Serializable, Observable {
     private final List<Uploader> uploaderList = new LinkedList<>();
     private final BigDecimal maxCapacity;
     private final Lock mItemLock = new ReentrantLock();
+    private final List<observer.Observer> observerList = new LinkedList<observer.Observer>();
+    private int numberOfRepository = 0;
+    private boolean isActiveRepository = false;
 
     public MediaFileRepository(BigDecimal maxCapacity) {
         this.maxCapacity = maxCapacity;
@@ -170,6 +173,8 @@ public class MediaFileRepository implements Serializable, Observable {
         return map;
     }
 
+    //observer functionality
+
     public ArrayList<Tag> listEnumTags() {
         ArrayList<Tag> tagList = new ArrayList<>();
         for (MediaFile m : mediaFileList) {
@@ -194,7 +199,6 @@ public class MediaFileRepository implements Serializable, Observable {
         return list;
     }
 
-
     public int NumberOfMediaType(String mediaType) {
         int counter = 0;
         for (MediaFile m : mediaFileList) {
@@ -204,10 +208,6 @@ public class MediaFileRepository implements Serializable, Observable {
         }
         return counter;
     }
-
-    //observer functionality
-
-    private final List<observer.Observer> observerList = new LinkedList<observer.Observer>();
 
     public List<observer.Observer> getObserverList() {
         return new LinkedList<>(observerList);
@@ -222,6 +222,8 @@ public class MediaFileRepository implements Serializable, Observable {
     public void detachObserver(observer.Observer observer) {
         this.observerList.remove(observer);
     }
+
+    //RepoList Functionality
 
     @Override
     public void notifyObservers() {
@@ -238,10 +240,6 @@ public class MediaFileRepository implements Serializable, Observable {
         return counter;
     }
 
-    //RepoList Functionality
-
-    private int numberOfRepository = 0;
-
     public int getNumberOfRepository() {
         return numberOfRepository;
     }
@@ -249,8 +247,6 @@ public class MediaFileRepository implements Serializable, Observable {
     public void setNumberOfRepository(int numberOfRepository) {
         this.numberOfRepository = numberOfRepository;
     }
-
-    private boolean isActiveRepository = false;
 
     public boolean isActiveRepository() {
         return isActiveRepository;

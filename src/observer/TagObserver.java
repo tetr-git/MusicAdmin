@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class TagObserver implements Observer, Serializable {
+    static final long serialVersionUID = 1L;
     private final MediaFileRepository mR;
     private ArrayList<Tag> oldListOfTags;
-    static final long serialVersionUID = 1L;
 
     public TagObserver(MediaFileRepository mR) {
         this.mR = mR;

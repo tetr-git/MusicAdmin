@@ -1,7 +1,7 @@
 import domain_logic.MediaFileRepoList;
 import observer.OberserverTyp;
 import routing.handler.EventHandler;
-import routing.listener.CliOutputListener;
+import routing.listener.OutputCliListener;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
 import routing.listener.DeleteListener;
@@ -20,7 +20,7 @@ public class SimOne {
         inputHandler.add(new CreateMediaListener(mediaFileRepoList, outputHandler));
         inputHandler.add(new CreateUploaderListener(mediaFileRepoList, outputHandler));
         inputHandler.add(new DeleteListener(mediaFileRepoList, outputHandler));
-        outputHandler.add(new CliOutputListener(consoleManagement));
+        outputHandler.add(new OutputCliListener(consoleManagement));
         SimulationOne simulationOne = new SimulationOne(mediaFileRepoList, inputHandler);
         simulationOne.start();
     }

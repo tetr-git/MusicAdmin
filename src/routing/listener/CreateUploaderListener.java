@@ -2,7 +2,7 @@ package routing.listener;
 
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.events.CreateUploaderEvent;
 import routing.handler.EventHandler;
 
@@ -38,8 +38,8 @@ public class CreateUploaderListener implements EventListener {
         } else {
             s.append("not added uploader ").append(((CreateUploaderEvent) event).getUploaderString());
         }
-        CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event, s.toString());
+        OutputEvent outputEvent;
+        outputEvent = new OutputEvent(event, s.toString());
         outputHandler.handle(outputEvent);
     }
 }

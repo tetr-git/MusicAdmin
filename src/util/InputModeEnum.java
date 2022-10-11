@@ -1,6 +1,6 @@
-package ui.cli;
+package util;
 
-public enum CliModeEnum {
+public enum InputModeEnum {
     c("create:     "),
     d("delete:     "),
     r("read:       "),
@@ -10,12 +10,16 @@ public enum CliModeEnum {
 
     private final String text;
 
-    CliModeEnum(final String text) {
+    InputModeEnum(final String text) {
         this.text = text;
     }
 
     @Override
     public String toString() {
         return text;
+    }
+
+    public char toChar() {
+        return text.charAt(0);
     }
 }

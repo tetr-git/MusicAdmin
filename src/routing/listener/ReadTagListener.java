@@ -3,7 +3,7 @@ package routing.listener;
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
 import domain_logic.enums.Tag;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.events.ReadTagEvent;
 import routing.handler.EventHandler;
 
@@ -58,6 +58,6 @@ public class ReadTagListener implements EventListener {
             s = new StringBuilder("Repository[" + mR.getNumberOfRepository() + "] no tags found");
         }
 
-        outputHandler.handle(new CliOutputEvent(event, s.toString()));
+        outputHandler.handle(new OutputEvent(event, s.toString()));
     }
 }

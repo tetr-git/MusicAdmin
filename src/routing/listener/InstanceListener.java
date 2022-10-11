@@ -2,18 +2,18 @@ package routing.listener;
 
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
-import routing.events.CliOutputEvent;
-import routing.events.SetRepositoryStatusEvent;
+import routing.events.OutputEvent;
+import routing.events.InstanceChangeEvent;
 import routing.handler.EventHandler;
 
 import java.util.EventObject;
 
-public class RepositoryListener implements EventListener {
+public class InstanceListener implements EventListener {
     private final MediaFileRepoList mediaFileRepoList;
     private final EventHandler outputHandler;
 
 
-    public RepositoryListener(MediaFileRepoList mediaFileRepoList, EventHandler outputHandler) {
+    public InstanceListener(MediaFileRepoList mediaFileRepoList, EventHandler outputHandler) {
         this.mediaFileRepoList = mediaFileRepoList;
         this.outputHandler = outputHandler;
     }
@@ -22,9 +22,9 @@ public class RepositoryListener implements EventListener {
 
     @Override
     public void onEvent(EventObject event) {
-        if (event.toString().equals("SetRepositoryStatusEvent")) {
-            String[] arg = ((SetRepositoryStatusEvent) event).getInput().getAttributes();
-            CliOutputEvent outputEvent;
+        if (event.toString().equals("InstanceChangeEvent")) {
+            String[] arg = ((InstanceChangeEvent) event).getInput().getAttributes();
+            OutputEvent outputEvent;
             String returnString = "try again";
             if (arg.length == 1 && arg[0].equalsIgnoreCase("storage")) {
                 mediaFileRepoList.detachAllRepositories();
@@ -45,7 +45,7 @@ public class RepositoryListener implements EventListener {
                 }
                 returnString = s.toString();
             }
-            outputEvent = new CliOutputEvent(event, returnString);
+            outputEvent = new OutputEvent(event, returnString);
             outputHandler.handle(outputEvent);
         }
     }

@@ -3,7 +3,7 @@ package routing.listener;
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
 import domain_logic.producer.Uploader;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.handler.EventHandler;
 
 import java.util.EventObject;
@@ -43,6 +43,6 @@ public class ReadUploaderListener implements EventListener {
         if (mR.readUploaderWithCountedMediaElements().isEmpty()) {
             s.append(" is empty");
         }
-        outputHandler.handle(new CliOutputEvent(event, s.toString()));
+        outputHandler.handle(new OutputEvent(event, s.toString()));
     }
 }

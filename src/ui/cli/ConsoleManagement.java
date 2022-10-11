@@ -2,19 +2,19 @@ package ui.cli;
 
 import routing.handler.EventHandler;
 import routing.parser.*;
+import util.InputModeEnum;
 
 import java.util.Scanner;
 
 public class ConsoleManagement {
-    private CliModeEnum mode = CliModeEnum.c;
-
-    ParseCreate parseCreate;
-    ParseDelete parseDelete;
-    ParsePersistence parsePersistence;
-    ParseRead parseRead;
-    ParseStorage parseStorage;
-    ParseUpdate parseUpdate;
-    Scanner scanner;
+    private InputModeEnum mode = InputModeEnum.c;
+    private final ParseCreate parseCreate;
+    private final ParseDelete parseDelete;
+    private final ParsePersistence parsePersistence;
+    private final ParseRead parseRead;
+    private final ParseStorage parseStorage;
+    private final ParseUpdate parseUpdate;
+    private final Scanner scanner;
     boolean exitMarker = false;
 
     public ConsoleManagement(EventHandler inputHandler) {
@@ -43,22 +43,22 @@ public class ConsoleManagement {
     private void switchMode(String input) {
         switch (input) {
             case ":c":
-                mode = CliModeEnum.c;
+                mode = InputModeEnum.c;
                 break;
             case ":d":
-                mode = CliModeEnum.d;
+                mode = InputModeEnum.d;
                 break;
             case ":u":
-                mode = CliModeEnum.u;
+                mode = InputModeEnum.u;
                 break;
             case ":r":
-                mode = CliModeEnum.r;
+                mode = InputModeEnum.r;
                 break;
             case ":p":
-                mode = CliModeEnum.p;
+                mode = InputModeEnum.p;
                 break;
             case ":s":
-                mode = CliModeEnum.s;
+                mode = InputModeEnum.s;
                 break;
             case ":exit":
                 exitMarker = true;

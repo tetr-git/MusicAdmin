@@ -1,7 +1,7 @@
 package routing.listener;
 
 import domain_logic.MediaFileRepoList;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.handler.EventHandler;
 
 import java.util.EventObject;
@@ -24,8 +24,8 @@ public class SaveListener implements EventListener {
             } else {
                 response = "Couldn't save Jos";
             }
-            CliOutputEvent outputEvent;
-            outputEvent = new CliOutputEvent(eventObject, response);
+            OutputEvent outputEvent;
+            outputEvent = new OutputEvent(eventObject, response);
             outputHandler.handle(outputEvent);
         }
     }

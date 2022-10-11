@@ -1,6 +1,6 @@
 package routing.parser;
 
-import routing.events.SetRepositoryStatusEvent;
+import routing.events.InstanceChangeEvent;
 import routing.handler.EventHandler;
 import util.RepoCollection;
 
@@ -14,6 +14,6 @@ public class ParseStorage {
 
     public void execute(String input) {
         String[] arg = input.trim().split("\\s+");
-        eventHandler.handle(new SetRepositoryStatusEvent(arg, new RepoCollection((arg))));
+        eventHandler.handle(new InstanceChangeEvent(arg, new RepoCollection((arg))));
     }
 }

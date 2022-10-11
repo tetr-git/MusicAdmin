@@ -1,13 +1,14 @@
 package ui.cli;
 
 import org.junit.jupiter.api.Test;
+import util.InputModeEnum;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CliModeEnumTest {
+class InputModeEnumTest {
 
     @Test
     void testToString() {
-        assertEquals("create:     ",CliModeEnum.c.toString()); }
+        assertEquals("create:     ", InputModeEnum.c.toString()); }
 
 }

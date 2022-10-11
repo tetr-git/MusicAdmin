@@ -1,7 +1,7 @@
 package routing.listener;
 
 import domain_logic.MediaFileRepoList;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.handler.EventHandler;
 
 import java.util.EventObject;
@@ -24,7 +24,7 @@ public class LoadListener implements EventListener {
             } else {
                 response = "Couldn't load File";
             }
-            CliOutputEvent outputEvent = new CliOutputEvent(eventObject, response);
+            OutputEvent outputEvent = new OutputEvent(eventObject, response);
             outputHandler.handle(outputEvent);
         }
     }

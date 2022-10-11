@@ -111,7 +111,7 @@ public class ViewModel {
             list.add("2");
         }
         String[] arg = list.toArray(new String[0]);
-        inputHandler.handle(new SetRepositoryStatusEvent(list, new RepoCollection(arg)));
+        inputHandler.handle(new InstanceChangeEvent(list, new RepoCollection(arg)));
     }
 
     public void buttonClickUpdateInstanceActivity(ActionEvent actionEvent) {
@@ -223,7 +223,7 @@ public class ViewModel {
         inputHandler.add(new ReadMediaListener(mediaFileRepoList, outputHandler));
         inputHandler.add(new ReadUploaderListener(mediaFileRepoList, outputHandler));
         inputHandler.add(new ReadTagListener(mediaFileRepoList, outputHandler));
-        inputHandler.add(new RepositoryListener(mediaFileRepoList, outputHandler));
+        inputHandler.add(new InstanceListener(mediaFileRepoList, outputHandler));
         inputHandler.add(new SaveListener(mediaFileRepoList, outputHandler));
         //CliOutputListener cliOutputListener = new CliOutputListener(consoleManagement);
         //outputHandler.add(cliOutputListener);

@@ -39,7 +39,7 @@ class ParseReadTest {
         inputHandler.add(new ReadUploaderListener(mediaFileRepoList,outputHandler));
         inputHandler.add(new ReadTagListener(mediaFileRepoList,outputHandler));
         consoleManagement = mock(ConsoleManagement.class);
-        outputHandler.add(new CliOutputListener(consoleManagement));
+        outputHandler.add(new OutputCliListener(consoleManagement));
 
         parseCreate = new ParseCreate(inputHandler);
         parseRead = new ParseRead(inputHandler);

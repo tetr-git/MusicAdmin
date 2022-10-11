@@ -40,7 +40,7 @@ class ParsePersistenceTest {
         inputHandler.add(new SaveListener(mediaFileRepoList,outputHandler));
         inputHandler.add(new LoadListener(mediaFileRepoList,outputHandler));
         consoleManagement = mock(ConsoleManagement.class);
-        outputHandler.add(new CliOutputListener(consoleManagement));
+        outputHandler.add(new OutputCliListener(consoleManagement));
         parseCreate = new ParseCreate(inputHandler);
         parsePersistence = new ParsePersistence(inputHandler);
     }

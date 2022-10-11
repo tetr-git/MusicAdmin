@@ -4,7 +4,7 @@ import domain_logic.MediaFileRepoList;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
 import routing.listener.ChangeListener;
-import routing.listener.CliOutputListener;
+import routing.listener.OutputCliListener;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
 import ui.cli.ConsoleManagement;
@@ -33,7 +33,7 @@ class ParseUpdateTest {
         inputHandler.add(new CreateMediaListener(mediaFileRepoList,outputHandler));
         inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
         ConsoleManagement consoleManagement = mock(ConsoleManagement.class);
-        outputHandler.add(new CliOutputListener(consoleManagement));
+        outputHandler.add(new OutputCliListener(consoleManagement));
         ParseCreate parseCreate = new ParseCreate(inputHandler);
         ParseUpdate parseUpdate = new ParseUpdate(inputHandler);
 

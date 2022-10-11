@@ -8,54 +8,15 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CliTest {
+class CliAlternativTest {
 
     /*
     sources for change of System.in and System.out
     https://www.danvega.dev/blog/2020/12/16/testing-standard-in-out-java/
     https://sehun.me/test-user-input-without-a-mock-framework-junit-69b8b052b6f2
+
+    Selected Copies of Cli Tests
      */
-
-    @Test
-    void ExampleUseCase() {
-        String userInput = ":c" + System.getProperty("line.separator") +
-                "Produzent1" + System.getProperty("line.separator") +
-                "InteractiveVideo Produzent1 Lifestyle,News 5000 3600" + System.getProperty("line.separator") +
-                "InteractiveVideo Produzent1 News 5000 3600" + System.getProperty("line.separator") +
-                ":r" + System.getProperty("line.separator") +
-                "content" + System.getProperty("line.separator") +
-                "uploader" + System.getProperty("line.separator") +
-                "tag i" + System.getProperty("line.separator") +
-                ":exit" + System.getProperty("line.separator");
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        //Date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar today = Calendar.getInstance();
-        Date todayAsDate = today.getTime();
-
-        String expectedOutput = "create:     # create:     # Repository[0] added uploader Produzent1\n" +
-                "create:     # Repository[0]\tTag Lifestyle added\tTag News added\n" +
-                "Repository[0] added Media interactivevideo\n" +
-                "create:     # Repository[0] added Media interactivevideo\n" +
-                "create:     # read:       # Repository: 0\n" +
-                "InteractiveVideo\t1\t"+sdf.format(todayAsDate)+"\t0\n" +
-                "InteractiveVideo\t2\t"+sdf.format(todayAsDate)+"\t0\n" +
-                "read:       # Repository[0]\n" +
-                "Produzent1\t2\n" +
-                "read:       # Repository[ 0] existing tags: \n" +
-                "Lifestyle\tNews\t\n" +
-                "read:       # ";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-        System.setOut(printStream);
-
-        String[] arg = {"1000000"};
-        Cli.main(arg);
-
-        String output = baos.toString();
-        assertEquals(expectedOutput,output);
-    }
 
     @Test
     void CliWithoutNet_SwitchModeCli() {
@@ -69,7 +30,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String output = baos.toString();
         assertEquals(expectedOutput,output);
@@ -87,7 +48,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -107,7 +68,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -129,7 +90,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -153,7 +114,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -178,7 +139,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-3];
@@ -198,7 +159,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -222,7 +183,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -251,7 +212,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -280,166 +241,13 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
         assertEquals(expectedOutput,output);
     }
 
-    @Test
-    void CliWithoutNet_readExistingTags() {
-        String userInput = "Produzent1" + System.getProperty("line.separator") +
-                "InteractiveVideo Produzent1 Lifestyle,News 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
-                ":r" + System.getProperty("line.separator")+
-                "tag e" + System.getProperty("line.separator")+
-                ":exit" + System.getProperty("line.separator");
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        String expectedOutput = "Animal\tTutorial\t";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-        System.setOut(printStream);
-
-        String[] arg = {"1000000"};
-        Cli.main(arg);
-
-        String[] lines = baos.toString().split(System.lineSeparator());
-        String output = lines[lines.length-2];
-        assertEquals(expectedOutput,output);
-    }
-
-    @Test
-    void CliWithoutNet_readNonExistingTags() {
-        String userInput = "Produzent1" + System.getProperty("line.separator") +
-                "InteractiveVideo Produzent1 Lifestyle,News 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
-                ":r" + System.getProperty("line.separator")+
-                "tag i" + System.getProperty("line.separator")+
-                ":exit" + System.getProperty("line.separator");
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        String expectedOutput = "Lifestyle\tNews\t";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-        System.setOut(printStream);
-
-        String[] arg = {"1000000"};
-        Cli.main(arg);
-
-        String[] lines = baos.toString().split(System.lineSeparator());
-        String output = lines[lines.length-2];
-        assertEquals(expectedOutput,output);
-    }
-
-    @Test
-    void CliWithoutNet_readTagsNoTagsInRepo() {
-        String userInput = "Produzent1" + System.getProperty("line.separator") +
-                "InteractiveVideo Produzent1 , 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
-                ":r" + System.getProperty("line.separator")+
-                "tag i" + System.getProperty("line.separator")+
-                ":exit" + System.getProperty("line.separator");
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        String expectedOutput = "create:     # read:       # Repository[0] no tags found";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-        System.setOut(printStream);
-
-        String[] arg = {"1000000"};
-        Cli.main(arg);
-
-        String[] lines = baos.toString().split(System.lineSeparator());
-        String output = lines[lines.length-2];
-        assertEquals(expectedOutput,output);
-    }
-
-    @Test
-    void CliWithoutNet_readTagsWrongInput() {
-        String userInput = "Produzent1" + System.getProperty("line.separator") +
-                "InteractiveVideo Produzent1 news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
-                ":r" + System.getProperty("line.separator")+
-                "tag x" + System.getProperty("line.separator")+
-                ":exit" + System.getProperty("line.separator");
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        String expectedOutput = "create:     # read:       # Wrong Input";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-        System.setOut(printStream);
-
-        String[] arg = {"1000000"};
-        Cli.main(arg);
-
-        String[] lines = baos.toString().split(System.lineSeparator());
-        String output = lines[lines.length-2];
-        assertEquals(expectedOutput,output);
-    }
-
-    @Test
-    void CliWithoutNet_DeleteMedia() {
-        String userInput = "Produzent1" + System.getProperty("line.separator") +
-                "InteractiveVideo Produzent1 news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
-                ":d" + System.getProperty("line.separator")+
-                "1" + System.getProperty("line.separator")+
-                ":exit" + System.getProperty("line.separator");
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        String expectedOutput = "Media deleted";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-        System.setOut(printStream);
-
-        String[] arg = {"1000000"};
-        Cli.main(arg);
-
-        String[] lines = baos.toString().split(System.lineSeparator());
-        String output = lines[lines.length-2];
-        assertEquals(expectedOutput,output);
-    }
-
-    @Test
-    void CliWithoutNet_DeleteUploader() {
-        String userInput = "1" + System.getProperty("line.separator") +
-                "InteractiveVideo 1 news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
-                ":d" + System.getProperty("line.separator")+
-                "1" + System.getProperty("line.separator")+
-                ":exit" + System.getProperty("line.separator");
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        String expectedOutput = "Uploader deleted";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-        System.setOut(printStream);
-
-        String[] arg = {"1000000"};
-        Cli.main(arg);
-
-        String[] lines = baos.toString().split(System.lineSeparator());
-        String output = lines[lines.length-2];
-        assertEquals(expectedOutput,output);
-    }
-
-    @Test
-    void CliWithoutNet_DeleteWrongInput() {
-        String userInput = "1" + System.getProperty("line.separator") +
-                "InteractiveVideo 1 news 5000 3600 Abstimmung 1080" + System.getProperty("line.separator") +
-                ":d" + System.getProperty("line.separator")+
-                "4" + System.getProperty("line.separator")+
-                ":exit" + System.getProperty("line.separator");
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        String expectedOutput = "create:     # delete:     # nothing deleted";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-        System.setOut(printStream);
-
-        String[] arg = {"1000000"};
-        Cli.main(arg);
-
-        String[] lines = baos.toString().split(System.lineSeparator());
-        String output = lines[lines.length-2];
-        assertEquals(expectedOutput,output);
-    }
 
     @Test
     void CliWithoutNet_UpdateCounter() {
@@ -456,7 +264,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -478,7 +286,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -500,7 +308,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];
@@ -532,7 +340,7 @@ class CliTest {
         System.setOut(printStream);
 
         String[] arg = {"1000000"};
-        Cli.main(arg);
+        CliAlternativ.main(arg);
 
         String[] lines = baos.toString().split(System.lineSeparator());
         String output = lines[lines.length-2];

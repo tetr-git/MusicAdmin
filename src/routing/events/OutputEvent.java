@@ -2,11 +2,11 @@ package routing.events;
 
 import java.util.EventObject;
 
-public class CliOutputEvent extends EventObject {
+public class OutputEvent extends EventObject {
 
     private final String write;
 
-    public CliOutputEvent(Object source, String write) {
+    public OutputEvent(Object source, String write) {
         super(source);
         this.write = write;
     }
@@ -17,7 +17,7 @@ public class CliOutputEvent extends EventObject {
 
     @Override
     public String toString() {
-        return "CliOutputEvent";
+        return "OutputEvent";
     }
 }
 

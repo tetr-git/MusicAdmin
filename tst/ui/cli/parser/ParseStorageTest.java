@@ -4,7 +4,7 @@ import domain_logic.MediaFileRepoList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
-import routing.listener.RepositoryListener;
+import routing.listener.InstanceListener;
 import routing.parser.ParseStorage;
 
 import java.math.BigDecimal;
@@ -23,7 +23,7 @@ class ParseStorageTest {
         mediaFileRepoList = new MediaFileRepoList (new BigDecimal(10000000));
         inputHandler = new EventHandler();
         outputHandler = new EventHandler();
-        inputHandler.add(new RepositoryListener(mediaFileRepoList,outputHandler));
+        inputHandler.add(new InstanceListener(mediaFileRepoList,outputHandler));
         parseStorage = new ParseStorage(inputHandler);
     }
 

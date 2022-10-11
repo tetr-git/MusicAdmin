@@ -2,7 +2,7 @@ package routing.listener;
 
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.events.DeleteEvent;
 import routing.handler.EventHandler;
 
@@ -41,8 +41,8 @@ public class DeleteListener implements EventListener {
         } else {
             response = "nothing deleted";
         }
-        CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event, response);
+        OutputEvent outputEvent;
+        outputEvent = new OutputEvent(event, response);
         outputHandler.handle(outputEvent);
     }
 }

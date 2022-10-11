@@ -3,7 +3,7 @@ package routing.listener;
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
 import routing.events.ChangeEvent;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.handler.EventHandler;
 
 import java.util.EventObject;
@@ -36,8 +36,8 @@ public class ChangeListener implements EventListener {
             response = "Repository[" + mR.getNumberOfRepository() + "] Counter of MediaFile with Address " + (((ChangeEvent) event).getStorageNameString()) + " updated";
         } else
             response = "Repository[" + mR.getNumberOfRepository() + "] Counter not updated updated";
-        CliOutputEvent outputEvent;
-        outputEvent = new CliOutputEvent(event, response);
+        OutputEvent outputEvent;
+        outputEvent = new OutputEvent(event, response);
         outputHandler.handle(outputEvent);
     }
 }

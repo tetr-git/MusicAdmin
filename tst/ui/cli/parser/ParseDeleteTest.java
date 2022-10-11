@@ -4,7 +4,7 @@ import domain_logic.MediaFileRepoList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import routing.handler.EventHandler;
-import routing.listener.CliOutputListener;
+import routing.listener.OutputCliListener;
 import routing.listener.CreateMediaListener;
 import routing.listener.CreateUploaderListener;
 import routing.listener.DeleteListener;
@@ -36,7 +36,7 @@ class ParseDeleteTest {
         inputHandler.add(new CreateUploaderListener(mediaFileRepoList,outputHandler));
         inputHandler.add(new DeleteListener(mediaFileRepoList,outputHandler));
         consoleManagement = mock(ConsoleManagement.class);
-        outputHandler.add(new CliOutputListener(consoleManagement));
+        outputHandler.add(new OutputCliListener(consoleManagement));
         parseCreate = new ParseCreate(inputHandler);
         parseDelete= new ParseDelete(inputHandler);
     }

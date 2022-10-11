@@ -3,7 +3,7 @@ package routing.listener;
 import domain_logic.MediaFileRepoList;
 import domain_logic.MediaFileRepository;
 import domain_logic.files.MediaFile;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.events.ReadMediaEvent;
 import routing.handler.EventHandler;
 
@@ -54,6 +54,6 @@ public class ReadMediaListener implements EventListener {
                         append(m.getAccessCount());
             }
         }
-        outputHandler.handle(new CliOutputEvent(event, s.toString()));
+        outputHandler.handle(new OutputEvent(event, s.toString()));
     }
 }

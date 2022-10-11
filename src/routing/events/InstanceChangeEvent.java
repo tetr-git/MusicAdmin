@@ -4,11 +4,11 @@ import util.RepoCollection;
 
 import java.util.EventObject;
 
-public class SetRepositoryStatusEvent extends EventObject {
+public class InstanceChangeEvent extends EventObject {
 
     private final RepoCollection input;
 
-    public SetRepositoryStatusEvent(Object source, RepoCollection input) {
+    public InstanceChangeEvent(Object source, RepoCollection input) {
         super(source);
         this.input = input;
     }
@@ -19,6 +19,6 @@ public class SetRepositoryStatusEvent extends EventObject {
 
     @Override
     public String toString() {
-        return "SetRepositoryStatusEvent";
+        return "InstanceChangeEvent";
     }
 }

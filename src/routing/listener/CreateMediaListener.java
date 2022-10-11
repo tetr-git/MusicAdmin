@@ -5,7 +5,7 @@ import domain_logic.MediaFileRepository;
 import domain_logic.enums.Tag;
 import domain_logic.files.*;
 import domain_logic.producer.UploaderImpl;
-import routing.events.CliOutputEvent;
+import routing.events.OutputEvent;
 import routing.events.CreateMediaEvent;
 import routing.handler.EventHandler;
 import util.MediaAttributesCollection;
@@ -41,7 +41,7 @@ public class CreateMediaListener implements EventListener {
         MediaAttributesCollection arg = ((CreateMediaEvent) event).getAttr();
         UploaderImpl uploader = new UploaderImpl((String) arg.get(0));
         boolean addedMedia = false;
-        CliOutputEvent outputEvent;
+        OutputEvent outputEvent;
         switch (arg.getType()) {
             case "audio":
                 if (arg.getSize() == 5) {
@@ -166,7 +166,7 @@ public class CreateMediaListener implements EventListener {
         } else {
             s = "Repository[" + mR.getNumberOfRepository() + "] couldn't add Media " + arg.getType();
         }
-        outputEvent = new CliOutputEvent(event, s);
+        outputEvent = new OutputEvent(event, s);
         outputHandler.handle(outputEvent);
     }
 }
